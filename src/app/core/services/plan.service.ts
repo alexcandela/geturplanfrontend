@@ -58,7 +58,7 @@ export class PlanService {
     data: FormData
   ): Observable<PlanFormResponse> => {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.post<any>(`${this.apiUrl}/post-plan/`, data, { headers });
+    return this.http.post<any>(`${this.apiUrl}/post-plan`, data, { headers });
   };
 
   deletePlan = (
