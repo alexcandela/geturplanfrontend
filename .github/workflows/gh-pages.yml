@@ -32,4 +32,4 @@ jobs:
 
     - name: Deploy
       if: success()
-      run: aws s3 sync ./dist/your-app-name s3://geturplan --delete
+      run: aws s3 sync ./dist/geturplanfrontend s3://geturplan --delete
