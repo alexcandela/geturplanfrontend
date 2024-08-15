@@ -64,7 +64,7 @@
             }
             } @else {
             @for (plan of plans; track $index) {
-            <app-plan [sameuser]="sameuser()"  [plan]="plan" />
+            <app-plan (deletePlanFromArray)="eliminarPlan($event)" [sameuser]="sameuser()"  [plan]="plan" />
             } @empty {
             <div></div>
             @if (sameuser()) {

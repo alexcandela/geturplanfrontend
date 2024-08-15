@@ -2,6 +2,7 @@ import {
   ChangeDetectorRef,
   Component,
   OnInit,
+  Output,
   WritableSignal,
   signal,
 } from '@angular/core';
@@ -12,6 +13,7 @@ import { AuthService } from '../../core/services/authservice.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { Route, Router, RouterLink } from '@angular/router';
 import { PlanService } from '../../core/services/plan.service';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-plan',
@@ -40,6 +42,9 @@ export class PlanComponent implements OnInit {
     private router: Router,
     private planService: PlanService
   ) {}
+
+  @Output() deletePlanFromArray = new EventEmitter<number>();
+
 
   like(event: Event) {
     event.preventDefault();
@@ -108,7 +113,7 @@ export class PlanComponent implements OnInit {
     if (typeof window !== 'undefined' && window.localStorage) {
       this.token = localStorage.getItem('jwt');
       if (this.token) {
-        if (this.authService.isTokenValid(this.token)) {
+        if (this.authService.isTokenValid(this.token)) {          
           this.showModal.set(true);
         } else {
           this.notificationService.showNotification(
@@ -160,10 +165,9 @@ export class PlanComponent implements OnInit {
                   'Plan eliminado correctamente.',
                   'success'
                 );
-                setTimeout(function() {
-                  location.reload();
-              }, 3000);
-              
+                // Eliminar del array de planes.
+                this.deletePlanFromArray.emit(this.plan.id);
+                this.showModal.set(false);
               }
             },
             (error) => {

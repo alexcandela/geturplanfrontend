@@ -81,7 +81,8 @@ export class ProfileComponent implements OnInit {
       this.token = localStorage.getItem('jwt');
       this.userService.getUserPlans(this.token, page, username).subscribe(
         (response: UserPlansResponse) => {
-          if (response.status === 'success') {
+          if (response.status === 'success') { 
+            console.log(response);
             this.plans = response.plans.data;
             this.totalPlans.set(response.plans.total);
             this.loadingPlans.set(false);
@@ -93,6 +94,27 @@ export class ProfileComponent implements OnInit {
       );
     }
   };
+
+  getPlansForPage(page: number): Plan[] {
+    const startIndex = (page - 1) * this.plansPerPage();
+    const endIndex = startIndex + this.plansPerPage();
+    return this.plans.slice(startIndex, endIndex);
+  }
+  updateCurrentPageAlEliminar = (currentPage: number) => {
+    const plansForCurrentPage = this.getPlansForPage(currentPage);
+    if (plansForCurrentPage.length === 0 && currentPage > 1) {
+      this.currentPage.set(currentPage - 1);
+      this.getUserPlans(this.currentPage(), this.username);
+    } else {
+      this.getUserPlans(this.currentPage(), this.username);
+    }
+  }
+    
+  eliminarPlan = (id: number) => {
+    this.plans = this.plans.filter(plan => plan.id !== id);
+    this.updateCurrentPageAlEliminar(this.currentPage());
+    
+  }
 
   onPageChange(page: number): void {
     this.currentPage.set(page);
