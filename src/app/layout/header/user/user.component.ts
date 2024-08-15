@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, Renderer2 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { LoginService } from '../../../core/services/login.service';
@@ -11,14 +11,14 @@ import { Router, RouterLink } from '@angular/router';
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss',
 })
-export class UserComponent {
-  constructor(private service: LoginService, private router: Router) {}
+export class UserComponent implements OnInit{
+  constructor(private service: LoginService, private router: Router, private renderer: Renderer2) {}
 
   @Input() userData: any;
   dropdownOpen = false;
 
   toggleDropdown() {
-    this.dropdownOpen = !this.dropdownOpen;
+    this.dropdownOpen = !this.dropdownOpen;    
   }
 
   logout = () => {
@@ -39,4 +39,18 @@ export class UserComponent {
       }
     );
   };
+
+  handleClickOutside(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    const dropdown = document.querySelector('.dropdown') as HTMLElement;
+    const dropdownToggle = document.querySelector('.userComp-name') as HTMLElement;
+
+    if (dropdown && !dropdown.contains(target) && !dropdownToggle.contains(target)) {
+      this.dropdownOpen = false;
+    }
+  }
+
+  ngOnInit(): void {
+    this.renderer.listen('document', 'click', (event) => this.handleClickOutside(event));
+  }
 }

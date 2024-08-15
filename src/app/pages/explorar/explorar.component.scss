@@ -150,13 +150,21 @@
       gap: 15px;
       height: 100%;
       box-sizing: border-box;
+      @media (max-width: 1024px) {
+        grid-template-rows: auto 1fr;
+      }
       .noplansmessagecontainer {
         display: flex;
         justify-content: center;
         align-items: end;
         gap: 5px;
-        
         grid-column: 2 / span 2;
+        @media (max-width: 1024px) { 
+          grid-column: 1 / span 1;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
         p {
           font-size: 18px;
           font-weight: 500;

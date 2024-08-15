@@ -1,4 +1,4 @@
-<div class="userComp">
+<div class="userComp" >
     <div class="userComp-name" (click)="toggleDropdown()">
         <div class="nombreCompleto">
             <span>{{userData.username}}</span>
@@ -7,10 +7,13 @@
     </div>
     <div class="dropdown" [ngClass]="{ 'show': dropdownOpen }">
         <ul>
-            <li><a [routerLink]="['/perfil', userData.username]">Mi Perfil</a><i class="fa-solid fa-circle-user"></i></li>
-            <li><a routerLink="publicar-plan">Publicar</a><i class="fa-solid fa-circle-plus"></i></li>
-            <li><a routerLink="favoritos">Favoritos</a><i class="fa-solid fa-heart"></i></li>
-            <li><a (click)="logout()">Logout</a><i class="fa-solid fa-right-from-bracket"></i></li>
+            <li (click)="toggleDropdown()"><a  [routerLink]="['/perfil', userData.username]">Mi Perfil</a><i
+                    class="fa-solid fa-circle-user"></i></li>
+            <li><a (click)="toggleDropdown()" routerLink="publicar-plan">Publicar</a><i
+                    class="fa-solid fa-circle-plus"></i></li>
+            <li><a (click)="toggleDropdown()" routerLink="favoritos">Favoritos</a><i class="fa-solid fa-heart"></i></li>
+            <li><a (click)="toggleDropdown()" (click)="logout()">Logout</a><i
+                    class="fa-solid fa-right-from-bracket"></i></li>
             <!-- <i class="fa-solid fa-heart"></i> -->
         </ul>
     </div>

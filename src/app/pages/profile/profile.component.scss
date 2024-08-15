@@ -75,6 +75,12 @@
         );
         background-size: 200% 100%;
         animation: wave 1.5s infinite ease-in-out;
+        @media (max-width: 1024px) {
+            width: 100px;
+            height: 100px;
+            border: solid 5px $fondo;
+          
+        }
       }
 
       /* Animación de ola */
