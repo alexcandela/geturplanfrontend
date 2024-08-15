@@ -1,0 +1,107 @@
+<section class="allLogin">
+    <section class="allLogin-info">
+        <section class="allLogin-info-cont">
+            <header class="allLogin-info-cont-titulo">
+                <div class="logoContainer">
+                    <img src="/assets/logo/geturplan_logo.svg" alt="logo">
+                    <h2>geturplan</h2>
+                </div>
+            </header>
+            <div class="allLogin-info-cont-img">
+                <img src="/assets/images/snowboarding.jpg" alt="Imagen de inicio">
+            </div>
+            <div class="allLogin-info-cont-text">
+                <div class="allLogin-info-cont-text-titulo">
+                    <h3>Bienvenido de nuevo</h3>
+                </div>
+                <div class="allLogin-info-cont-text-p">
+                    <p>Descubre los nuevos planes de esta semana.</p>
+                    <p>Conoce a gente nueva disfrutando de los mejores lugares.</p>
+                </div>
+            </div>
+        </section>
+    </section>
+    <section class="allLogin-cont">
+        <section class="login">
+            <article class="login-titulo">
+                <h3>Bienvenido de nuevo</h3>
+                <p>Inicia sesión para ver los nuevos planes.</p>
+            </article>
+            <section class="login-inputs">
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)" id="login"
+                    class="login-inputs-inp">
+                    <div class="inputContainer">
+                        <div class="input">
+                            <div class="input-divicon">
+                                <img src="/assets/icons/email.png" alt="email-icon">
+                            </div>
+                            <input type="email" name="email" id="login" formControlName="email">
+                            <div></div>
+                        </div>
+                        @if (submitted() && loginForm.controls['email'].invalid) {
+                        <div class="errorMessageContainer">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            @if (loginForm.controls['email'].errors?.['required']) {
+                            <small class="errorMessage">El email es obligatorio.</small>
+                            }
+                            @if (loginForm.controls['email'].errors?.['email']) {
+                            <small class="errorMessage">El email no es válido.</small>
+                            }
+                        </div>
+                        }
+                    </div>
+
+                    <div class="inputContainer">
+                        <div class="input">
+                            <div class="input-divicon">
+                                <img src="/assets/icons/password.png" alt="password-icon">
+                            </div>
+                            <input [type]="inputtype()" name="password" id="login" formControlName="password">
+                            <button type="button" (click)="showpassword()"><img [src]="showPasswordImg()"
+                                    alt="eye-icon"></button>
+                        </div>
+                        @if (submitted() && loginForm.controls['password'].invalid) {
+                        <div class="errorMessageContainer">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            @if (loginForm.controls['password'].errors?.['required']) {
+                            <small class="errorMessage">La contraseña es obligatoria.</small>
+                            }
+                        </div>
+                        }
+                    </div>
+                    @if(showErrorMessage()){
+                    <div class="errorMessageContainer">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <small class="errorMessage">{{message()}}</small>
+                    </div>
+                    }
+                    <div class="opciones">
+                        <div class="opciones-remember">
+                            <span>Recuerdame</span><input [value]="rememberme()" type="checkbox" name="rememberme"
+                                id="login" formControlName="rememberme">
+                        </div>
+                        <div class="opciones-forgot">
+                            <a href="http://">He olvidado mi contraseña</a>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-iniciarsesion">Iniciar Sesión</button>
+                </form>
+            </section>
+            <section class="login-hr">
+                <hr>
+            </section>
+            <section class="login-google">
+                <a href="" class="googlebtn">
+                    <img src="/assets/icons/google.png" alt="google-logo">
+                    <span>Iniciar sesión con Google</span>
+                </a>
+            </section>
+            <section class="login-linkregistrarse">
+                <p>¿No tienes cuenta?</p><a href="/register">Registrate</a>
+            </section>
+            <section class="divVolver">
+                <a href="/" class="btn btn-basico"><span>Volver al inicio</span><i class="fa-solid fa-house"></i></a>
+            </section>
+        </section>
+    </section>
+</section>

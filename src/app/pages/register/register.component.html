@@ -1,0 +1,162 @@
+<section class="allLogin">
+    <section class="allLogin-info">
+        <section class="allLogin-info-cont">
+            <header class="allLogin-info-cont-titulo">
+                <img src="/assets/logo/geturplan_logo.svg" alt="logo">
+                <h2>geturplan</h2>
+            </header>
+            <div class="allLogin-info-cont-img">
+                <img src="/assets/images/snowboarding.jpg" alt="Imagen de inicio">
+            </div>
+            <div class="allLogin-info-cont-text">
+                <div class="allLogin-info-cont-text-titulo">
+                    <h3>Registrate en geturplan</h3>
+                </div>
+                <div class="allLogin-info-cont-text-p">
+                    <p>Descubre los nuevos planes de esta semana.</p>
+                    <p>Conoce a gente nueva disfrutando de los mejores lugares.</p>
+                </div>
+            </div>
+        </section>
+    </section>
+    <section class="allLogin-cont">
+        <section class="login">
+            <article class="login-titulo">
+                <h3>Empieza tu aventura</h3>
+                <p>Registrate y empieza a ver los nuevos planes.</p>
+            </article>
+            <section class="login-inputs">
+                <form [formGroup]="registerForm" (submit)="onSubmit(registerForm.value)" form="register"
+                    class="login-inputs-inp">
+                    <div class="dobleInput">
+                        <div class="inputContainer">
+                            <div class="input">
+                                <div class="input-divicon">
+                                    <img src="/assets/icons/user.svg" alt="user-icon">
+                                </div>
+                                <input type="text" name="nombre" id="register" placeholder="Nombre"
+                                    formControlName="nombre">
+                                <div></div>
+                            </div>
+                            @if (submitted() && registerForm.controls['nombre'].invalid) {
+                            <div class="errorMessageContainer">
+                                <i class="fa-solid fa-circle-exclamation"></i>
+                                @if (registerForm.controls['nombre'].errors?.['required']) {
+                                <small class="errorMessage">El nombre es obligatorio.</small>
+                                }
+                            </div>
+                            }
+                        </div>
+                        <div class="inputContainer">
+                            <div class="input">
+                                <div class="input-divicon">
+                                    <img src="/assets/icons/user.svg" alt="user-icon">
+                                </div>
+                                <input type="text" name="apellido" id="register" placeholder="Apellido"
+                                    formControlName="apellido">
+                                <div></div>
+                            </div>
+                            @if (submitted() && registerForm.controls['apellido'].invalid) {
+                            <div class="errorMessageContainer">
+                                <i class="fa-solid fa-circle-exclamation"></i>
+                                @if (registerForm.controls['apellido'].errors?.['required']) {
+                                <small class="errorMessage">El apellido es obligatorio.</small>
+                                }
+                            </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="inputContainer">
+                        <div class="input">
+                            <div class="input-divicon">
+                                <img src="/assets/icons/username.svg" alt="user-icon">
+                            </div>
+                            <input type="text" name="username" id="register" placeholder="Nombre de usuario"
+                                formControlName="username">
+                            <div></div>
+                        </div>
+                        @if (submitted() && registerForm.controls['username'].invalid) {
+                        <div class="errorMessageContainer">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            @if (registerForm.controls['username'].errors?.['required']) {
+                            <small class="errorMessage">El nombre de usuario es obligatorio.</small>
+                            }
+                        </div>
+                        }
+                        @if (usernameBackend()) {
+                        <div class="errorMessageContainer">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <small class="errorMessage">El nombre de usuario ya existe.</small>
+                        </div>
+                        }
+                    </div>
+                    <div class="inputContainer">
+                        <div class="input">
+                            <div class="input-divicon">
+                                <img src="/assets/icons/email.png" alt="email-icon">
+                            </div>
+                            <input type="email" name="email" id="register" placeholder="Correo electronico"
+                                formControlName="email">
+                            <div></div>
+                        </div>
+                        @if (submitted() && registerForm.controls['email'].invalid) {
+                        <div class="errorMessageContainer">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            @if (registerForm.controls['email'].errors?.['required']) {
+                            <small class="errorMessage">El email es obligatorio.</small>
+                            }
+                            @if (registerForm.controls['email'].errors?.['email']) {
+                            <small class="errorMessage">El email no es válido.</small>
+                            }
+                        </div>
+                        }
+                        @if (emailBackend()) {
+                        <div class="errorMessageContainer">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <small class="errorMessage">El email ya existe.</small>
+                        </div>
+                        }
+                    </div>
+                    <div class="inputContainer">
+                        <div class="input">
+                            <div class="input-divicon">
+                                <img src="/assets/icons/password.png" alt="password-icon">
+                            </div>
+                            <input [type]="inputtype()" name="password" id="register" placeholder="Contraseña segura"
+                                formControlName="password">
+                            <button type="button" (click)="showpassword()"><img [src]="showPasswordImg()"
+                                    alt="eye-icon"></button>
+                        </div>
+                        @if (submitted() && registerForm.controls['password'].invalid) {
+                        <div class="errorMessageContainer">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            @if (registerForm.controls['password'].errors?.['required']) {
+                            <small class="errorMessage">La contraseña es obligatoria.</small>
+                            }
+                            @if (registerForm.controls['password'].errors?.['pattern']) {
+                            <small class="errorMessage">La contraseña no es segura.</small>
+                            }
+                        </div>
+                        }
+                    </div>
+                    <button type="submit" class="btn btn-iniciarsesion">Registrarse</button>
+                </form>
+            </section>
+            <section class="login-hr">
+                <hr>
+            </section>
+            <section class="login-google">
+                <a href="" class="googlebtn">
+                    <img src="/assets/icons/google.png" alt="google-logo">
+                    <span>Registrate con Google</span>
+                </a>
+            </section>
+            <section class="login-linkregistrarse">
+                <p>¿Ya tienes una cuenta?</p><a href="/login">Inicia Sesión</a>
+            </section>
+            <section class="divVolver">
+                <a href="/" class="btn btn-basico"><span>Volver al inicio</span><i class="fa-solid fa-house"></i></a>
+            </section>
+        </section>
+    </section>
+</section>

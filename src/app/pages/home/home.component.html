@@ -1,0 +1,38 @@
+<section class="home">
+    <section class="populares">
+        <article class="populares-titulo">
+            <i class="fa-solid fa-fire"></i>
+            <h2>Planes Populares de {{mesActual()}}</h2>
+        </article>
+        <section class="populares-planes">
+            @if (loading()) {
+            @for (let of [1, 2, 3, 4]; track $index) {
+            <app-skeleton-plan />
+            }
+            } @else {
+            @for (plan of popularPlans(); track $index) {
+            <app-plan [plan]="plan" />
+            } @empty {
+                <div class="noplans">
+                    <p>Todavía no se han publicado planes en {{mesActual()}} 😢</p>
+                </div>
+            }
+            }
+            <a class="vermas" routerLink="/explorar">
+                <span>Ver todos los planes</span>
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </a>
+        </section>
+    </section>
+    <section class="publicar">
+        <div class="publicar-info">
+            <h3>Publica tu plan.</h3>
+            <p>Comparte tu plan perfecto con el mundo.</p>
+            <a routerLink="/publicar-plan" class="btn btn-basico">Publicar plan</a>
+        </div>
+        <div class="publicar-img">
+            <img src="/assets/images/publicar_home.svg" alt="">
+        </div>
+    </section>
+    <app-toast-notification />
+</section>

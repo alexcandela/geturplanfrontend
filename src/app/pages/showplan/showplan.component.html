@@ -1,0 +1,73 @@
+<section class="planDetalle">
+    <section class="planDetalle-fotoComments">
+        <section class="fotos">
+            <section class="fotos-seleccionar">
+                <img [src]="plan.img" (click)="selectMainImage(plan.img)" alt="plan-img">
+                @for (img of plan.secondary_images; track $index) {
+                    <img [src]="img.img" (click)="selectMainImage(img.img)" alt="img">
+                }
+            </section>
+            <section class="fotos-principal">
+                <img [src]="selectedImg()" alt="plan-img">
+            </section>
+        </section>
+        <section class="comentarios">
+            <div class="commentdisable">
+            </div>
+            <div class="comments">
+                @if (logged()) {
+                    <form class="comentar" [formGroup]="commentForm" (ngSubmit)="submitComment(commentForm.value)">
+                        <textarea name="comentario" placeholder="Escribe tu comentario..." formControlName="comment" maxlength="200"></textarea>
+                        <article>
+                            <input type="submit" name="comentar" class="btn btn-basico" value="Publicar comentario">
+                        </article>
+                    </form>
+                }
+                <section class="lista">
+                    <div class="lista-scroll">
+                        @for (comment of plan.comments; track $index) {
+                        <app-comment [comment]="comment" />
+                        }
+                        @empty {
+                            <p>Este plan no tiene comentarios.</p>
+                        }
+                    </div>
+                </section>
+            </div>
+        </section>
+    </section>
+    <section class="planDetalle-info">
+        <article class="planDetalle-info-titulo">
+            <h2>{{plan.name}}</h2>
+        </article>
+        <section class="planDetalle-info-location">
+            <article><i class="fa-solid fa-location-dot"></i><span>{{plan.city}}, {{plan.province}}</span></article>
+        </section>
+        <section class="planDetalle-info-descripcion">
+            <article class="username"><img
+                    [src]="plan.user.img"
+                    alt="user-img"><a [routerLink]="['/perfil', plan.user.username]">{{plan.user.username}}</a></article>
+            <article class="desc">
+                <p [innerHTML]="plan.description | newlineToBr"></p>
+            </article>
+            <article class="fechalikes">
+                <section class="likes">
+                    <div class="likediv">
+                        <img [src]="likeImgBtn()" (click)="like($event)" alt="like-button">
+                    </div>
+                    <span>{{plan.likes_count}}</span>
+                </section>
+                <article class="fecha">
+                    <i class="fa-solid fa-clock"></i>
+                    <span>Publicado el</span>
+                    <span>{{ plan.created_at | dateFormat }}</span>
+                </article>
+            </article>
+        </section>
+        <section class="planDetalle-info-googlemaps">
+            <i class="fa-solid fa-map-pin"></i>
+            <a [href]="plan.url" target="_blank">Click para ver ubicación exacta en Google Maps.</a>
+        </section>
+    </section>
+</section>
+<app-toast-notification />

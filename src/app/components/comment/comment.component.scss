@@ -1,0 +1,60 @@
+@import "../../../styles.scss";
+.comment {
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    border: solid #e9e8e8 2px;
+    // box-shadow: $sombra;
+    background-color: #fff;
+    padding: 10px;
+    gap: 5px;
+    &-username {
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        gap: 10px;
+        img {
+            width: 25px;
+            height: 25px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        a {
+            font-family: $montserrat;
+            font-weight: 700;
+            font-size: 18px;
+            color: $azul;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+    &-text {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 5px;
+        p {
+            font-size: 16px;
+            font-weight: 500;
+            font-family: $montserrat;
+        }
+        &-fecha {
+            display: flex;
+            justify-content: end;
+            align-items: end;
+            gap: 5px;
+            i {
+                font-size: 13px;
+                color: $azul;
+                padding: 2px;
+            }
+            span {
+                font-family: $montserrat;
+                font-size: 15px;
+                font-weight: 500;
+            }
+        }
+    }
+}

@@ -1,0 +1,58 @@
+<section class="allEditar">
+    <form [formGroup]="editProfileForm" (ngSubmit)="onSubmit(editProfileForm.value)" enctype="multipart/form-data" method="post" class="allEditar-form">
+        <section class="allEditar-form-fotodesc">
+            <article class="inpimg">
+                @if (loading()) {
+                <div class="skeletonimg"></div>
+                } @else {
+                <img [src]="user.img" alt="user-img">
+                }
+                <div class="uploadcont">
+                    <div class="custom-file-upload">
+                        <input type="file" id="file-input" (change)="onFileChange($event)" />
+                        <label for="file-input" class="btn btn-basico">Cambiar imagen</label>
+                    </div>
+                    <p id="file-name"></p>
+                </div>
+                <button class="btneliminar" type="button" (click)="deleteImg()">Eliminar imagen</button>
+            </article>
+            <article class="input">
+                <label for="sobremi">Agrega o cambia tu descripción</label>
+                <textarea name="sobremi" placeholder="Escribe una breve descripción sobre ti..." formControlName="description" maxlength="250"></textarea>
+            </article>
+        </section>
+        <section class="allEditar-form-redessociales">
+            <article class="titulo">
+                <h3>Vincula tus redes sociales</h3>
+                <i class="fa-solid fa-share-nodes"></i>
+            </article>
+            <section class="redessociales">
+                <section class="input">
+                    <label for="instagram"><i class="fa-brands fa-instagram"></i><span>Instagram</span></label>
+                    <input type="text" name="instagram" formControlName="instagram">
+                </section>
+                <section class="input">
+                    <label for="facebook"><i class="fa-brands fa-facebook"></i><span>Facebook</span></label>
+                    <input type="text" name="facebook" formControlName="facebook">
+                </section>
+                <section class="input">
+                    <label for="tiktok"><i class="fa-brands fa-tiktok"></i><span>Tiktok</span></label>
+                    <input type="text" name="tiktok" formControlName="tiktok">
+                </section>
+            </section>
+        </section>
+        <section class="allEditar-form-configuracion">
+            <article class="titulo">
+                <h3>Configuración avanzada</h3>
+                <i class="fa-solid fa-gear"></i>
+            </article>
+            <section class="opciones">
+
+            </section>
+        </section>
+        <section class="allEditar-form-guardar">
+            <input type="submit" name="guardar" value="Guardar" class="btn btn-basico">
+        </section>
+    </form>
+</section>
+<app-toast-notification />

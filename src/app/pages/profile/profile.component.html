@@ -1,0 +1,91 @@
+<section class="allProfile">
+    <section class="allProfile-primerbloque">
+        <article class="banner"></article>
+        <section class="userimg">
+            @if (loading()) {
+            <div class="skeletonimg"></div>
+            } @else {
+            <img [src]="user.img" alt="user-img">
+            }
+
+        </section>
+        <section class="infouser">
+            <div class="none"></div>
+            <article class="name">
+                <i class="fa-solid fa-circle-user"></i>
+                <h3>{{user.username}}</h3>
+            </article>
+            <article class="redessociales">
+                @if (sameuser()) {
+                <a href="favoritos" class="btn btn-basico fav"><span class="spantitle">Favoritos</span><i
+                        class="fa-solid fa-heart"></i></a>
+                <a href="editar-perfil" class="btn btn-basico fav"><span class="spantitle">Editar</span><i
+                        class="fa-solid fa-pen"></i></a>
+                }
+                @if (user.instagram) {
+                <a href="{{user.instagram}}" target="_blank"><i class="fa-brands fa-instagram instagram-icon"></i></a>
+                }
+
+                @if (user.facebook) {
+                <a href="{{user.facebook}}" target="_blank"><i class="fa-brands fa-facebook facebook-icon"></i></a>
+                }
+
+                @if (user.tiktok) {
+                <a href="{{user.tiktok}}" target="_blank"><i class="fa-brands fa-tiktok tiktok-icon"></i></a>
+                }
+
+            </article>
+        </section>
+    </section>
+    <section class="allProfile-sobremi">
+        <article class="username">
+            <span>Sobre mí</span>
+        </article>
+        <article class="description">
+            <p>{{user.description}}</p>
+        </article>
+    </section>
+    <section class="allProfile-planes">
+        <article class="titulo">
+            <article class="titulo-name">
+                <i class="fa-solid fa-circle-check"></i>
+                @if (sameuser()) {
+                    <h4>Mis planes</h4>
+                } @else {
+                    <h4>Todos los planes de {{user.username}}</h4>
+                }
+            </article>
+            <hr>
+        </article>
+        <section class="lista">
+            @if (loadingPlans()) {
+            @for (item of [1,2,3]; track $index) {
+                <app-skeleton-plan />
+            }
+            } @else {
+            @for (plan of plans; track $index) {
+            <app-plan [sameuser]="sameuser()"  [plan]="plan" />
+            } @empty {
+            <div></div>
+            @if (sameuser()) {
+            <div class="messageContainer">
+                <p>Todavía no tienes ningun plan.</p>
+                <a href="publicar-plan" class="btn btn-basico">Publicar plan</a>
+            </div>
+            } @else {
+            <div class="messageContainer">
+                <p>Este usuario no ha publicado ningún plan.</p>
+            </div>
+            }
+            <div></div>
+            }
+            }
+        </section>
+        <section class="pag">
+            <app-pagination [itemsPerPage]="3" [totalItems]="totalPlans()" [currentPage]="currentPage()"
+                (pageChange)="onPageChange($event)">
+            </app-pagination>
+        </section>
+    </section>
+</section>
+<app-toast-notification />

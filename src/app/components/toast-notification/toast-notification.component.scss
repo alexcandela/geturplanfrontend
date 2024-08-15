@@ -1,0 +1,58 @@
+@import "../../../styles.scss";
+
+.toast-notification {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: $sombra;
+  transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+  
+  
+  i {
+    font-size: 19px;
+    @media (max-width: 1024px) {
+    font-size: 16px;
+    }
+  }
+
+  span {
+    font-family: $montserrat;
+    color: #fff;
+    font-weight: 500;
+    font-size: 18px;
+    @media (max-width: 1024px) {
+    font-size: 15px;
+    }
+  }
+}
+
+.toast-notification.error {
+  background-color: #bb0c00;
+  color: white;
+}
+
+.toast-notification.success {
+  background-color: #009705;
+  color: white;
+}
+
+.toast-notification.info {
+  background-color: $azul;
+  color: white;
+}
+
+.toast-notification.warning {
+  background-color: #c57600;
+  color: white;
+}
+
+.toast-notification.hide {
+  transform: translateY(100%);
+  opacity: 0;
+}

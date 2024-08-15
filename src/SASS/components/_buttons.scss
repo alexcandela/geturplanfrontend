@@ -1,0 +1,87 @@
+.btn {
+    font-family: $montserrat;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    // letter-spacing: -0.5px;
+    &-login {
+        padding: 2px 15px;
+        background-color: #fff;
+        border: solid 2px $azul;
+        font-size: 15px;
+        font-weight: 600;
+        color: #000;
+        transition: ease-in-out 0.2s;
+        &:hover {
+            background-color: #ececec;
+        }
+    }
+    &-iniciarsesion {
+        background-color: $azul;
+        border: none;
+        font-size: 17px;
+        font-weight: 600;
+        color: #fff;
+        transition: ease-in-out 0.2s;
+        padding: 10px 0;
+        &:hover {
+            background-color: $azulHover;
+        }
+    }
+    &-basico {
+        padding: 5px 10px;
+        color: #fff;
+        background-color: $azul;
+        font-weight: 600;
+        transition: ease-in-out 0.2s;
+        border: none;
+        &:hover {
+            background-color: $azulHover;
+        }
+    }
+    &-categoria {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        padding: 3px 5px;
+        font-weight: 600;
+        background-color: #fff;
+        border: solid 1px #000;
+        transition: ease-in-out 0.2s;
+        font-size: 15px;
+        &:hover {
+            background-color: #ececec;
+        }
+    }
+    &-resetfiltros {
+        background-color: red;
+        padding: 3px 0;
+        color: #fff;
+        font-weight: 600;
+        border: none;
+        box-shadow: $sombra;
+        font-size: 15px;
+    }
+}
+
+.btnmostrarmas {
+    border: none;
+    background-color: transparent;
+    font-size: 15px;
+    font-family: $montserrat;
+    cursor: pointer;
+    color: $azul;
+    font-weight: 600;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.selected {
+    background-color: $azul;
+    color: #fff;
+    &:hover {
+        background-color: $azulHover;
+    }
+}

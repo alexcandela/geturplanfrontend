@@ -1,0 +1,83 @@
+<section class="explorar">
+    <section class="explorar-filtros">
+        <article class="explorar-filtros-titulo">
+            <h2>Filtra tu busqueda</h2>
+        </article>
+        <section class="buscador">
+            <input type="text" [(ngModel)]="buscador" (keyup.enter)="filtrar()" placeholder="Buscar plan..."><i
+                (click)="filtrar()" class="fa-solid fa-magnifying-glass"></i>
+        </section>
+        <section class="filtro">
+            <div class="filtro-titulo">
+                <h5>Ordenar</h5>
+            </div>
+            <div class="filtro-contordenar">
+                <button class="btn btn-categoria" [ngClass]="{'selected': ordenarFecha()}" (click)="alternarOrdenar('fecha')" (click)="filtrar()"><span>Fecha</span><i
+                        class="fa-solid fa-arrow-up-wide-short"></i></button>
+                <button class="btn btn-categoria" [ngClass]="{'selected': ordenarPopular()}" (click)="alternarOrdenar('popular')" (click)="filtrar()"><span>Popularidad</span><i
+                        class="fa-solid fa-arrow-up-right-dots"></i></button>
+            </div>
+        </section>
+        <section class="filtro">
+            <div class="filtro-titulo">
+                <h5>Categorias</h5>
+            </div>
+            <div class="filtro-contcategoria">
+                <section class="categorias">
+                    @for (categoria of categorias | slice:0:cant(); track $index) {
+                    <div class="categoria">
+                        <input type="checkbox" name="categoria" [checked]="estaSeleccionada(categoria.name)"
+                            (change)="actualizarSeleccion(categoria.name, $event)"
+                            (change)="filtrar()"><span>{{categoria.name}}</span>
+                    </div>
+                    } @empty {
+                        <p>No se han encontrado planes.</p>
+                    }
+                </section>
+                <section class="mostrarMasContainer">
+                    <button class="btnmostrarmas" (click)="mostrarMas()">{{textButton()}}</button>
+                </section>
+            </div>
+        </section>
+        <section class="filtro">
+            <div class="filtro-titulo">
+                <h5>Ubicación</h5>
+            </div>
+            <div class="filtro-contubicacion">
+                <label for="provincia">Selecciona la provincia</label>
+                <select name="provincia" (change)="filtrar()" [(ngModel)]="provinciaSeleccionada">
+                    <option>Cualquiera</option>
+                    @for (prov of provincias; track $index) {
+                    <option>{{prov}}</option>
+                    }
+                </select>
+            </div>
+        </section>
+        <button class="btn btn-resetfiltros" (click)="filtrar()" (click)="limpiarFiltros()">Limpiar filtros</button>
+    </section>
+    <section class="explorar-planes">
+        <section class="listado">
+            @if (loading()) {
+            @for (let of [1, 2, 3, 4, 6, 5, 7, 8]; track $index) {
+            <app-skeleton-plan />
+            }
+            } @else {
+            @for (plan of plans; track $index) {
+            <app-plan [plan]="plan" />
+            } @empty {
+                <div></div>
+                <div class="noplansmessagecontainer">
+                    <p>No se han encontrado planes.</p>
+                    <i class="fa-solid fa-circle-question"></i>
+                </div>
+            }
+            }
+        </section>
+        <section class="pag">
+            <app-pagination [itemsPerPage]="8" [totalItems]="totalPlans()" [currentPage]="currentPage()"
+                (pageChange)="onPageChange($event)">
+            </app-pagination>
+        </section>
+    </section>
+</section>
+<app-toast-notification />

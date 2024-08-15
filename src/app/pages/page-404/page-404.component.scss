@@ -1,0 +1,17 @@
+@import "../../../styles.scss";
+.all404 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+    gap: 10px;
+    img {
+        width: 35%;
+    }
+    h2 {
+        font-size: 35px;
+        font-family: $montserrat;
+        letter-spacing: -1px;
+    }
+}

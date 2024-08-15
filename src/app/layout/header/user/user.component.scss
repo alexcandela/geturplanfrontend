@@ -1,0 +1,101 @@
+@import "../../../../styles.scss";
+
+.userComp {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 15px;
+  background-image: linear-gradient(to right, $azul, #0145da);
+  border-radius: 5px;
+  position: relative;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #0046d1; /* Cambia el color de fondo al pasar el ratón sobre el componente */
+  }
+
+  &-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: 25px;
+      border-radius: 50%;
+    }
+  }
+
+  &-name {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+
+    .nombreCompleto {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 3px;
+
+      span {
+        font-family: $montserrat;
+        font-size: 15px;
+        font-weight: 600;
+        color: #fff;
+        letter-spacing: -0.5px;
+      }
+    }
+
+    i {
+      color: #fff;
+    }
+  }
+}
+
+.dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+  z-index: 999;
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px 10px;
+      cursor: pointer;
+      gap: 5px;
+      border-radius: 5px;
+      a {
+        font-size: 14px;
+        font-family: $montserrat;
+        letter-spacing: -0.5px;
+        font-weight: 500;
+        text-decoration: none;
+        color: #000;
+      }
+      i {
+        color: $azul;
+      }
+      &:hover {
+        background-color: #dddddd;
+      }
+    }
+  }
+}
+
+.show {
+  display: block;
+}

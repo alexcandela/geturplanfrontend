@@ -1,0 +1,292 @@
+@import "../../../styles.scss";
+.allProfile {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 0.5fr auto 1fr;
+  gap: 25px;
+  // height: 100%;
+  max-height: 70vh;
+  box-sizing: border-box;
+  padding: 0 375px;
+  @media (max-width: 1024px) {
+    padding: 0 20px;
+  }
+  &-primerbloque {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    gap: 10px;
+    @media (max-width: 1024px) {
+      gap: 30px;
+    }
+    .banner {
+      display: flex;
+      width: 100%;
+      box-sizing: border-box;
+      width: 100%;
+      height: 180px;
+      position: relative;
+      z-index: 1;
+      border-radius: 20px;
+      box-shadow: $sombra;
+      object-fit: cover;
+      background: linear-gradient(45deg, #1e90ff, #00bfff);
+      @media (max-width: 1024px) {
+        height: 100px;
+      }
+    }
+    .userimg {
+      position: absolute;
+      z-index: 2;
+      left: 10%;
+      top: 10%;
+      img {
+        border: solid 10px $fondo;
+        background-color: #fff;
+        border-radius: 50%;
+        object-fit: cover;
+        width: 200px;
+        height: 200px;
+      }
+      @media (max-width: 1024px) {
+        left: 10%;
+        top: 10%;
+        img {
+          width: 100px;
+          height: 100px;
+          border: solid 5px $fondo;
+        }
+      }
+
+      .skeletonimg {
+        border: solid 10px $fondo;
+        background-color: #ebebeb;
+        border-radius: 50%;
+        width: 200px;
+        height: 200px;
+        position: relative;
+        overflow: hidden;
+        /* Animación */
+        background: linear-gradient(
+          90deg,
+          #d1d1d1 25%,
+          #e0e0e0 50%,
+          #d1d1d1 75%
+        );
+        background-size: 200% 100%;
+        animation: wave 1.5s infinite ease-in-out;
+      }
+
+      /* Animación de ola */
+      @keyframes wave {
+        0% {
+          background-position: 200% 0;
+        }
+        100% {
+          background-position: -200% 0;
+        }
+      }
+    }
+    .infouser {
+      display: grid;
+      grid-template-columns: 0.9fr 1fr 1fr;
+      @media (max-width: 1024px) {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .none {
+          display: none;
+        }
+      }
+      .name {
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        gap: 5px;
+        i {
+          font-size: 30px;
+          color: $azul;
+        }
+        h3 {
+          font-size: 28px;
+          font-family: $montserrat;
+          letter-spacing: -1px;
+          color: #000;
+          font-weight: 700;
+        }
+        @media (max-width: 1024px) {
+          i,
+          h3 {
+            font-size: 20px;
+          }
+        }
+      }
+
+      .redessociales {
+        display: flex;
+        justify-content: end;
+        align-items: center;
+        gap: 15px;
+        box-sizing: border-box;
+        padding: 0 10px;
+        @media (max-width: 1024px) {
+          flex-wrap: wrap;
+          gap: 10px;
+          .spantitle {
+            display: none;
+          }
+        }
+        
+        i {
+          font-size: 30px;
+          padding: 3px;
+          @media (max-width: 1024px) {
+            padding: 1px 0;
+            font-size: 25px; 
+          }
+          
+        }
+        .fav {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 5px;
+          span {
+            font-size: 15px;
+          }
+          i {
+            font-size: 15px;
+            padding: 0;            
+          }
+        }
+        .instagram-icon {
+          background: linear-gradient(
+            45deg,
+            #f09433,
+            #e6683c,
+            #dc2743,
+            #cc2366,
+            #bc1888
+          );
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          display: inline-block;
+        }
+        .facebook-icon {
+          background: linear-gradient(45deg, #3b5998, #8b9dc3);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          display: inline-block;
+        }
+        .tiktok-icon {
+          background: linear-gradient(45deg, #00f2ea, #ff0050, #000000);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          display: inline-block;
+        }
+      }
+    }
+  }
+  &-sobremi {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px 50px;
+    gap: 10px;
+    border: solid $azul;
+    border-radius: 5px;
+    @media (max-width: 1024px) {
+      padding: 10px 20px;
+    }
+    .username {
+      display: flex;
+      span {
+        font-size: 25px;
+        font-family: $montserrat;
+        letter-spacing: -0.5px;
+        color: $azul;
+        font-weight: 700;
+        @media (max-width: 1024px) {
+          font-size: 23px;
+        }
+      }
+    }
+    .description {
+      display: flex;
+      p {
+        font-family: $montserrat;
+        font-size: 18px;
+        letter-spacing: -0.5px;
+        font-weight: 500;
+        @media (max-width: 1024px) {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+  &-planes {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    gap: 10px;
+    .titulo {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      &-name {
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        gap: 10px;
+        @media (max-width: 1024px) {
+          gap: 5px;
+        }
+        i {
+          font-size: 18px;
+          color: $azul;
+          @media (max-width: 1024px) {
+            font-size: 16px;
+          }
+        }
+        h4 {
+          font-size: 20px;
+          font-family: $montserrat;
+          letter-spacing: -0.5px;
+          @media (max-width: 1024px) {
+            font-size: 16px;
+          }
+        }
+      }
+      hr {
+        border: none;
+        border-top: 2px solid #d3d3d3;
+        margin: 0;
+      }
+    }
+    .lista {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      .messageContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 50%;
+        gap: 10px;
+        p {
+          font-family: $montserrat;
+          font-size: 20px;
+          color: #808080;
+          box-sizing: border-box;
+          text-align: center;
+        }
+      }
+    }
+    .pag {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
