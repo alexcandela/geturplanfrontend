@@ -1,5 +1,5 @@
 import { Component, OnInit, WritableSignal, signal } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Plan, PlanResponse, UserPlan } from '../../core/interfaces/plan';
 import { PlanService } from '../../core/services/plan.service';
 import { Title } from '@angular/platform-browser';
@@ -73,7 +73,8 @@ export class ShowplanComponent implements OnInit {
     private likeService: LikeService,
     private notificationService: NotificationService,
     private fb: FormBuilder,
-    private commentService: CommentService
+    private commentService: CommentService,
+    private router: Router
   ) {
     titulo.setTitle('Ver plan');
     this.commentForm = this.fb.group({
@@ -96,6 +97,7 @@ export class ShowplanComponent implements OnInit {
         },
         (error) => {
           console.log(error);
+          this.router.navigate(['/404']);
         }
       );
     }

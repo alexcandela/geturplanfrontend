@@ -8,10 +8,26 @@
     gap: 10px;
     img {
         width: 35%;
+        @media (max-width: 1024px) {
+            width: 90%;
+          }
     }
     h2 {
         font-size: 35px;
         font-family: $montserrat;
         letter-spacing: -1px;
+        text-align: center;
+        @media (max-width: 1024px) {
+            font-size: 25px;
+          }
+    }
+    a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        i {
+            font-size: 15px;
+        }
     }
 }
