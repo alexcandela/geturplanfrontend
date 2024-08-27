@@ -122,11 +122,22 @@
                             <div class="input-divicon">
                                 <img src="/assets/icons/password.png" alt="password-icon">
                             </div>
-                            <input [type]="inputtype()" name="password" id="register" placeholder="Contraseña segura"
-                                formControlName="password">
+                            <input [type]="inputtype()" name="password" id="register"
+                                placeholder="Contraseña segura" formControlName="password"
+                                (focus)="showPasswordFeedback()" (blur)="hidePasswordFeedback()">
                             <button type="button" (click)="showpassword()"><img [src]="showPasswordImg()"
                                     alt="eye-icon"></button>
                         </div>
+                        <div class="passbar" [ngClass]="getPassbarClass()">
+                        </div>
+                        @if (show()) {
+                        <div class="passFeedback">
+
+                            <p><i class="fa-solid fa-circle-info"></i> La contraseña debe tener al menos 8 caracteres,
+                                incluir mayúsculas, minúsculas, números y símbolos.</p>
+                        </div>
+                        }
+
                         @if (submitted() && registerForm.controls['password'].invalid) {
                         <div class="errorMessageContainer">
                             <i class="fa-solid fa-circle-exclamation"></i>
