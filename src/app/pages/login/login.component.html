@@ -81,7 +81,7 @@
                                 id="login" formControlName="rememberme">
                         </div>
                         <div class="opciones-forgot">
-                            <a href="http://">He olvidado mi contraseña</a>
+                            <a (click)="sendEmail()" >He olvidado mi contraseña</a>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-iniciarsesion">Iniciar Sesión</button>
@@ -105,3 +105,4 @@
         </section>
     </section>
 </section>
+<app-toast-notification />

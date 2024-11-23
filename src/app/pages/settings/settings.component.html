@@ -1,0 +1,46 @@
+<section class="settings">
+    <article class="settings-userinfo">
+        <article class="img">
+            <img [src]="user?.img" alt="">
+        </article>
+        <section class="info">
+            <h2>{{user?.username}}</h2>
+            <p>{{fraseSeleccionada()}}</p>
+        </section>
+    </article>
+    <section class="settings-all">
+        <section class="settings-all-list">
+            <ul>
+                <li (click)="seleccionarComponente('general')" [ngClass]="{'black': selectedComponent() === 'general'}"  class="grey">General</li>
+                <li (click)="seleccionarComponente('editar')" [ngClass]="{'black': selectedComponent() === 'editar'}" class="grey">Editar perfil</li>
+                <li (click)="seleccionarComponente('password')" [ngClass]="{'black': selectedComponent() === 'password'}" class="grey">Contraseña</li>
+                <li (click)="seleccionarComponente('redes')" [ngClass]="{'black': selectedComponent() === 'redes'}" class="grey">Redes Sociales</li>
+                <li (click)="seleccionarComponente('notificaciones')" [ngClass]="{'black': selectedComponent() === 'notificaciones'}" class="grey">Notificaciones</li>
+                <hr>
+                <li class="red">Borrar cuenta</li>
+            </ul>
+        </section>
+        <div class="settings-all-componentcontainer">
+            @switch (selectedComponent()) {
+                @case ('general') {
+                    <app-general [user]="user" (refresh)="refresh($event)"/>
+                }
+                @case ('editar') {
+                    <app-editar-perfil />
+                }
+                @case ('password') {
+                    <app-password />
+                }
+                @case ('redes') {
+                    <app-notificaciones />
+                }
+                @case ('notificaciones') {
+                    <app-redes-sociales />
+                }
+                @default {
+                    <app-general />
+                }
+              }
+        </div>
+    </section>
+</section>

@@ -1,0 +1,114 @@
+@import "../../../styles.scss";
+
+.settings {
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 50px 400px;
+  gap: 50px;
+  @media (max-width: 1024px) {
+    padding: 20px;
+    gap: 15px;
+  }
+  &-userinfo {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 20px;
+    .img {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        @media (max-width: 1024px) {
+          width: 75px;
+          height: 75px;
+        }
+      }
+    }
+    .info {
+      display: flex;
+      flex-direction: column;
+      justify-content: end;
+      align-items: start;
+      padding: 10px 0;
+      h2 {
+        font-size: 30px;
+        font-family: $montserrat;
+        letter-spacing: -0.5px;
+        font-weight: 600;
+        @media (max-width: 1024px) {
+          font-size: 22px;
+        }
+        
+      }
+      p {
+        font-size: 16px;
+        font-family: $montserrat;
+        letter-spacing: -0.5px;
+        color: #6b6b6b;
+        @media (max-width: 1024px) {
+          font-size: 13px;
+        }
+      }
+    }
+  }
+  &-all {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    gap: 10px;
+    @media (max-width: 1024px) {
+      grid-template-columns: auto, 1fr;
+      gap: 1px;
+    }
+    &-list {
+      display: flex;
+      justify-content: start;
+      align-items: start;
+      ul {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        list-style-type: none;
+        width: 100%;
+        @media (max-width: 1024px) {
+          
+        }
+        li {
+          font-family: $montserrat;
+          font-size: 16px;
+          cursor: pointer;
+          transition: ease-in-out 0.3s;
+          @media (max-width: 1024px) {
+            font-size: 10px;
+          }
+          &:hover {
+            color: #000000;
+          }
+        }
+        hr {
+          border: none; /* Elimina cualquier borde predeterminado */
+          border-top: 1px solid #d3d3d3;
+        }
+      }
+    }
+    &-componentcontainer {
+      
+    }
+  }
+}
+.grey {
+  color: #4d4d4d;
+  font-weight: 500;
+}
+.red {
+  color: red;
+  font-weight: 500;
+}
+.black {
+  color: #000000;
+  font-weight: 600;
+}

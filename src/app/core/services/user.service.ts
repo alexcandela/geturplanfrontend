@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User, UserPlansResponse, UserResponse } from '../interfaces/user';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { AllPlansResponse } from '../interfaces/plan';
 import { environment } from '../environments/environment';
 @Injectable({
@@ -38,5 +38,23 @@ export class UserService {
       headers,
       params,
     });
+  }
+  sendEmailResetPassword = (token: string | null) => {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<any>(`${this.apiUrl}/reset-password`, {
+      headers,
+    });
+  };
+
+  private userSubject = new BehaviorSubject<User | null>(null);
+  user$ = this.userSubject.asObservable();
+
+  setUser(user: User) {
+    this.userSubject.next(user);
+    localStorage.setItem('user', JSON.stringify(user));
+  }
+  getUserFromLocalStorage(): User | null {
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user) : null;
   }
 }

@@ -1,0 +1,160 @@
+@import "../../../../styles.scss";
+.editarContainer {
+  display: grid;
+  grid-template-columns: 1fr;
+  @media (max-width: 1024px) {
+    padding: 0 10px;
+  }
+  &-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px 10px;
+    &-section1 {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      height: 100%;
+      gap: 5px;
+      @media (max-width: 1024px) {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+      .editarFoto {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        // padding: 1rem;
+        max-width: 300px;
+        margin: 0 auto;
+        position: relative;
+
+        .skeletonimg {
+          width: 120px;
+          height: 120px;
+          border-radius: 50%;
+          background: linear-gradient(
+            90deg,
+            #e0e0e0 25%,
+            #f2f2f2 50%,
+            #e0e0e0 75%
+          );
+          background-size: 200% 100%;
+          animation: skeleton-loading 1.5s infinite;
+        }
+
+        img {
+          width: 120px;
+          height: 120px;
+          border-radius: 50%;
+          object-fit: cover;
+          @media (max-width: 1024px) {
+            grid-template-columns: 1fr;
+          }
+        }
+
+        .uploadcont {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          //   gap: 0.5rem;
+
+          .custom-file-upload {
+            position: relative;
+            display: inline-block;
+
+            input[type="file"] {
+              display: none;
+            }
+
+            label {
+              text-align: center;
+              font-family: $montserrat;
+              display: inline-block;
+
+              padding: 5px 10px;
+              color: #ffffff;
+              background-color: #007bff;
+              border-radius: 5px;
+              font-size: 15px;
+              cursor: pointer;
+              transition: background-color 0.3s ease;
+              @media (max-width: 1024px) {
+               font-size: 12px;
+              }
+
+              &:hover {
+                background-color: #0056b3;
+              }
+            }
+          }
+
+          #file-name {
+            font-size: 0.8rem;
+            color: #666;
+          }
+        }
+
+        .btneliminar {
+          position: absolute;
+          top: 0;
+          right: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: #fff;
+          border: none;
+          border-radius: 50%;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+          padding: 5px;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+          img {
+            width: 25px;
+            height: 25px;
+          }
+          &:hover {
+            background-color: #b02a37;
+          }
+        }
+      }
+
+      /* Animación del esqueleto */
+      @keyframes skeleton-loading {
+        0% {
+          background-position: 200% 0;
+        }
+        100% {
+          background-position: -200% 0;
+        }
+      }
+
+      .editarDesc {
+        display: grid;
+        grid-template-columns: 1fr;
+        // @media (max-width: 1024px) {
+        //   display: flex;
+        //   justify-content: center;
+        //   align-items: center;
+        //   width: 100%;
+        //  }
+        textarea {
+            padding: 10px;
+            font-family: $montserrat;
+            @media (max-width: 1024px) {
+              font-size: 12px;
+             }
+        }
+      }
+    }
+    &-guardar {
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      input {
+        @media (max-width: 1024px) {
+          font-size: 12px;
+         }
+      }
+    }
+  }
+}

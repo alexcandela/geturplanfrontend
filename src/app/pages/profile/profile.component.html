@@ -17,9 +17,9 @@
             </article>
             <article class="redessociales">
                 @if (sameuser()) {
-                <a href="favoritos" class="btn btn-basico fav"><span class="spantitle">Favoritos</span><i
+                <a routerLink="/favoritos" class="btn btn-basico fav"><span class="spantitle">Favoritos</span><i
                         class="fa-solid fa-heart"></i></a>
-                <a href="editar-perfil" class="btn btn-basico fav"><span class="spantitle">Editar</span><i
+                <a routerLink="/settings" class="btn btn-basico fav"><span class="spantitle">Editar</span><i
                         class="fa-solid fa-pen"></i></a>
                 }
                 @if (user.instagram) {

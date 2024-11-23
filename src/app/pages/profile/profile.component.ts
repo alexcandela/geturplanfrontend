@@ -66,6 +66,7 @@ export class ProfileComponent implements OnInit {
             this.sameuser.set(response.sameuser);
             this.defDescription();
             this.loading.set(false);
+            this.userService.setUser(response.user);
           }
         },
         (error) => {
@@ -82,7 +83,6 @@ export class ProfileComponent implements OnInit {
       this.userService.getUserPlans(this.token, page, username).subscribe(
         (response: UserPlansResponse) => {
           if (response.status === 'success') { 
-            console.log(response);
             this.plans = response.plans.data;
             this.totalPlans.set(response.plans.total);
             this.loadingPlans.set(false);

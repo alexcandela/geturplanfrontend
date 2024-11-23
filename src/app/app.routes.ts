@@ -10,13 +10,14 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { EditarPerfilComponent } from './pages/editar-perfil/editar-perfil.component';
 import { FavoritosComponent } from './pages/favoritos/favoritos.component';
 import { EditarPlanComponent } from './pages/editar-plan/editar-plan.component';
-import { NgModule } from '@angular/core';
+import { SettingsComponent } from './pages/settings/settings.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'explorar', component: ExplorarComponent },
+    { path: 'settings', component: SettingsComponent },
     { path: 'showplan/:id', component: ShowplanComponent }, 
     { path: 'publicar-plan', component: PublicarPlanComponent },
     { path: 'editar-plan', component: EditarPlanComponent },

@@ -1,0 +1,45 @@
+<form class="form" method="post" [formGroup]="editGeneral" (ngSubmit)="onSubmit(editGeneral.value)">
+    <section class="form-input">
+        <label for="username">Username</label>
+        <input type="text" name="username" formControlName="username">
+        <p>URL de tu perfil: https://geturplan.com/perfil/<span>{{user?.username}}</span></p>
+        @if (submitted() && editGeneral.controls['username'].invalid) {
+        <div class="errorMessageContainer">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            @if (editGeneral.controls['username'].errors?.['required']) {
+            <small class="errorMessage">La el nombre de usuario no puede estar vacío.</small>
+            }
+        </div>
+        }
+        @if (conflictUsername()) {
+            <div class="errorMessageContainer">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <small class="errorMessage">El nombre de usuario ya está en uso.</small>
+            </div>
+           }
+    </section>
+    <section class="form-input">
+        <label for="email">Email</label>
+        <input type="email" name="email" formControlName="email">
+        @if (submitted() && editGeneral.controls['email'].invalid) {
+        <div class="errorMessageContainer">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            @if (editGeneral.controls['email'].errors?.['required']) {
+            <small class="errorMessage">El email no puede estar vacío.</small>
+            } @else if (editGeneral.controls['email'].errors?.['email']) {
+            <small class="errorMessage">El email no es válido.</small>
+            }
+        </div>
+        }
+       @if (conflictEmail()) {
+        <div class="errorMessageContainer">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <small class="errorMessage">El email ya está en uso.</small>
+        </div>
+       }
+    </section>
+    <section class="form-guardar">
+        <input type="submit" name="guardar" value="Guardar cambios" class="savechanges">
+    </section>
+</form>
+<app-toast-notification />

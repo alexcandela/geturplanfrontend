@@ -32,6 +32,8 @@ export class HeaderComponent {
         if (this.authService.isTokenValid(this.token)) {
           this.userData = this.authService.decodeToken(this.token);
           this.loggedUser.set(true);
+          console.log(this.userData);
+          
         } else {
           this.clearToken();
         }

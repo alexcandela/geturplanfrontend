@@ -1,5 +1,6 @@
 <section class="allEditar">
-    <form [formGroup]="editProfileForm" (ngSubmit)="onSubmit(editProfileForm.value)" enctype="multipart/form-data" method="post" class="allEditar-form">
+    <form [formGroup]="editProfileForm" (ngSubmit)="onSubmit(editProfileForm.value)" enctype="multipart/form-data"
+        method="post" class="allEditar-form">
         <section class="allEditar-form-fotodesc">
             <article class="inpimg">
                 @if (loading()) {
@@ -18,7 +19,8 @@
             </article>
             <article class="input">
                 <label for="sobremi">Agrega o cambia tu descripción</label>
-                <textarea name="sobremi" placeholder="Escribe una breve descripción sobre ti..." formControlName="description" maxlength="250"></textarea>
+                <textarea name="sobremi" placeholder="Escribe una breve descripción sobre ti..."
+                    formControlName="description" maxlength="250"></textarea>
             </article>
         </section>
         <section class="allEditar-form-redessociales">
@@ -46,9 +48,51 @@
                 <h3>Configuración avanzada</h3>
                 <i class="fa-solid fa-gear"></i>
             </article>
-            <section class="opciones">
-
+            <section class="opcionescuenta">
+                <div class="opcionescuenta-titulo">
+                    <h3>Cuenta</h3>
+                    <i class="fa-solid fa-user-gear"></i>
+                </div>
+                <div class="opcionescuenta-opciones">
+                    <div class="opcionescuenta-opciones-option">
+                        <i class="fa-solid fa-key"></i>
+                        <a (click)="sendEmail()">Cambiar contraseña</a>
+                    </div>
+                    <div class="opcionescuenta-opciones-option">
+                        <i class="fa-solid fa-at"></i>
+                        <a>Cambiar correo electrónico</a>
+                    </div>
+                </div>
             </section>
+            <section class="opcionescuenta">
+                <div class="opcionescuenta-titulo">
+                    <h3>Notificaciones y acceso</h3>
+                    <i class="fa-solid fa-user-gear"></i>
+                </div>
+                <div class="opcionescuenta-opciones">
+                    <div class="opcionescuenta-opciones-option">
+                        <div class="list">
+                            <div class="seleccion">
+                                <p>Recibir notificaciones de nuevos planes</p> <input type="checkbox" name="" id="">
+                            </div>
+                            <div class="seleccion">
+                                <p>Recibir notificaciones de tus planes</p> <input type="checkbox" name="" id="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="opcionescuenta-opciones-option">
+                        <div class="list">
+                            <div class="seleccion">
+                                <p>Perfil privado</p> <input type="checkbox" name="" id="">
+                            </div>
+                            <div class="seleccion">
+                                <p>Recibir notificaciones de tus planes</p> <input type="checkbox" name="" id="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
         </section>
         <section class="allEditar-form-guardar">
             <input type="submit" name="guardar" value="Guardar" class="btn btn-basico">

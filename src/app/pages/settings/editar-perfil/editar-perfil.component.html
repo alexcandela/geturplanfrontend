@@ -1,0 +1,31 @@
+<section class="editarContainer">
+    <form [formGroup]="editProfileForm" (ngSubmit)="onSubmit(editProfileForm.value)" enctype="multipart/form-data"
+        method="post" class="editarContainer-form">
+        <div class="editarContainer-form-section1">
+            <div class="editarFoto">
+                @if (loading()) {
+                <div class="skeletonimg"></div>
+                } @else {
+                <img [src]="user.img" alt="user-img">
+                }
+                <div class="uploadcont">
+                    <div class="custom-file-upload">
+                        <input type="file" id="file-input" (change)="onFileChange($event)" />
+                        <label for="file-input" class="btn btn-basico">Cambiar imagen</label>
+                    </div>
+                    <p id="file-name"></p>
+                </div>
+                <button class="btneliminar" type="button" (click)="deleteImg()"><img src="assets/icons/papelera.svg"
+                        alt="delete-icon"></button>
+            </div>
+            <div class="editarDesc">
+                <textarea name="sobremi" placeholder="Escribe una breve descripción sobre ti..."
+                    formControlName="description" maxlength="250"></textarea>
+            </div>
+        </div>
+        <section class="editarContainer-form-guardar">
+            <input type="submit" name="guardar" value="Guardar cambios" class="savechanges">
+        </section>
+    </form>
+</section>
+<app-toast-notification />

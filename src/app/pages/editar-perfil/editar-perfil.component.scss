@@ -236,10 +236,10 @@
           font-weight: 700;
           letter-spacing: -0.5px;
           color: #464646;
-          
         }
         @media (max-width: 1024px) {
-          h3,i {
+          h3,
+          i {
             font-size: 20px;
           }
         }
@@ -259,6 +259,7 @@
     &-configuracion {
       display: flex;
       flex-direction: column;
+      gap: 10px;
       .titulo {
         display: flex;
         justify-content: start;
@@ -276,8 +277,73 @@
           color: #464646;
         }
         @media (max-width: 1024px) {
-          h3,i {
+          h3,
+          i {
             font-size: 20px;
+          }
+        }
+      }
+      .opcionescuenta {
+        display: flex;
+        flex-direction: column;
+        padding: 10px 0;
+        gap: 10px;
+        &-titulo {
+          display: flex;
+          justify-content: start;
+          align-items: center;
+          gap: 5px;
+          i {
+            font-size: 19px;
+            color: $azul;
+          }
+          h3 {
+            font-family: $montserrat;
+            font-size: 20px;
+            color: #464646;
+          }
+        }
+        &-opciones {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          // padding: 10px;
+          &-option {
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            gap: 5px;
+            
+            a {
+              font-size: 16px;
+              font-family: $montserrat;
+              font-weight: 500;
+              cursor: pointer;
+              &:hover {
+                text-decoration: underline;
+              }
+            }
+            i {
+              font-size: 16px;
+              color: $azul;
+            }
+            .list {
+              display: flex;
+              justify-content: center;
+              align-items: start;
+              flex-direction: column;
+              gap: 10px;
+              .seleccion {
+                display: flex;
+                justify-content: start;
+                align-items: center;
+                gap: 5px;
+                p {
+                  font-family: $montserrat;
+                  font-size: 16px;
+                }
+              }
+            }
+            
           }
         }
       }

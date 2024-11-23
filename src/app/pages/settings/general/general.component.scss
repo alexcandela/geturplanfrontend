@@ -1,0 +1,57 @@
+@import "../../../../styles.scss";
+.form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding: 0 50px;
+    @media (max-width: 1024px) {
+        padding: 0 10px;
+      }
+    &-input {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 5px;
+        label {
+            font-size: 16px;
+            font-weight: 500;
+            @media (max-width: 1024px) {
+                font-size: 13px;
+              }
+        }
+        input {
+            padding: 7px 10px;
+            font-size: 15px;
+            font-weight: 500;
+            letter-spacing: -0.5px;
+            @media (max-width: 1024px) {
+                font-size: 12px;
+              }
+        }
+        p {
+            font-size: 15px;
+            font-family: $montserrat;
+            letter-spacing: -0.5px;
+            font-weight: 500;
+            color: #6b6b6b;
+            @media (max-width: 1024px) {
+                font-size: 12px;
+              }
+            span {
+                font-weight: 600;
+            }
+            
+        }
+    }
+    &-guardar {
+        display: flex;
+        justify-content: end;
+        align-items: center;
+        input {
+            @media (max-width: 1024px) {
+                font-size: 12px;
+              }
+        }
+    }
+    
+}

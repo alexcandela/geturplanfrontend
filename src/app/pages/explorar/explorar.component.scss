@@ -47,6 +47,9 @@
         font-size: 16px;
         font-weight: 500;
         background-color: transparent;
+        &:hover, &:focus {
+          box-shadow: none;
+        }
       }
       i {
         font-size: 17px;

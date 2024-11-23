@@ -1,9 +1,9 @@
 import { Component, OnInit, WritableSignal, signal } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserService } from '../../core/services/user.service';
-import { AuthService } from '../../core/services/authservice.service';
-import { User, UserData, UserResponse } from '../../core/interfaces/user';
+import { UserService } from '../../../core/services/user.service';
+import { AuthService } from '../../../core/services/authservice.service';
+import { UserEdit, UserData, UserResponse } from '../../../core/interfaces/user';
 import {
   FormsModule,
   FormGroup,
@@ -11,11 +11,11 @@ import {
   FormBuilder,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { EditProfileForm } from '../../core/interfaces/edit-profile-form';
-import { EditProfileService } from '../../core/services/edit-profile.service';
-import { ToastComponent } from '../../components/toast-notification/toast-notification.component';
-import { NotificationService } from '../../core/services/notification.service';
-import { imageValidator } from '../../core/validadores';
+import { EditProfileForm } from '../../../core/interfaces/edit-profile-form';
+import { EditProfileService } from '../../../core/services/edit-profile.service';
+import { ToastComponent } from '../../../components/toast-notification/toast-notification.component';
+import { NotificationService } from '../../../core/services/notification.service';
+import { imageValidator } from '../../../core/validadores';
 @Component({
   selector: 'app-editar-perfil',
   standalone: true,
@@ -25,14 +25,9 @@ import { imageValidator } from '../../core/validadores';
 })
 export class EditarPerfilComponent implements OnInit {
   editProfileForm: FormGroup;
-  user: User = {
-    username: '',
-    email: '',
+  user: UserEdit = {
     description: '',
     img: '',
-    instagram: '',
-    facebook: '',
-    tiktok: '',
   };
   token: string | null = null;
   userData: UserData | null = null;
@@ -53,9 +48,6 @@ export class EditarPerfilComponent implements OnInit {
     this.editProfileForm = this.fb.group({
       img: [this.user.img],
       description: [this.user.description],
-      instagram: [this.user.instagram],
-      facebook: [this.user.facebook],
-      tiktok: [this.user.tiktok],
     });
   }
 
@@ -73,9 +65,6 @@ export class EditarPerfilComponent implements OnInit {
             this.user = response.user;
             this.editProfileForm.patchValue({
               description: this.user.description,
-              instagram: this.user.instagram || null,
-              facebook: this.user.facebook || null,
-              tiktok: this.user.tiktok || null,
             });
             this.loading.set(false);
           }
@@ -174,8 +163,7 @@ export class EditarPerfilComponent implements OnInit {
     if (typeof window !== 'undefined' && window.localStorage) {
       const token = localStorage.getItem('jwt');
       if (token) {
-        const formData = this.generateFormData();
-
+        const formData = this.generateFormData();        
         this.editProfileService.editProfile(token, formData).subscribe(
           (response: any) => {
             if (response.status === 'success') {

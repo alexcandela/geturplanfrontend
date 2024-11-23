@@ -10,6 +10,11 @@ export interface User {
   tiktok: string | null;
 }
 
+export interface UserEdit {
+  description: string;
+  img: string | null;
+}
+
 export interface UserData {
   id: number;
   username: string;

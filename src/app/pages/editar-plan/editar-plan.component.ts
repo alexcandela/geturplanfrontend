@@ -304,6 +304,6 @@ export class EditarPlanComponent implements OnInit {
       }
     });
     this.checkLogged();
-    this.linkPerfil = `perfil/${this.plan?.user.username}`;
+    this.linkPerfil = `/perfil/${this.plan?.user.username}`;
   }
 }
