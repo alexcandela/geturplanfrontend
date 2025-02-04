@@ -157,6 +157,13 @@
           justify-content: center;
           align-items: center;
           gap: 5px;
+          background-color: transparent;
+          border: solid $azul 1px;
+          color: $azul;
+          padding: 5px;
+          &:hover {
+            background-color: #e7e7e7;
+          }
           span {
             font-size: 15px;
           }
