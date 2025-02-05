@@ -2,13 +2,23 @@
     <section class="planDetalle-fotoComments">
         <section class="fotos">
             <section class="fotos-seleccionar">
-                <img [src]="plan.img" (click)="selectMainImage(plan.img)" alt="plan-img">
+                @if (showSkeleton()) {
+                @for (let of [1, 2, 3, 4]; track $index) {
+                <div class="skeleton skeleton-main"></div>
+                }
+                } @else {
+                <img [src]="plan.img" (click)="selectMainImage(plan.img)" alt="plan-img" class="main-img">
                 @for (img of plan.secondary_images; track $index) {
-                    <img [src]="img.img" (click)="selectMainImage(img.img)" alt="img">
+                <img [src]="img.img" (click)="selectMainImage(img.img)" alt="img">
+                }
                 }
             </section>
             <section class="fotos-principal">
+                @if (showSkeleton()) {
+                <div class="skeleton skeleton-main"></div>
+                } @else {
                 <img [src]="selectedImg()" alt="plan-img">
+                }
             </section>
         </section>
         <section class="comentarios">
@@ -16,12 +26,13 @@
             </div>
             <div class="comments">
                 @if (logged()) {
-                    <form class="comentar" [formGroup]="commentForm" (ngSubmit)="submitComment(commentForm.value)">
-                        <textarea name="comentario" placeholder="Escribe tu comentario..." formControlName="comment" maxlength="200"></textarea>
-                        <article>
-                            <input type="submit" name="comentar" class="btn btn-basico" value="Publicar comentario">
-                        </article>
-                    </form>
+                <form class="comentar" [formGroup]="commentForm" (ngSubmit)="submitComment(commentForm.value)">
+                    <textarea name="comentario" placeholder="Escribe tu comentario..." formControlName="comment"
+                        maxlength="200"></textarea>
+                    <article>
+                        <input type="submit" name="comentar" class="btn btn-basico" value="Publicar comentario">
+                    </article>
+                </form>
                 }
                 <section class="lista">
                     <div class="lista-scroll">
@@ -29,26 +40,44 @@
                         <app-comment [comment]="comment" />
                         }
                         @empty {
-                            <p>Este plan no tiene comentarios.</p>
+                        <p>Este plan no tiene comentarios.</p>
                         }
                     </div>
                 </section>
             </div>
         </section>
     </section>
+
     <section class="planDetalle-info">
         <article class="planDetalle-info-titulo">
+            @if (showSkeleton()) {
+            <span class="skeletonPlanName skeleton"></span>
+            } @else {
             <h2>{{plan.name}}</h2>
+            }
         </article>
         <section class="planDetalle-info-location">
+            @if (showSkeleton()) {
+            <span class="skeletonText skeleton"></span>
+            } @else {
             <article><i class="fa-solid fa-location-dot"></i><span>{{plan.city}}, {{plan.province}}</span></article>
+            }
         </section>
         <section class="planDetalle-info-descripcion">
-            <article class="username"><img
-                    [src]="plan.user.img"
-                    alt="user-img"><a [routerLink]="['/perfil', plan.user.username]">{{plan.user.username}}</a></article>
+            @if (showSkeleton()) {
+            <article class="username"><span class="skeletonUsername skeleton"></span><span
+                    class="skeletonText skeleton blue"></span></article>
+            } @else {
+            <article class="username"><img [src]="plan.user.img" alt="user-img"><a
+                    [routerLink]="['/perfil', plan.user.username]">{{plan.user.username}}</a></article>
+            }
+
             <article class="desc">
-                <p [innerHTML]="plan.description | newlineToBr"></p>
+                @if (showSkeleton()) {
+                <span class="skeletonDesc skeleton"></span>
+                } @else {
+                    <p [innerHTML]="plan.description | newlineToBr"></p>
+                }
             </article>
             <article class="fechalikes">
                 <section class="likes">
@@ -69,5 +98,6 @@
             <a [href]="plan.url" target="_blank">Click para ver ubicación exacta en Google Maps.</a>
         </section>
     </section>
+
 </section>
 <app-toast-notification />

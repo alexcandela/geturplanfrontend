@@ -58,6 +58,7 @@
           }
         }
       }
+
       &-principal {
         display: flex;
         justify-content: center;
@@ -322,4 +323,71 @@
       }
     }
   }
+}
+
+.skeleton {
+  background: #ddd;
+  animation: pulse 1.5s infinite;
+}
+
+.skeleton-main {
+  width: 100%;
+  height: 500px;
+  border-radius: 10px;
+  @media (max-width: 1024px) {
+    max-height: 250px;
+  }
+}
+
+.skeleton-secondary {
+  width: 100%;
+  height: 150px;
+  border-radius: 10px;
+  @media (max-width: 1024px) {
+    height: 25px;
+    width: 80px;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.planDetalleSkeleton {
+  height: 100%;
+}
+.skeletonPlanName {
+  height: 50px;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.skeletonText {
+  height: 20px;
+  width: 40%;
+  border-radius: 5px;
+}
+
+.skeletonUsername {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.skeletonDesc {
+  height: 100px;
+  width: 100%;
+  border-radius: 5px;
+}
+
+.blue {
+  background-color: rgba($azul, 0.5);
 }

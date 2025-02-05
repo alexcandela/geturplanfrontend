@@ -10,6 +10,7 @@ import { AuthService } from '../../core/services/authservice.service';
 import { LikeService } from '../../core/services/like.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { ToastComponent } from '../../components/toast-notification/toast-notification.component';
+
 import {
   FormBuilder,
   FormGroup,
@@ -65,6 +66,8 @@ export class ShowplanComponent implements OnInit {
   commentForm: FormGroup;
   selectedImg: WritableSignal<string> = signal('');
 
+  showSkeleton = signal(true);
+
   constructor(
     private route: ActivatedRoute,
     private planService: PlanService,
@@ -93,6 +96,7 @@ export class ShowplanComponent implements OnInit {
             this.likeImgBtn.set(
               this.plan.has_liked ? this.likeImg : this.emptyLike
             );
+            this.showSkeleton.set(false);
           }
         },
         (error) => {

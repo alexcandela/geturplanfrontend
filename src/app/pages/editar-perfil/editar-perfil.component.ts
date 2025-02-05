@@ -16,6 +16,7 @@ import { EditProfileService } from '../../core/services/edit-profile.service';
 import { ToastComponent } from '../../components/toast-notification/toast-notification.component';
 import { NotificationService } from '../../core/services/notification.service';
 import { imageValidator } from '../../core/validadores';
+import { backendurl } from '../../core/environments/backendurl';
 @Component({
   selector: 'app-editar-perfil',
   standalone: true,
@@ -34,6 +35,9 @@ export class EditarPerfilComponent implements OnInit {
     facebook: '',
     tiktok: '',
   };
+
+  defaultImg: string = `${backendurl.apiUrl}/storage/default/default_user.png`;
+
   token: string | null = null;
   userData: UserData | null = null;
   loading = signal(true);
@@ -119,9 +123,9 @@ export class EditarPerfilComponent implements OnInit {
 
   deleteImg = () => {
     if (
-      this.user.img !== 'http://localhost:8000/storage/default/default_user.png'
+      this.user.img !== this.defaultImg
     ) {
-      this.user.img = 'http://localhost:8000/storage/default/default_user.png';
+      this.user.img = this.defaultImg;
     } else {
       this.notificationService.showNotification(
         'No se puede borrar la imagen.',
