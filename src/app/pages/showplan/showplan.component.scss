@@ -366,16 +366,17 @@
 .skeletonPlanName {
   height: 50px;
   width: 100%;
-  border-radius: 10px;
+  border-radius: 5px;
+  box-sizing: border-box;
 }
 
 .skeletonText {
   height: 20px;
-  width: 40%;
+  width: 50%;
   border-radius: 5px;
 }
 
-.skeletonUsername {
+.skeletonUserImg{
   width: 30px;
   height: 30px;
   object-fit: cover;
@@ -386,6 +387,7 @@
   height: 100px;
   width: 100%;
   border-radius: 5px;
+  box-sizing: border-box;
 }
 
 .blue {
