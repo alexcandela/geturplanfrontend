@@ -1,6 +1,6 @@
 <section class="comment">
     <article class="comment-username">
-        <img [src]="comment.user.img" alt="user-img"><a [routerLink]="['/perfil', comment.user.username]">{{comment.user.username}}</a>
+        <img [src]="comment.user.img" alt="user-img"><a rel="noopener noreferrer" [routerLink]="['/perfil', comment.user.username]">{{comment.user.username}}</a>
     </article>
     <article class="comment-text">
         <p>{{comment.comment}}</p>

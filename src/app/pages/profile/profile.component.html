@@ -17,21 +17,21 @@
             </article>
             <article class="redessociales">
                 @if (sameuser()) {
-                <a routerLink="/favoritos" class="btn btn-basico fav"><span class="spantitle">Favoritos</span><i
+                <a rel="noopener noreferrer" routerLink="/favoritos" class="btn btn-basico fav"><span class="spantitle">Favoritos</span><i
                         class="fa-solid fa-heart"></i></a>
-                <a routerLink="/settings" class="btn btn-basico fav"><span class="spantitle">Editar</span><i
+                <a rel="noopener noreferrer" routerLink="/settings" class="btn btn-basico fav"><span class="spantitle">Editar</span><i
                         class="fa-solid fa-pen"></i></a>
                 }
                 @if (user.instagram) {
-                <a href="{{user.instagram}}" target="_blank"><i class="fa-brands fa-instagram instagram-icon"></i></a>
+                <a rel="noopener noreferrer" href="{{user.instagram}}" target="_blank"><i class="fa-brands fa-instagram instagram-icon"></i></a>
                 }
 
                 @if (user.facebook) {
-                <a href="{{user.facebook}}" target="_blank"><i class="fa-brands fa-facebook facebook-icon"></i></a>
+                <a rel="noopener noreferrer" href="{{user.facebook}}" target="_blank"><i class="fa-brands fa-facebook facebook-icon"></i></a>
                 }
 
                 @if (user.tiktok) {
-                <a href="{{user.tiktok}}" target="_blank"><i class="fa-brands fa-tiktok tiktok-icon"></i></a>
+                <a rel="noopener noreferrer" href="{{user.tiktok}}" target="_blank"><i class="fa-brands fa-tiktok tiktok-icon"></i></a>
                 }
 
             </article>
@@ -70,7 +70,7 @@
             @if (sameuser()) {
             <div class="messageContainer">
                 <p>Todavía no tienes ningun plan.</p>
-                <a href="publicar-plan" class="btn btn-basico">Publicar plan</a>
+                <a rel="noopener noreferrer" href="publicar-plan" class="btn btn-basico">Publicar plan</a>
             </div>
             } @else {
             <div class="messageContainer">

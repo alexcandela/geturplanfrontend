@@ -1,27 +1,27 @@
 @if (totalPages > 1) {<nav>
   <ul class="pagination">
       <li class="page-item" [class.disabled]="currentPage === 1">
-          <a class="page-link" (click)="onPageChange(1)">
+          <a rel="noopener noreferrer" class="page-link" (click)="onPageChange(1)">
               <i class="fa-solid fa-backward"></i>
           </a>
       </li>
     <li class="page-item" [class.disabled]="currentPage === 1">
-      <a class="page-link" (click)="onPageChange(currentPage - 1)">
+      <a rel="noopener noreferrer" class="page-link" (click)="onPageChange(currentPage - 1)">
         <i class="fa-solid fa-circle-arrow-left"></i>
       </a>
     </li>
     @for (page of visiblePages; track $index) {
       <li class="page-item" [class.active]="page === currentPage">
-        <a class="page-link" (click)="onPageChange(page)">{{ page }}</a>
+        <a rel="noopener noreferrer" class="page-link" (click)="onPageChange(page)">{{ page }}</a>
       </li>
     }
     <li class="page-item" [class.disabled]="currentPage === totalPages">
-      <a class="page-link" (click)="onPageChange(currentPage + 1)">
+      <a rel="noopener noreferrer" class="page-link" (click)="onPageChange(currentPage + 1)">
         <i class="fa-solid fa-circle-arrow-right"></i>
       </a>
     </li>
     <li class="page-item" [class.disabled]="currentPage === totalPages">
-      <a class="page-link" (click)="onPageChange(totalPages)">
+      <a rel="noopener noreferrer" class="page-link" (click)="onPageChange(totalPages)">
           <i class="fa-solid fa-forward"></i>
       </a>
   </li>
