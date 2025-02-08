@@ -5,6 +5,7 @@ import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { routes } from './app.routes';
+import { ViewportScroller } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -19,13 +20,14 @@ export class AppComponent implements OnInit {
   // Array de rutas donde no se mostrará ni el header ni el footer.
   excludedRoutes = ['/login', '/register'];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private viewportScroller: ViewportScroller) {}
 
   ngOnInit() {
     this.router.events.pipe(
       filter((event: Event): event is NavigationEnd => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
       this.showHeaderFooter = !this.excludedRoutes.includes(event.urlAfterRedirects);
+      this.viewportScroller.scrollToPosition([0, 0]);
     });
   }
 }
