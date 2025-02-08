@@ -7,7 +7,7 @@
         <div class="errorMessageContainer">
             <i class="fa-solid fa-circle-exclamation"></i>
             @if (editGeneral.controls['username'].errors?.['required']) {
-            <small class="errorMessage">La el nombre de usuario no puede estar vacío.</small>
+            <small class="errorMessage">Este campo no puede estar vacío.</small>
             }
         </div>
         }
@@ -25,7 +25,7 @@
         <div class="errorMessageContainer">
             <i class="fa-solid fa-circle-exclamation"></i>
             @if (editGeneral.controls['email'].errors?.['required']) {
-            <small class="errorMessage">El email no puede estar vacío.</small>
+            <small class="errorMessage">Este campo no puede estar vacío.</small>
             } @else if (editGeneral.controls['email'].errors?.['email']) {
             <small class="errorMessage">El email no es válido.</small>
             }
