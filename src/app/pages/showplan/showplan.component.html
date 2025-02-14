@@ -35,14 +35,14 @@
                 </form>
                 }
                 <section class="lista">
-                    <div class="lista-scroll">
-                        @for (comment of plan.comments; track $index) {
+                    <ul class="lista-scroll">
+                        @for (comment of plan.comments; track $index)  {
                         <app-comment [comment]="comment" />
                         }
                         @empty {
                         <p>Este plan no tiene comentarios.</p>
                         }
-                    </div>
+                    </ul>
                 </section>
             </div>
         </section>

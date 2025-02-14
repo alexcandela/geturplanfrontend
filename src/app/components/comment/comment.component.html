@@ -1,4 +1,4 @@
-<section class="comment">
+<li class="comment">
     <article class="comment-username">
         <img [src]="comment.user.img" alt="user-img"><a rel="noopener noreferrer" [routerLink]="['/perfil', comment.user.username]">{{comment.user.username}}</a>
     </article>
@@ -9,4 +9,5 @@
             <span>{{comment.created_at | dateFormat}}</span>
         </article>
     </article>
-</section>
+    <!-- <app-commentreply /> -->
+</li>

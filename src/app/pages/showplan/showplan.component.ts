@@ -1,4 +1,4 @@
-import { Component, OnInit, WritableSignal, signal } from '@angular/core';
+import { Component, OnInit, WritableSignal, signal, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Plan, PlanResponse, UserPlan } from '../../core/interfaces/plan';
 import { PlanService } from '../../core/services/plan.service';
@@ -10,6 +10,10 @@ import { AuthService } from '../../core/services/authservice.service';
 import { LikeService } from '../../core/services/like.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { ToastComponent } from '../../components/toast-notification/toast-notification.component';
+import { Comment } from '../../core/interfaces/plan';
+
+import { trigger, transition, style, animate } from '@angular/animations';
+
 
 import {
   FormBuilder,
@@ -28,12 +32,14 @@ import { CommentService } from '../../core/services/comment.service';
     CommentComponent,
     ToastComponent,
     ReactiveFormsModule,
-    RouterLink
+    RouterLink,
   ],
   templateUrl: './showplan.component.html',
-  styleUrl: './showplan.component.scss'
+  styleUrl: './showplan.component.scss',
 })
 export class ShowplanComponent implements OnInit {
+  @ViewChild('list', { static: false }) list!: ElementRef<HTMLUListElement>;
+  
   planId: number = 0;
   plan: Plan = {
     id: 0,
@@ -77,14 +83,14 @@ export class ShowplanComponent implements OnInit {
     private notificationService: NotificationService,
     private fb: FormBuilder,
     private commentService: CommentService,
-    private router: Router
+    private router: Router,
   ) {
     titulo.setTitle('Ver plan');
     this.commentForm = this.fb.group({
       comment: ['', Validators.required],
     });
   }
-
+ 
   getPlan = () => {
     if (typeof window !== 'undefined' && window.localStorage) {
       this.token = localStorage.getItem('jwt');
@@ -166,6 +172,11 @@ export class ShowplanComponent implements OnInit {
     this.selectedImg.set(img);
   }
 
+  addComment(newComment: Comment) {
+    this.plan.comments = [newComment, ...(this.plan.comments ?? [])]; // Fuerza actualización del DOM
+  }
+  
+
   submitComment = (data: { comment: string }) => {
     if (typeof window !== 'undefined' && window.localStorage) {
       this.token = localStorage.getItem('jwt');
@@ -176,7 +187,8 @@ export class ShowplanComponent implements OnInit {
             .subscribe(
               (response) => {
                 if (response.status === 'success') {
-                  this.plan.comments?.unshift(response.comment);
+                  // this.plan.comments?.unshift(response.comment);
+                  this.addComment(response.comment);
                   this.commentForm.get('comment')?.setValue('');
                   // this.notificationService.showNotification(
                   //   'Comentario publicado correctamente.',
