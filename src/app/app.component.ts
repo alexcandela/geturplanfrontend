@@ -7,6 +7,8 @@ import { FooterComponent } from './layout/footer/footer.component';
 import { routes } from './app.routes';
 import { ViewportScroller } from '@angular/common';
 
+
+
 @Component({
   selector: 'app-root',
   standalone: true,

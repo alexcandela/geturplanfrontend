@@ -1,13 +1,30 @@
-<li class="comment">
-    <article class="comment-username">
-        <img [src]="comment.user.img" alt="user-img"><a rel="noopener noreferrer" [routerLink]="['/perfil', comment.user.username]">{{comment.user.username}}</a>
-    </article>
-    <article class="comment-text">
-        <p>{{comment.comment}}</p>
+<article class="comment-username">
+    <img [src]="comment.user.img" alt="user-img"><a rel="noopener noreferrer"
+        [routerLink]="['/perfil', comment.user.username]">{{comment.user.username}}</a>
+</article>
+<article class="comment-text">
+    <p>{{comment.comment}}</p>
+    <div class="commentActions">
+        <article class="commentActions-buttons">
+            <div class="commentActions-buttons-likes">
+                <span>{{ randomNumber }}</span>
+                <button class="commentLikeBtn">
+                    <img [src]="likeImgBtn()" alt="like-button">
+                </button>
+            </div>
+            <div class="commentActions-buttons-resp">
+                <button class="replyBtn">Responder</button>
+            </div>
+            @if (sameuser) {
+            <div class="commentActions-buttons-eliminarComent">
+                <button class="deleteCommentBtn" (click)="deleteComment($event)">Eliminar</button>
+            </div>
+            }
+        </article>
         <article class="comment-text-fecha">
             <i class="fa-solid fa-clock"></i>
             <span>{{comment.created_at | dateFormat}}</span>
         </article>
-    </article>
-    <!-- <app-commentreply /> -->
-</li>
+    </div>
+</article>
+<!-- <app-commentreply /> -->

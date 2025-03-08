@@ -36,8 +36,10 @@
                 }
                 <section class="lista">
                     <ul class="lista-scroll">
-                        @for (comment of plan.comments; track $index)  {
-                        <app-comment [comment]="comment" />
+                        @for (comment of plan.comments; track $index) {
+                        <li class="comment" [@commentAnimation]="isNewComment ? 'void' : '*'">
+                            <app-comment (delete)="handleDelete($event)" [comment]="comment" [sameuser]="sameUser(comment.user.id)"/>
+                        </li>
                         }
                         @empty {
                         <p>Este plan no tiene comentarios.</p>
@@ -76,7 +78,7 @@
                 @if (showSkeleton()) {
                 <span class="skeletonDesc skeleton"></span>
                 } @else {
-                    <p [innerHTML]="plan.description | newlineToBr"></p>
+                <p [innerHTML]="plan.description | newlineToBr"></p>
                 }
             </article>
             <article class="fechalikes">

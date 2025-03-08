@@ -24,6 +24,7 @@ import { Router } from '@angular/router';
 })
 export class GeneralComponent implements OnInit {
   @Input() user: User | null = {
+    id: 0,
     username: '',
     email: '',
     description: '',

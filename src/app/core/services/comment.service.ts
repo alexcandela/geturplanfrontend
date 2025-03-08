@@ -22,4 +22,12 @@ export class CommentService {
     };
     return this.http.post<any>(`${this.apiUrl}/comment`, { params }, { headers });
   };
+
+  deleteComment = (
+    token: string | null,
+    commentId: Number
+  ): Observable<any> => {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.delete<any>(`${this.apiUrl}/delete-comment/${commentId}`, { headers });
+  };
 }

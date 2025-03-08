@@ -101,3 +101,44 @@
         background-color: #2e2e2e;
     }
 }
+
+.replyBtn {
+    font-family: $montserrat;
+    color: #686868;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    &:hover {
+        transition: 0.3s;
+        color: $azul;
+    }
+}
+
+.commentLikeBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    img {
+        width: 15px;
+        height: 15px;
+    }
+}
+
+.deleteCommentBtn {
+    font-family: $montserrat;
+    color: rgb(250, 94, 94);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    &:hover {
+        transition: 0.3s;
+        color: red;
+    }
+}

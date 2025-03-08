@@ -33,6 +33,7 @@ export interface PlanResponse {
 }
 
 export interface Comment {
+  id: number
   comment: string;
   user_id: number;
   plan_id: number;

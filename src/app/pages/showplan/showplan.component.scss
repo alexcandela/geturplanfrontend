@@ -156,6 +156,16 @@
           box-sizing: border-box;
           height: 100%;
           // border: solid red;
+          .comment {
+            display: flex;
+            flex-direction: column;
+            border-radius: 5px;
+            border: solid #e9e8e8 2px;
+            background-color: #fff;
+            padding: 10px 15px;
+            gap: 10px;
+            box-sizing: border-box;
+          }
           p {
             display: flex;
             justify-content: center;
@@ -165,7 +175,6 @@
             font-size: 18px;
             color: #818181;
             height: 50%;
-            // border: solid red;
           }
         }
       }
@@ -378,7 +387,7 @@
   border-radius: 5px;
 }
 
-.skeletonUserImg{
+.skeletonUserImg {
   width: 30px;
   height: 30px;
   object-fit: cover;

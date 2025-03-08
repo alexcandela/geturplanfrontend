@@ -1,6 +1,7 @@
 import { Plan } from "./plan";
 
 export interface User {
+  id: number;
   username: string;
   email: string;
   description: string;

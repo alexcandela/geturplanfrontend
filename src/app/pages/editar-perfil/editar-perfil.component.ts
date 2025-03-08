@@ -27,6 +27,7 @@ import { backendurl } from '../../core/environments/backendurl';
 export class EditarPerfilComponent implements OnInit {
   editProfileForm: FormGroup;
   user: User = {
+    id: 0,
     username: '',
     email: '',
     description: '',

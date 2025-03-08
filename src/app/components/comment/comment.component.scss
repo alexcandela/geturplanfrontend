@@ -2,27 +2,22 @@
 .comment {
   display: flex;
   flex-direction: column;
-  border-radius: 5px;
-  border: solid #e9e8e8 2px;
-  background-color: #fff;
-  padding: 10px 15px;
-  gap: 5px;
-  box-sizing: border-box;
+  gap: 10px;
   &-username {
     display: flex;
     justify-content: start;
     align-items: center;
     gap: 10px;
     img {
-      width: 25px;
-      height: 25px;
+      width: 20px;
+      height: 20px;
       object-fit: cover;
       border-radius: 50%;
     }
     a {
       font-family: $montserrat;
-      font-weight: 700;
-      font-size: 18px;
+      font-weight: 600;
+      font-size: 17px;
       color: $azul;
       text-decoration: none;
       letter-spacing: -0.5px;
@@ -33,32 +28,67 @@
   }
   &-text {
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-rows: 1fr auto;
     gap: 5px;
-    @media (max-width: 1024px) {
-        display: flex;
-        flex-direction: column;
-    }
     p {
       font-size: 16px;
       font-weight: 500;
       font-family: $montserrat;
+      padding: 5px;
     }
     &-fecha {
       display: flex;
       justify-content: end;
-      align-items: end;
+      align-items: center;
       gap: 5px;
       i {
-        font-size: 13px;
+        font-size: 11px;
         color: $azul;
         padding: 2px;
       }
       span {
         font-family: $montserrat;
-        font-size: 15px;
+        font-size: 13px;
         font-weight: 500;
       }
+    }
+  }
+}
+
+.commentActions {
+  display: flex;
+  justify-content: space-between;
+  &-buttons {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+    &-likes {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      span {
+        font-family: $montserrat;
+        font-size: 15px;
+        font-weight: 500;
+        color: red;
+      }
+    }
+    &-resp {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    &-eliminarComent {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    &-eliminarComent {
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 }

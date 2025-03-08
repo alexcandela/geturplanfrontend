@@ -22,6 +22,7 @@ import { SkeletonPlanComponent } from '../../components/skeleton-plan/skeleton-p
 })
 export class ProfileComponent implements OnInit {
   user: User = {
+    id: 0,
     username: '',
     email: '',
     description: '',
