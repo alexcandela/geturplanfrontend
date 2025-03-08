@@ -149,6 +149,10 @@
               background-color: transparent;
               font-weight: 500;
               padding: 0 5px;
+              &:focus {
+                background-color: transparent;
+                box-shadow: none;
+              }
             }
             button {
               display: flex;
@@ -195,6 +199,7 @@
           left: 0;
           width: calc(100%);
           box-sizing: border-box;
+          text-align: center;
 
           @media (max-width: 1024px) {
           }

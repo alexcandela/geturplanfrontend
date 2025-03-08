@@ -122,9 +122,9 @@
                             <div class="input-divicon">
                                 <img src="/assets/icons/password.png" alt="password-icon">
                             </div>
-                            <input [type]="inputtype()" name="password" id="register"
-                                placeholder="Contraseña segura" formControlName="password"
-                                (focus)="showPasswordFeedback()" (blur)="hidePasswordFeedback()">
+                            <input [type]="inputtype()" name="password" id="register" placeholder="Contraseña segura"
+                                formControlName="password" (focus)="showPasswordFeedback()"
+                                (blur)="hidePasswordFeedback()">
                             <button type="button" (click)="showpassword()"><img [src]="showPasswordImg()"
                                     alt="eye-icon"></button>
                         </div>
@@ -132,9 +132,8 @@
                         </div>
                         @if (show()) {
                         <div class="passFeedback">
-
                             <p><i class="fa-solid fa-circle-info"></i> La contraseña debe tener al menos 8 caracteres,
-                                incluir mayúsculas, minúsculas, números y símbolos.</p>
+                                incluir mayúsculas, minúsculas y números.</p>
                         </div>
                         }
 
@@ -166,7 +165,8 @@
                 <p>¿Ya tienes una cuenta?</p><a rel="noopener noreferrer" href="/login">Inicia Sesión</a>
             </section>
             <section class="divVolver">
-                <a rel="noopener noreferrer" href="/" class="btn btn-basico"><span>Volver al inicio</span><i class="fa-solid fa-house"></i></a>
+                <a rel="noopener noreferrer" href="/" class="btn btn-basico"><span>Volver al inicio</span><i
+                        class="fa-solid fa-house"></i></a>
             </section>
         </section>
     </section>
