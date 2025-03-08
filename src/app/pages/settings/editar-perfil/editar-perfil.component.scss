@@ -131,20 +131,29 @@
       .editarDesc {
         display: grid;
         grid-template-columns: 1fr;
-        // @media (max-width: 1024px) {
-        //   display: flex;
-        //   justify-content: center;
-        //   align-items: center;
-        //   width: 100%;
-        //  }
+        
         textarea {
             padding: 10px;
             font-family: $montserrat;
+            resize: none;  // Evita que el usuario cambie el tamaño manualmente
+            width: 100%;
+            height: auto;
+            min-height: 80px; // Establece un tamaño mínimo
+            max-height: 300px; // Establece un tamaño máximo si lo deseas
+            overflow-y: auto; // Muestra una barra de desplazamiento si el contenido es mayor que el tamaño del textarea
+            word-wrap: break-word;  // Para que el texto largo se ajuste dentro del área
+            
+            // Para ajustar el tamaño según el contenido
+            height: auto;
+            min-height: 80px;
+            max-height: 300px;
+            
             @media (max-width: 1024px) {
-              font-size: 12px;
-             }
+                font-size: 12px;
+            }
         }
-      }
+    }
+    
     }
     &-guardar {
       display: flex;

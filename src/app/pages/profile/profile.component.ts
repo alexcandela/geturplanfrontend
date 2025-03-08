@@ -86,6 +86,7 @@ export class ProfileComponent implements OnInit {
             this.plans = response.plans.data;
             this.totalPlans.set(response.plans.total);
             this.loadingPlans.set(false);
+            
           }
         },
         (error) => {
@@ -100,6 +101,7 @@ export class ProfileComponent implements OnInit {
     const endIndex = startIndex + this.plansPerPage();
     return this.plans.slice(startIndex, endIndex);
   }
+
   updateCurrentPageAlEliminar = (currentPage: number) => {
     const plansForCurrentPage = this.getPlansForPage(currentPage);
     if (plansForCurrentPage.length === 0 && currentPage > 1) {
@@ -109,11 +111,10 @@ export class ProfileComponent implements OnInit {
       this.getUserPlans(this.currentPage(), this.username);
     }
   }
-    
+
   eliminarPlan = (id: number) => {
     this.plans = this.plans.filter(plan => plan.id !== id);
     this.updateCurrentPageAlEliminar(this.currentPage());
-    
   }
 
   onPageChange(page: number): void {
@@ -123,9 +124,12 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      this.username = params.get('username') ?? '';
-      this.getUser(this.username);
+      const newUsername = params.get('username') ?? '';
+      if (this.username !== newUsername) {
+        this.username = newUsername;
+        this.getUser(this.username);
+        this.getUserPlans(this.currentPage(), this.username);
+      }
     });
-    this.getUserPlans(this.currentPage(), this.username);
   }
 }

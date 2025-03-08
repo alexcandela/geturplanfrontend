@@ -21,6 +21,8 @@ export class UserComponent implements OnInit{
     this.dropdownOpen = !this.dropdownOpen;    
   }
 
+  
+
   logout = () => {
     const token = localStorage.getItem('jwt');
     if (!token) {
