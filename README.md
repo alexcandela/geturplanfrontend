@@ -1,27 +1,29 @@
-# Frontend
+# 📦 Backend de geturplan
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.3.
+Este es el backend de geturplan, desarrollado con Laravel. Se encarga de gestionar la lógica de negocio, autenticación y almacenamiento de datos en una base de datos RDS en Amazon.
 
-## Development server
+## 🚀 Tecnologías Utilizadas
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Laravel 11.43.2
+- MySQL (Amazon RDS)
+- Tymon/JWT-Auth (autenticación con JWT)
+- AWS EC2 (hosting)
+- Composer (gestor de dependencias)
 
-## Code scaffolding
+## 📌 Descripción
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Este backend proporciona la API necesaria para que los usuarios puedan:
 
-## Build
+✅ Publicar y gestionar planes  
+✅ Interactuar mediante likes y comentarios  
+✅ Modificar su perfil  
+✅ Administrar autenticación y seguridad  
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+💡 **El backend está estructurado para gestionar las peticiones de los usuarios de manera efectiva, garantizando una experiencia fluida en la aplicación.**
 
-## Running unit tests
+## 🔗 Conéctate con el frontend
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Este backend trabaja en conjunto con el frontend de la aplicación, desarrollado en Angular.  
+Puedes ver más sobre el frontend aquí: [Repositorio Frontend](https://github.com/alexcandela/geturplanfrontend)
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+---
