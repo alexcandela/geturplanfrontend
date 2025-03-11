@@ -5,7 +5,7 @@ Este es el backend de geturplan, desarrollado con Laravel. Se encarga de gestion
 ## 🚀 Tecnologías Utilizadas
 
 - Laravel 11.43.2
-- MySQL (Amazon RDS)
+- PostgreSQL (Amazon RDS)
 - Tymon/JWT-Auth (autenticación con JWT)
 - AWS EC2 (hosting)
 - Composer (gestor de dependencias)
