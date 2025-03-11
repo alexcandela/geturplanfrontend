@@ -239,9 +239,7 @@ export class ShowplanComponent implements OnInit {
             .subscribe(
               (response) => {
                 if (response.status === 'success') {
-                  // this.plan.comments?.unshift(response.comment);
                   this.addComment(response.comment);
-
                   this.commentForm.get('comment')?.setValue('');
                 }
               },

@@ -33,15 +33,6 @@ export class HomeComponent implements OnInit {
     titulo.setTitle('Home');
   }
 
-  defMesActual(): void {
-    const months = [
-      'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-      'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
-    ];
-    const now = new Date();
-    this.mesActual.set(months[now.getMonth()]);
-  }
-
   getPlans = () => {
     if (typeof window !== 'undefined' && window.localStorage) {
       this.token = localStorage.getItem('jwt');
@@ -60,7 +51,6 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.defMesActual();
     this.getPlans();
   }
 }

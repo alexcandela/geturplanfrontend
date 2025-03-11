@@ -1,11 +1,4 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  signal,
-  Output,
-  EventEmitter,
-} from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { Comment } from '../../core/interfaces/plan';
 import { DateFormatPipe } from '../../core/pipes/date-format.pipe';
 import { RouterLink } from '@angular/router';
@@ -14,24 +7,24 @@ import { trigger, transition, style, animate } from '@angular/animations';
 import { AuthService } from '../../core/services/authservice.service';
 import { CommentService } from '../../core/services/comment.service';
 import { NotificationService } from '../../core/services/notification.service';
-import { UserResponse } from '../../core/interfaces/user';
-import { UserService } from '../../core/services/user.service';
+import { LikeService } from '../../core/services/like.service';
+import { ChangeDetectorRef } from '@angular/core';
+import { signal } from '@angular/core';
 
 @Component({
   selector: 'app-comment',
   standalone: true,
   imports: [DateFormatPipe, RouterLink, CommentreplyComponent],
   templateUrl: './comment.component.html',
-  styleUrl: './comment.component.scss',
+  styleUrls: ['./comment.component.scss'],
 })
-export class CommentComponent implements OnInit {
+export class CommentComponent implements OnChanges {
   @Input() comment!: Comment;
   @Input() sameuser?: Boolean = false;
   @Output() delete = new EventEmitter<number>();
 
   emptyLike: string = '/assets/icons/like_empty.svg';
   likeImg: string = '/assets/icons/like.svg';
-  randomNumber: number = Math.floor(Math.random() * 20);
   token: string | null = null;
   likeImgBtn = signal(this.emptyLike);
 
@@ -39,9 +32,21 @@ export class CommentComponent implements OnInit {
     private authService: AuthService,
     private notificationService: NotificationService,
     private commentService: CommentService,
-    private userService: UserService
+    private likeService: LikeService,
+    private cdr: ChangeDetectorRef
   ) {}
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['comment'] && this.comment) {
+      this.updateLikeState();
+    }
+  }
+
+  updateLikeState() {
+    this.likeImgBtn.set(
+      this.comment.has_liked ? this.likeImg : this.emptyLike
+    );
+  }
 
   deleteComment(event: Event) {
     event.preventDefault();
@@ -55,12 +60,9 @@ export class CommentComponent implements OnInit {
             .subscribe(
               (response) => {
                 if (response.status === 'success') {
-                  this.delete.emit(this.comment.id);
-                  this.notificationService.showNotification(
-                    'Comentario eliminado correctamente.',
-                    'success'
-                  );
+                  this.delete.emit(this.comment.id); 
                 }
+                this.cdr.detectChanges();
               },
               (error) => {
                 console.error(error);
@@ -87,7 +89,50 @@ export class CommentComponent implements OnInit {
     }
   }
 
+  like(event: Event) {
+    event.preventDefault();
+    if (typeof window !== 'undefined' && window.localStorage) {
+      this.token = localStorage.getItem('jwt');
+      if (this.token) {
+        if (this.authService.isTokenValid(this.token)) {
+          this.likeService.toLikeComment(this.token, this.comment.id).subscribe(
+            (response) => {
+              if (response.status === 'success') {
+                this.likeImgBtn.set(
+                  this.likeImgBtn() === this.emptyLike
+                    ? this.likeImg
+                    : this.emptyLike
+                );
+                if (this.comment.likes_count === undefined || this.comment.likes_count === null) {
+                  this.comment.likes_count = 0;
+                }
+                this.comment.likes_count = response.message
+                  ? this.comment.likes_count + 1
+                  : this.comment.likes_count - 1;
+              }
+            },
+            (error) => {
+              console.error(error);
+            }
+          );
+        } else {
+          this.notificationService.showNotification(
+            'Inicia sesión para utilizar esta función.',
+            'error'
+          );
+          return;
+        }
+      } else {
+        this.notificationService.showNotification(
+          'Inicia sesión para utilizar esta función.',
+          'error'
+        );
+        return;
+      }
+    }
+  }
+
   ngOnInit(): void {
-    console.log(this.sameuser);
+    this.updateLikeState();
   }
 }

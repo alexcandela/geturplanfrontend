@@ -7,9 +7,9 @@
     <div class="commentActions">
         <article class="commentActions-buttons">
             <div class="commentActions-buttons-likes">
-                <span>{{ randomNumber }}</span>
+                <span>{{ comment.likes_count || 0 }}</span>
                 <button class="commentLikeBtn">
-                    <img [src]="likeImgBtn()" alt="like-button">
+                    <img [src]="likeImgBtn()" (click)="like($event)" alt="like-button">
                 </button>
             </div>
             <div class="commentActions-buttons-resp">

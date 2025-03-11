@@ -38,7 +38,8 @@
                     <ul class="lista-scroll">
                         @for (comment of plan.comments; track $index) {
                         <li class="comment" [@commentAnimation]="isNewComment ? 'void' : '*'">
-                            <app-comment (delete)="handleDelete($event)" [comment]="comment" [sameuser]="sameUser(comment.user.id)"/>
+                            <app-comment (delete)="handleDelete($event)" [comment]="comment"
+                                [sameuser]="sameUser(comment.user.id)" />
                         </li>
                         }
                         @empty {

@@ -38,6 +38,8 @@ export interface Comment {
   user_id: number;
   plan_id: number;
   user: UserPlan;
+  likes_count: number;
+  has_liked: boolean;
   created_at: string;
 }
 
