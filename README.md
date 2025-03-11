@@ -1,29 +1,27 @@
-# 📦 Backend de geturplan
+# 🎨 Frontend de geturplan
 
-Este es el backend de geturplan, desarrollado con Laravel. Se encarga de gestionar la lógica de negocio, autenticación y almacenamiento de datos en una base de datos RDS en Amazon.
+Este es el frontend de geturplan, desarrollado con Angular. Proporciona una interfaz interactiva para que los usuarios puedan explorar y gestionar planes.
 
 ## 🚀 Tecnologías Utilizadas
 
-- Laravel 11.43.2
-- PostgreSQL (Amazon RDS)
-- Tymon/JWT-Auth (autenticación con JWT)
-- AWS EC2 (hosting)
-- Composer (gestor de dependencias)
+- Angular 18.0.3
+- TypeScript
+- RxJS (manejo de estados reactivos)
 
 ## 📌 Descripción
 
-Este backend proporciona la API necesaria para que los usuarios puedan:
+La aplicación permite a los usuarios:
 
-✅ Publicar y gestionar planes  
-✅ Interactuar mediante likes y comentarios  
-✅ Modificar su perfil  
-✅ Administrar autenticación y seguridad  
+✅ Crear y explorar planes  
+✅ Dar like y comentar en planes  
+✅ Editar su perfil  
+✅ Navegar con una experiencia fluida y responsiva  
 
-💡 **El backend está estructurado para gestionar las peticiones de los usuarios de manera efectiva, garantizando una experiencia fluida en la aplicación.**
+💡 **El diseño está pensado para ser intuitivo y accesible, con una interfaz moderna y adaptable a cualquier dispositivo.**
 
-## 🔗 Conéctate con el frontend
+## 🔗 Conéctate con el backend
 
-Este backend trabaja en conjunto con el frontend de la aplicación, desarrollado en Angular.  
-Puedes ver más sobre el frontend aquí: [Repositorio Frontend](https://github.com/alexcandela/geturplanfrontend)
+Este frontend se comunica con un backend desarrollado en Laravel.  
+Más detalles aquí: [Repositorio Backend](https://github.com/alexcandela/geturplanbackend)
 
 ---
