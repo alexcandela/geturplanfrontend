@@ -133,7 +133,8 @@ export class ShowplanComponent implements OnInit {
     });
   }
 
-  defaultDescription = 'Echa un vistazo a este interesante plan'; // Descripción breve por defecto
+  defaultDescription = 'Descubre planes alucinantes en Geturplan, donde puedes encontrar las mejores actividades y experiencias para disfrutar con tus amigos o familia. ¡No te pierdas ninguna aventura!' // Descripción breve por defecto
+
 
   whatsappShareUrl = '';
   facebookShareUrl = '';
@@ -157,19 +158,19 @@ export class ShowplanComponent implements OnInit {
   buildShareLink() {
     const planUrl = window.location.href;  // URL de la página actual
     const planText = `Mira este plan que puede gustarte: ${this.plan.name} - ${this.defaultDescription}`;
-    const planImage = this.plan.img; // La URL completa de la imagen
 
     // Crear el enlace de WhatsApp
     this.whatsappShareUrl = `https://wa.me/?text=${encodeURIComponent(
-      `Echa un vistazo a este plan: ${this.plan.name} - ${this.defaultDescription} ${planUrl} Imagen: ${planImage}`
+      `Echa un vistazo a este plan: ${this.plan.name} - ${this.defaultDescription} ${planUrl}`
     )}`;
 
-    // Crear el enlace de Facebook (con texto y la imagen)
-    this.facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(planUrl)}&quote=${encodeURIComponent(planText)}&picture=${encodeURIComponent(planImage)}`;
+    // Crear el enlace de Facebook (con texto)
+    this.facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(planUrl)}&quote=${encodeURIComponent(planText)}`;
 
     // Crear el enlace de Twitter (X)
-    this.xShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(planText)}&url=${encodeURIComponent(planUrl)}&media=${encodeURIComponent(planImage)}`;
+    this.xShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(planText)}&url=${encodeURIComponent(planUrl)}`;
 }
+
 
 
   getPlan = () => {
