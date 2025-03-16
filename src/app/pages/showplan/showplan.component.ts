@@ -6,11 +6,14 @@ import {
   ElementRef,
   AfterViewInit,
   ViewChild,
+  ChangeDetectorRef,
+  QueryList,
+  ViewChildren,
 } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Plan, PlanResponse, UserPlan } from '../../core/interfaces/plan';
 import { PlanService } from '../../core/services/plan.service';
-import { Title } from '@angular/platform-browser';
+import { Title, Meta } from '@angular/platform-browser';
 import { DateFormatPipe } from '../../core/pipes/date-format.pipe';
 import { NewlineToBrPipe } from '../../core/pipes/newline-to-br.pipe';
 import { CommentComponent } from '../../components/comment/comment.component';
@@ -19,8 +22,6 @@ import { LikeService } from '../../core/services/like.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { ToastComponent } from '../../components/toast-notification/toast-notification.component';
 import { Comment } from '../../core/interfaces/plan';
-import { map, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
 
 import { trigger, transition, style, animate } from '@angular/animations';
 
@@ -34,6 +35,7 @@ import { CommentService } from '../../core/services/comment.service';
 import { UserResponse } from '../../core/interfaces/user';
 import { UserService } from '../../core/services/user.service';
 import { Observable } from 'rxjs';
+import { environment } from '../../core/environments/environment';
 
 @Component({
   selector: 'app-showplan',
@@ -69,6 +71,7 @@ import { Observable } from 'rxjs';
 })
 export class ShowplanComponent implements OnInit {
   @ViewChild('list', { static: false }) list!: ElementRef<HTMLUListElement>;
+  @ViewChildren(CommentComponent) commentComponents!: QueryList<CommentComponent>;
 
   sameuser = signal(false);
 
@@ -119,7 +122,9 @@ export class ShowplanComponent implements OnInit {
     private fb: FormBuilder,
     private commentService: CommentService,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private cdr: ChangeDetectorRef,
+    private metaService: Meta
   ) {
     titulo.setTitle('Ver plan');
     this.commentForm = this.fb.group({
@@ -225,9 +230,21 @@ export class ShowplanComponent implements OnInit {
 
   addComment(newComment: Comment) {
     this.isNewComment = true;
+    newComment.has_liked = false;
+  
     this.plan.comments = [newComment, ...(this.plan.comments ?? [])];
-    setTimeout(() => (this.isNewComment = false), 300);
+  
+    // Después de agregar el nuevo comentario, actualiza el estado de todos los comentarios
+    setTimeout(() => {
+      this.commentComponents.forEach((commentComp) => {
+        // Aquí asegúrate de que el estado de like se actualice también para los comentarios existentes
+        commentComp.updateLikeState(); 
+      });
+      this.cdr.detectChanges();
+    }, 0);
   }
+  
+  
 
   submitComment = (data: { comment: string }) => {
     if (typeof window !== 'undefined' && window.localStorage) {
@@ -270,11 +287,40 @@ export class ShowplanComponent implements OnInit {
     );
   }
 
+  compartir() {
+    if (navigator.share) {
+      navigator.share({
+        title: 'Título del contenido',
+        text: 'Descripción breve.',
+        url: window.location.href
+      })
+      .then(() => console.log('Compartido con éxito'))
+      .catch((error) => console.log('Error al compartir:', error));
+    } else {
+      this.notificationService.showNotification(
+        'Tu navegador no es compatible',
+        'warning'
+      );
+    }
+  }
+  
+  actualizarMetadatos() {
+    const apiUrl = environment.apiUrl;
+    const url = `${apiUrl}/showplan/${this.plan.id}`;
+    
+    this.metaService.updateTag({ property: 'og:title', content: this.plan.name });
+    this.metaService.updateTag({ property: 'og:description', content: this.plan.description });
+    this.metaService.updateTag({ property: 'og:image', content: this.plan.img });
+    this.metaService.updateTag({ property: 'og:url', content: url });
+    this.metaService.updateTag({ property: 'og:type', content: 'website' });
+  }
+
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.planId = Number(params.get('id'));
       this.getPlan();
       this.checkLogged();
     });
+    this.actualizarMetadatos();
   }
 }

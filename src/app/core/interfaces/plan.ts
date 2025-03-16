@@ -40,6 +40,19 @@ export interface Comment {
   user: UserPlan;
   likes_count: number;
   has_liked: boolean;
+  has_replies: boolean;
+  replies: CommentReply[]
+  created_at: string;
+}
+
+export interface CommentReply {
+  id: number
+  reply: string;
+  user_id: number;
+  comment_id: number;
+  user: UserPlan;
+  likes_count: number;
+  has_liked: boolean;
   created_at: string;
 }
 

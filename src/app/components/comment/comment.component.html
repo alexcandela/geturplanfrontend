@@ -1,6 +1,6 @@
 <article class="comment-username">
-    <img [src]="comment.user.img" alt="user-img"><a rel="noopener noreferrer"
-        [routerLink]="['/perfil', comment.user.username]">{{comment.user.username}}</a>
+    <img [src]="comment.user.img" alt="user-img">
+    <a rel="noopener noreferrer" [routerLink]="['/perfil', comment.user.username]">{{comment.user.username}}</a>
 </article>
 <article class="comment-text">
     <p>{{comment.comment}}</p>
@@ -8,6 +8,7 @@
         <article class="commentActions-buttons">
             <div class="commentActions-buttons-likes">
                 <span>{{ comment.likes_count || 0 }}</span>
+                <!-- <span>{{ hasLiked() }}</span> -->
                 <button class="commentLikeBtn">
                     <img [src]="likeImgBtn()" (click)="like($event)" alt="like-button">
                 </button>
@@ -27,4 +28,9 @@
         </article>
     </div>
 </article>
-<!-- <app-commentreply /> -->
+@if (comment.has_replies) {
+    @for (reply of comment.replies; track $index) {
+        <app-commentreply [reply]="reply"/>
+    }
+
+}

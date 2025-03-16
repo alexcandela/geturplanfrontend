@@ -27,6 +27,7 @@ export class CommentComponent implements OnChanges {
   likeImg: string = '/assets/icons/like.svg';
   token: string | null = null;
   likeImgBtn = signal(this.emptyLike);
+  hasLiked = signal(false);
 
   constructor(
     private authService: AuthService,
@@ -35,6 +36,7 @@ export class CommentComponent implements OnChanges {
     private likeService: LikeService,
     private cdr: ChangeDetectorRef
   ) {}
+  
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['comment'] && this.comment) {
@@ -46,6 +48,9 @@ export class CommentComponent implements OnChanges {
     this.likeImgBtn.set(
       this.comment.has_liked ? this.likeImg : this.emptyLike
     );
+    this.hasLiked.set(this.comment.has_liked);
+    console.log(this.hasLiked());
+    
   }
 
   deleteComment(event: Event) {
@@ -98,6 +103,8 @@ export class CommentComponent implements OnChanges {
           this.likeService.toLikeComment(this.token, this.comment.id).subscribe(
             (response) => {
               if (response.status === 'success') {
+                this.hasLiked.set(response.message);
+        
                 this.likeImgBtn.set(
                   this.likeImgBtn() === this.emptyLike
                     ? this.likeImg
@@ -133,6 +140,7 @@ export class CommentComponent implements OnChanges {
   }
 
   ngOnInit(): void {
+    console.log(this.comment.replies);
     this.updateLikeState();
   }
 }

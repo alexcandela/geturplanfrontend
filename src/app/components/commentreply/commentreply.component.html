@@ -1,12 +1,36 @@
-<section class="comment">
-    <article class="comment-username">
-        <img src="http://localhost:8000/storage/default/default_user.png" alt="user-img"><a rel="noopener noreferrer">Usuario</a>
-    </article>
-    <article class="comment-text">
-        <p>Respuesta al comentario.</p>
-        <article class="comment-text-fecha">
-            <i class="fa-solid fa-clock"></i>
-            <span>08/02/25</span>
+<section class="container">
+    <div class="container-icon">
+        <img src="/assets/icons/reply.svg" alt="reply-icon">
+    </div>
+    <div class="commentreply">
+        <article class="commentreply-username">
+            <img [src]="reply.user.img" alt="user-img">
+            <a rel="noopener noreferrer" [routerLink]="['/perfil', reply.user.username]">{{reply.user.username}}</a>
         </article>
-    </article>
+        <article class="commentreply-text">
+            <p>{{reply.reply}}</p>
+            <div class="commentActions">
+                <article class="commentActions-buttons">
+                    <div class="commentActions-buttons-likes">
+                        <span>0</span>
+                        <button class="commentLikeBtn">
+                            <img [src]="likeImgBtn()" alt="like-button">
+                        </button>
+                    </div>
+                    <div class="commentActions-buttons-resp">
+                        <button class="replyBtn">Responder</button>
+                    </div>
+                    @if (1 == 1) {
+                    <div class="commentActions-buttons-eliminarComent">
+                        <button class="deleteCommentBtn">Eliminar</button>
+                    </div>
+                    }
+                </article>
+                <article class="commentreply-text-fecha">
+                    <i class="fa-solid fa-clock"></i>
+                    <span>8/05/25</span>
+                </article>
+            </div>
+        </article>
+    </div>
 </section>
