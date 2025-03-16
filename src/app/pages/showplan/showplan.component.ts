@@ -308,6 +308,8 @@ export class ShowplanComponent implements OnInit {
   
   actualizarMetadatos() {
     const apiUrl = environment.apiUrl;
+    console.log(apiUrl);
+    
     const url = `${apiUrl}/showplan/${this.plan.id}`;
     this.metaService.updateTag({ property: 'og:title', content: this.plan.name });
     this.metaService.updateTag({ property: 'og:description', content: this.plan.description });
