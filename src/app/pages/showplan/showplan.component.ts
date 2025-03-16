@@ -126,7 +126,8 @@ export class ShowplanComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private metaService: Meta
   ) {
-    titulo.setTitle('Ver plan');
+
+    this.titulo.setTitle('Ver plan');
     this.commentForm = this.fb.group({
       comment: ['', Validators.required],
     });
@@ -158,6 +159,7 @@ export class ShowplanComponent implements OnInit {
             this.likeImgBtn.set(
               this.plan.has_liked ? this.likeImg : this.emptyLike
             );
+            this.actualizarMetadatos();
             this.showSkeleton.set(false);
           }
         },
@@ -307,7 +309,6 @@ export class ShowplanComponent implements OnInit {
   actualizarMetadatos() {
     const apiUrl = environment.apiUrl;
     const url = `${apiUrl}/showplan/${this.plan.id}`;
-    
     this.metaService.updateTag({ property: 'og:title', content: this.plan.name });
     this.metaService.updateTag({ property: 'og:description', content: this.plan.description });
     this.metaService.updateTag({ property: 'og:image', content: this.plan.img });
@@ -321,6 +322,5 @@ export class ShowplanComponent implements OnInit {
       this.getPlan();
       this.checkLogged();
     });
-    this.actualizarMetadatos();
   }
 }
