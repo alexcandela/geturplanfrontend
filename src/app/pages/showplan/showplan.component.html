@@ -89,13 +89,22 @@
                     </div>
                     <span>{{plan.likes_count}}</span>
                     <article class="sharediv">
+                        <a [href]="whatsappShareUrl">
+                            <img src="/assets/icons/whatsapp.svg" alt="whatsapp-icon">
+                        </a>
+                        <a [href]="xShareUrl" target="_blank">
+                            <img src="/assets/icons/twitter.svg" alt="twitter-icon">
+                        </a>
+                        <a [href]="facebookShareUrl" target="_blank">
+                            <img src="/assets/icons/facebook.svg" alt="facebook-icon">
+                        </a>
                         <img src="/assets/icons/share.svg" alt="share-icon" (click)="compartir()" >
                     </article>
                 </section>
                 
                 <article class="fecha">
                     <i class="fa-solid fa-clock"></i>
-                    <span>Publicado el</span>
+                    <span class="fecha-frase" >Publicado el</span>
                     <span>{{ plan.created_at | dateFormat }}</span>
                 </article>
             </article>

@@ -279,7 +279,7 @@
               cursor: pointer;
             }
           }
-          
+
           span {
             font-size: 19px;
             font-family: $montserrat;
@@ -291,19 +291,34 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 3px;
-            border-radius: 10px;
-            img {
-              width: 24px;
-              cursor: pointer;
+            padding: 3px 10px;
+            a {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              
+              border-radius: 10px;
+              &:hover {
+                transition: 0.3s;
+                background-color: #e9e8e8;
+              }
             }
-            &:hover {
-              transition: 0.3s;
-              background-color: #e9e8e8;
+            img {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              padding: 3px;
+              width: 24px;
+              border-radius: 10px;
+              cursor: pointer;
+              &:hover {
+                transition: 0.3s;
+                background-color: #e9e8e8;
+              }
             }
           }
         }
-        
+
         .fecha {
           display: flex;
           justify-content: end;
@@ -318,6 +333,11 @@
             font-size: 17px;
             font-family: $montserrat;
             color: $azul;
+          }
+          &-frase {
+            @media (max-width: 1024px) {
+              display: none;
+            }
           }
         }
       }

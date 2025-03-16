@@ -71,7 +71,8 @@ import { environment } from '../../core/environments/environment';
 })
 export class ShowplanComponent implements OnInit {
   @ViewChild('list', { static: false }) list!: ElementRef<HTMLUListElement>;
-  @ViewChildren(CommentComponent) commentComponents!: QueryList<CommentComponent>;
+  @ViewChildren(CommentComponent)
+  commentComponents!: QueryList<CommentComponent>;
 
   sameuser = signal(false);
 
@@ -126,12 +127,17 @@ export class ShowplanComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private metaService: Meta
   ) {
-
     this.titulo.setTitle('Ver plan');
     this.commentForm = this.fb.group({
       comment: ['', Validators.required],
     });
   }
+
+  defaultDescription = 'Echa un vistazo a este interesante plan'; // Descripción breve por defecto
+
+  whatsappShareUrl = '';
+  facebookShareUrl = '';
+  xShareUrl = '';
 
   sameUser(commentUserId: number): boolean {
     if (typeof window !== 'undefined' && window.localStorage) {
@@ -148,6 +154,24 @@ export class ShowplanComponent implements OnInit {
     return false;
   }
 
+  buildShareLink() {
+    const planUrl = window.location.href;  // URL de la página actual
+    const planText = `Mira este plan que puede gustarte: ${this.plan.name} - ${this.defaultDescription}`;
+    const planImage = this.plan.img; // La URL completa de la imagen
+
+    // Crear el enlace de WhatsApp
+    this.whatsappShareUrl = `https://wa.me/?text=${encodeURIComponent(
+      `Echa un vistazo a este plan: ${this.plan.name} - ${this.defaultDescription} ${planUrl} Imagen: ${planImage}`
+    )}`;
+
+    // Crear el enlace de Facebook (con texto y la imagen)
+    this.facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(planUrl)}&quote=${encodeURIComponent(planText)}&picture=${encodeURIComponent(planImage)}`;
+
+    // Crear el enlace de Twitter (X)
+    this.xShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(planText)}&url=${encodeURIComponent(planUrl)}&media=${encodeURIComponent(planImage)}`;
+}
+
+
   getPlan = () => {
     if (typeof window !== 'undefined' && window.localStorage) {
       this.token = localStorage.getItem('jwt');
@@ -159,7 +183,8 @@ export class ShowplanComponent implements OnInit {
             this.likeImgBtn.set(
               this.plan.has_liked ? this.likeImg : this.emptyLike
             );
-            // this.actualizarMetadatos();
+            this.actualizarMetadatos();
+            this.buildShareLink();
             this.showSkeleton.set(false);
           }
         },
@@ -233,20 +258,18 @@ export class ShowplanComponent implements OnInit {
   addComment(newComment: Comment) {
     this.isNewComment = true;
     newComment.has_liked = false;
-  
+
     this.plan.comments = [newComment, ...(this.plan.comments ?? [])];
-  
+
     // Después de agregar el nuevo comentario, actualiza el estado de todos los comentarios
     setTimeout(() => {
       this.commentComponents.forEach((commentComp) => {
         // Aquí asegúrate de que el estado de like se actualice también para los comentarios existentes
-        commentComp.updateLikeState(); 
+        commentComp.updateLikeState();
       });
       this.cdr.detectChanges();
     }, 0);
   }
-  
-  
 
   submitComment = (data: { comment: string }) => {
     if (typeof window !== 'undefined' && window.localStorage) {
@@ -291,13 +314,14 @@ export class ShowplanComponent implements OnInit {
 
   compartir() {
     if (navigator.share) {
-      navigator.share({
-        title: 'Título del contenido',
-        text: 'Descripción breve.',
-        url: window.location.href
-      })
-      .then(() => console.log('Compartido con éxito'))
-      .catch((error) => console.log('Error al compartir:', error));
+      navigator
+        .share({
+          title: this.plan.name,
+          text: this.defaultDescription,
+          url: window.location.href,
+        })
+        .then(() => console.log('Compartido con éxito'))
+        .catch((error) => console.log('Error al compartir:', error));
     } else {
       this.notificationService.showNotification(
         'Tu navegador no es compatible',
@@ -305,18 +329,46 @@ export class ShowplanComponent implements OnInit {
       );
     }
   }
-  
-  // actualizarMetadatos() {
-  //   const apiUrl = environment.apiUrl;
-  //   console.log(apiUrl);
-    
-  //   const url = `${apiUrl}/showplan/${this.plan.id}`;
-  //   this.metaService.updateTag({ property: 'og:title', content: this.plan.name });
-  //   this.metaService.updateTag({ property: 'og:description', content: this.plan.description });
-  //   this.metaService.updateTag({ property: 'og:image', content: this.plan.img });
-  //   this.metaService.updateTag({ property: 'og:url', content: url });
-  //   this.metaService.updateTag({ property: 'og:type', content: 'website' });
-  // }
+
+  actualizarMetadatos() {
+    const apiUrl = environment.apiUrl;
+    const url = `${apiUrl}/showplan/${this.plan.id}`;
+
+    // Actualizar los metadatos OG (Open Graph)
+    this.metaService.updateTag({
+      property: 'og:title',
+      content: this.plan.name,
+    });
+    this.metaService.updateTag({
+      property: 'og:description',
+      content: this.plan.description,
+    });
+    this.metaService.updateTag({
+      property: 'og:image',
+      content: this.plan.img,
+    });
+    this.metaService.updateTag({ property: 'og:url', content: url });
+    this.metaService.updateTag({ property: 'og:type', content: 'website' });
+
+    // Actualizar los metadatos de Twitter Card (ahora X)
+    this.metaService.updateTag({
+      name: 'twitter:card',
+      content: 'summary_large_image',
+    });
+    this.metaService.updateTag({
+      name: 'twitter:title',
+      content: this.plan.name,
+    });
+    this.metaService.updateTag({
+      name: 'twitter:description',
+      content: this.plan.description,
+    });
+    this.metaService.updateTag({
+      name: 'twitter:image',
+      content: this.plan.img,
+    });
+    this.metaService.updateTag({ name: 'twitter:url', content: url });
+  }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
