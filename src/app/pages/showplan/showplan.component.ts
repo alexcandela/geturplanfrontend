@@ -157,19 +157,17 @@ export class ShowplanComponent implements OnInit {
 
   buildShareLink() {
     const planUrl = window.location.href;  // URL de la página actual
-    const planText = `Mira este plan que puede gustarte: ${this.plan.name} - ${this.defaultDescription}`;
 
-    // Crear el enlace de WhatsApp
-    this.whatsappShareUrl = `https://wa.me/?text=${encodeURIComponent(
-      `Echa un vistazo a este plan: ${this.plan.name} - ${this.defaultDescription} ${planUrl}`
-    )}`;
+    // Enlace de WhatsApp (sin texto extra, solo la URL)
+    this.whatsappShareUrl = `https://wa.me/?text=${encodeURIComponent(planUrl)}`;
 
-    // Crear el enlace de Facebook (con texto)
-    this.facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(planUrl)}&quote=${encodeURIComponent(planText)}`;
+    // Enlace de Facebook (solo la URL)
+    this.facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(planUrl)}`;
 
-    // Crear el enlace de Twitter (X)
-    this.xShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(planText)}&url=${encodeURIComponent(planUrl)}`;
+    // Enlace de Twitter (X) (sin texto extra)
+    this.xShareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(planUrl)}`;
 }
+
 
 
 
@@ -184,7 +182,6 @@ export class ShowplanComponent implements OnInit {
             this.likeImgBtn.set(
               this.plan.has_liked ? this.likeImg : this.emptyLike
             );
-            this.actualizarMetadatos();
             this.buildShareLink();
             this.showSkeleton.set(false);
           }
@@ -317,8 +314,6 @@ export class ShowplanComponent implements OnInit {
     if (navigator.share) {
       navigator
         .share({
-          title: this.plan.name,
-          text: this.defaultDescription,
           url: window.location.href,
         })
         .then(() => console.log('Compartido con éxito'))
@@ -329,46 +324,6 @@ export class ShowplanComponent implements OnInit {
         'warning'
       );
     }
-  }
-
-  actualizarMetadatos() {
-    const apiUrl = environment.apiUrl;
-    const url = `${apiUrl}/showplan/${this.plan.id}`;
-
-    // Actualizar los metadatos OG (Open Graph)
-    this.metaService.updateTag({
-      property: 'og:title',
-      content: this.plan.name,
-    });
-    this.metaService.updateTag({
-      property: 'og:description',
-      content: this.plan.description,
-    });
-    this.metaService.updateTag({
-      property: 'og:image',
-      content: this.plan.img,
-    });
-    this.metaService.updateTag({ property: 'og:url', content: url });
-    this.metaService.updateTag({ property: 'og:type', content: 'website' });
-
-    // Actualizar los metadatos de Twitter Card (ahora X)
-    this.metaService.updateTag({
-      name: 'twitter:card',
-      content: 'summary_large_image',
-    });
-    this.metaService.updateTag({
-      name: 'twitter:title',
-      content: this.plan.name,
-    });
-    this.metaService.updateTag({
-      name: 'twitter:description',
-      content: this.plan.description,
-    });
-    this.metaService.updateTag({
-      name: 'twitter:image',
-      content: this.plan.img,
-    });
-    this.metaService.updateTag({ name: 'twitter:url', content: url });
   }
 
   ngOnInit(): void {
