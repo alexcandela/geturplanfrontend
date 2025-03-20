@@ -36,14 +36,12 @@
                 }
                 <section class="lista">
                     <ul class="lista-scroll">
-                        @for (comment of plan.comments; track $index) {
+                        @for (comment of plan.comments; track comment.id) {
                         <li class="comment" [@commentAnimation]="isNewComment ? 'void' : '*'">
-                            <app-comment (delete)="handleDelete($event)" [comment]="comment"
-                                [sameuser]="sameUser(comment.user.id)" />
+                            <app-comment (delete)="handleDelete($event)" [comment]="comment" [planUserId]="plan.user_id"
+                                [sameuser]="sameUser(comment.user.id)">
+                            </app-comment>
                         </li>
-                        }
-                        @empty {
-                        <p>Este plan no tiene comentarios.</p>
                         }
                     </ul>
                 </section>
@@ -98,13 +96,13 @@
                         <a [href]="facebookShareUrl" target="_blank">
                             <img src="/assets/icons/facebook.svg" alt="facebook-icon">
                         </a>
-                        <img src="/assets/icons/share.svg" alt="share-icon" (click)="compartir()" >
+                        <img src="/assets/icons/share.svg" alt="share-icon" (click)="compartir()">
                     </article>
                 </section>
-                
+
                 <article class="fecha">
                     <i class="fa-solid fa-clock"></i>
-                    <span class="fecha-frase" >Publicado el</span>
+                    <span class="fecha-frase">Publicado el</span>
                     <span>{{ plan.created_at | dateFormat }}</span>
                 </article>
             </article>

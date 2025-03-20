@@ -6,6 +6,12 @@
         <article class="commentreply-username">
             <img [src]="reply.user.img" alt="user-img">
             <a rel="noopener noreferrer" [routerLink]="['/perfil', reply.user.username]">{{reply.user.username}}</a>
+            @if (creador) {
+            <div class="commentreply-username-creador">
+                <span>Creador</span>
+                <img src="/assets/icons/star.svg" alt="star-icon">
+            </div>
+            }
         </article>
         <article class="commentreply-text">
             <p>{{reply.reply}}</p>
@@ -18,11 +24,11 @@
                         </button>
                     </div>
                     <div class="commentActions-buttons-resp">
-                        <button class="replyBtn">Responder</button>
+                        <button class="replyBtn" (click)="responder($event)">Responder</button>
                     </div>
-                    @if (1 == 1) {
+                    @if (sameuser()) {
                     <div class="commentActions-buttons-eliminarComent">
-                        <button class="deleteCommentBtn">Eliminar</button>
+                        <button class="deleteCommentBtn" (click)="deleteReply($event)">Eliminar</button>
                     </div>
                     }
                 </article>

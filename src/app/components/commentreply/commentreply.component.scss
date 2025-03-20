@@ -44,6 +44,24 @@
         text-decoration: underline;
       }
     }
+    &-creador {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      img {
+        width: 15px;
+        height: 15px;
+      }
+      span {
+        font-family: $montserrat;
+        font-weight: 500;
+        font-size: 14px;
+        color: #8d8d8d;
+        text-decoration: none;
+        letter-spacing: -0.5px;
+      }
+    }
   }
   &-text {
     display: grid;

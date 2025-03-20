@@ -133,9 +133,6 @@ export class ShowplanComponent implements OnInit {
     });
   }
 
-  defaultDescription = 'Descubre planes alucinantes en Geturplan, donde puedes encontrar las mejores actividades y experiencias para disfrutar con tus amigos o familia. ¡No te pierdas ninguna aventura!' // Descripción breve por defecto
-
-
   whatsappShareUrl = '';
   facebookShareUrl = '';
   xShareUrl = '';
@@ -156,20 +153,23 @@ export class ShowplanComponent implements OnInit {
   }
 
   buildShareLink() {
-    const planUrl = window.location.href;  // URL de la página actual
+    const planUrl = window.location.href; // URL de la página actual
 
     // Enlace de WhatsApp (sin texto extra, solo la URL)
-    this.whatsappShareUrl = `https://wa.me/?text=${encodeURIComponent(planUrl)}`;
+    this.whatsappShareUrl = `https://wa.me/?text=${encodeURIComponent(
+      planUrl
+    )}`;
 
     // Enlace de Facebook (solo la URL)
-    this.facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(planUrl)}`;
+    this.facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+      planUrl
+    )}`;
 
     // Enlace de Twitter (X) (sin texto extra)
-    this.xShareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(planUrl)}`;
-}
-
-
-
+    this.xShareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(
+      planUrl
+    )}`;
+  }
 
   getPlan = () => {
     if (typeof window !== 'undefined' && window.localStorage) {
@@ -178,6 +178,8 @@ export class ShowplanComponent implements OnInit {
         (response: any) => {
           if (response.status === 'success') {
             this.plan = response.plan;
+            console.log(this.plan.comments);
+
             this.selectedImg.set(this.plan.img);
             this.likeImgBtn.set(
               this.plan.has_liked ? this.likeImg : this.emptyLike
@@ -253,21 +255,26 @@ export class ShowplanComponent implements OnInit {
     this.selectedImg.set(img);
   };
 
+  trackByCommentId(index: number, comment: Comment): number {
+    return comment.id; // O cualquier identificador único del comentario
+  }
+
   addComment(newComment: Comment) {
     this.isNewComment = true;
-    newComment.has_liked = false;
-
-    this.plan.comments = [newComment, ...(this.plan.comments ?? [])];
-
-    // Después de agregar el nuevo comentario, actualiza el estado de todos los comentarios
+    // No reinicies el estado de hasLiked, solo añádelo tal como está en el nuevo comentario
+    newComment.has_liked = newComment.has_liked || false; // Asegúrate de que no esté vacío
+  
+    this.plan.comments?.unshift(newComment); // Agregar al principio
+  
+    // Actualizar el estado de los likes después de agregar el nuevo comentario
     setTimeout(() => {
       this.commentComponents.forEach((commentComp) => {
-        // Aquí asegúrate de que el estado de like se actualice también para los comentarios existentes
         commentComp.updateLikeState();
       });
       this.cdr.detectChanges();
     }, 0);
   }
+  
 
   submitComment = (data: { comment: string }) => {
     if (typeof window !== 'undefined' && window.localStorage) {

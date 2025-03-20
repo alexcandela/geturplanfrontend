@@ -1,6 +1,12 @@
 <article class="comment-username">
     <img [src]="comment.user.img" alt="user-img">
     <a rel="noopener noreferrer" [routerLink]="['/perfil', comment.user.username]">{{comment.user.username}}</a>
+    @if (creador) {
+    <div class="comment-username-creador">
+        <span>Creador</span>
+        <img src="/assets/icons/star.svg" alt="star-icon">
+    </div>
+    }
 </article>
 <article class="comment-text">
     <p>{{comment.comment}}</p>
@@ -8,13 +14,12 @@
         <article class="commentActions-buttons">
             <div class="commentActions-buttons-likes">
                 <span>{{ comment.likes_count || 0 }}</span>
-                <!-- <span>{{ hasLiked() }}</span> -->
                 <button class="commentLikeBtn">
                     <img [src]="likeImgBtn()" (click)="like($event)" alt="like-button">
                 </button>
             </div>
             <div class="commentActions-buttons-resp">
-                <button class="replyBtn">Responder</button>
+                <button (click)="toggleInputReply()" class="replyBtn">Responder</button>
             </div>
             @if (sameuser) {
             <div class="commentActions-buttons-eliminarComent">
@@ -28,9 +33,20 @@
         </article>
     </div>
 </article>
-@if (comment.has_replies) {
-    @for (reply of comment.replies; track $index) {
-        <app-commentreply [reply]="reply"/>
-    }
+@if (inputReply()) {
+<form class="comment-inputreply" [formGroup]="replyForm" (ngSubmit)="submitReply(replyForm.value)">
+    <textarea name="reply" placeholder="Escribe tu respuesta..." formControlName="reply" maxlength="200"></textarea>
+    <button type="submit">
+        <img src="/assets/icons/reply-icon.svg" alt="reply-icon">
+    </button>
+</form>
+}
+
+
+@if (hasReplies()) {
+@for (reply of comment.replies; track reply.id) {
+<app-commentreply (deleteReplyFromArray)="handleDelete($event)" (responderRespuesta)="responderRespuesta($event)"
+    [reply]="reply" [planUserId]="planUserId" [@replyAnimation] />
+}
 
 }

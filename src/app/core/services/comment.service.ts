@@ -30,4 +30,25 @@ export class CommentService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.delete<any>(`${this.apiUrl}/delete-comment/${commentId}`, { headers });
   };
+
+  reply = (
+    token: string | null,
+    commentId: number,
+    reply: string
+  ): Observable<any> => {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const params = {
+      reply: reply,
+      commentId: commentId,
+    };
+    return this.http.post<any>(`${this.apiUrl}/reply`, { params }, { headers });
+  };
+
+  deleteReply = (
+    token: string | null,
+    replyId: Number
+  ): Observable<any> => {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.delete<any>(`${this.apiUrl}/delete-reply/${replyId}`, { headers });
+  };
 }

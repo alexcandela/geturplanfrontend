@@ -25,6 +25,24 @@
         text-decoration: underline;
       }
     }
+    &-creador {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      img {
+        width: 15px;
+        height: 15px;
+      }
+      span {
+        font-family: $montserrat;
+        font-weight: 500;
+        font-size: 14px;
+        color: #8d8d8d;
+        text-decoration: none;
+        letter-spacing: -0.5px;
+      }
+    }
   }
   &-text {
     display: grid;
@@ -50,6 +68,50 @@
         font-family: $montserrat;
         font-size: 13px;
         font-weight: 500;
+      }
+    }
+  }
+  &-inputreply {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 5px;
+    padding: 10px;
+    @media (max-width: 1024px) {
+      padding: 5px;
+    }
+    textarea {
+      font-size: 15px;
+      font-weight: 500;
+      padding: 10px;
+      border: 1.5px solid #ccc;
+      border-radius: 5px;
+      outline: none;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      resize: none;
+      height: 50px;
+      background-color: #ffffff;
+      color: #333;
+      font-family: $montserrat;
+    }
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #f0f0f0;
+      img {
+        width: 40px;
+        height: 40px;
+        @media (max-width: 1024px) {
+          width: 30px;
+          height: 30px;
+        }
+      }
+      &:hover {
+        transition: ease-in-out 0.3s;
+        background-color: #e4e4e4;
       }
     }
   }
