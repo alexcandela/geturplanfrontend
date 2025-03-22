@@ -127,5 +127,6 @@ body {
   }
 
   input {
-    transform: scale(1);
+    transform: scale(1.01);
+    touch-action: manipulation;
   }
