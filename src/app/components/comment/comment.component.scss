@@ -92,6 +92,9 @@
       background-color: #ffffff;
       color: #333;
       font-family: $montserrat;
+      @media (max-width: 1024px) {
+        font-size: 16px;
+      }
     }
     button {
       display: flex;
