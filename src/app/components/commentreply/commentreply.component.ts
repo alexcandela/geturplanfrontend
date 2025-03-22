@@ -6,6 +6,7 @@ import { AuthService } from '../../core/services/authservice.service';
 import { CommentService } from '../../core/services/comment.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { NotificationService } from '../../core/services/notification.service';
+import { LikeService } from '../../core/services/like.service';
 
 @Component({
   selector: 'app-commentreply',
@@ -30,11 +31,14 @@ export class CommentreplyComponent {
 
   creador: boolean = false;
 
+  hasLiked = signal(false);
+
   constructor(
     private authService: AuthService,
     private commentService: CommentService,
     private cdr: ChangeDetectorRef,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private likeService: LikeService
   ){
   }
 
@@ -105,11 +109,65 @@ export class CommentreplyComponent {
     }
   }
 
+  like(event: Event) {
+    event.preventDefault();
+    if (typeof window !== 'undefined' && window.localStorage) {
+      this.token = localStorage.getItem('jwt');
+      if (this.token) {
+        if (this.authService.isTokenValid(this.token)) {
+          this.likeService.toLikeCommentReply(this.token, this.reply.id).subscribe(
+            (response) => {
+              if (response.status === 'success') {
+                this.hasLiked.set(response.message);
+                this.reply.has_liked = response.message;
+                this.likeImgBtn.set(
+                  this.likeImgBtn() === this.emptyLike
+                    ? this.likeImg
+                    : this.emptyLike
+                );
+                if (
+                  this.reply.likes_count === undefined ||
+                  this.reply.likes_count === null
+                ) {
+                  this.reply.likes_count = 0;
+                }
+                this.reply.likes_count = response.message
+                  ? this.reply.likes_count + 1
+                  : this.reply.likes_count - 1;
+              }
+            },
+            (error) => {
+              console.error(error);
+            }
+          );
+        } else {
+          this.notificationService.showNotification(
+            'Inicia sesión para utilizar esta función.',
+            'error'
+          );
+          return;
+        }
+      } else {
+        this.notificationService.showNotification(
+          'Inicia sesión para utilizar esta función.',
+          'error'
+        );
+        return;
+      }
+    }
+  }
+
+  updateLikeState() {
+    this.likeImgBtn.set(this.reply.has_liked ? this.likeImg : this.emptyLike);
+    this.hasLiked.set(this.reply.has_liked);
+  }
+
   trackByReplyId(index: number, reply: CommentReply): number {
       return reply.id; // O cualquier identificador único del comentario
     }
 
   ngOnInit(): void {
+    this.updateLikeState();
     this.sameuser.set(this.checkSameUser(this.reply.user_id));
     this.checkCredor(); 
   }

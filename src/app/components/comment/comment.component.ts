@@ -298,7 +298,5 @@ export class CommentComponent implements OnChanges {
     this.checkLogged();
     this.hasReplies.set(this.comment.has_replies);
     this.checkCredor();
-    console.log(this.hasLiked);
-    
   }
 }

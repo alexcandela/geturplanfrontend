@@ -21,9 +21,9 @@ export class LikeService {
     return this.http.post<any>(`${this.apiUrl}/comment-like`, {commentId}, { headers });
   }
 
-  // toLikeCommentReply = (token: string | null, replyId: number): Observable<any> => {
-  //   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  //   return this.http.post<any>(`${this.apiUrl}/reply-like`, {replyId}, { headers });
-  // }
+  toLikeCommentReply = (token: string | null, replyId: number): Observable<any> => {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post<any>(`${this.apiUrl}/reply-like`, {replyId}, { headers });
+  }
 
 }
