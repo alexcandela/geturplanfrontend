@@ -4,7 +4,7 @@ Este es el frontend de geturplan, desarrollado con Angular. Proporciona una inte
 
 ## 🚀 Tecnologías Utilizadas
 
-- Angular 18.0.3
+- Angular 19
 - TypeScript
 - RxJS (manejo de estados reactivos)
 
