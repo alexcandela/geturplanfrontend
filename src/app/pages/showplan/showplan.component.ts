@@ -23,6 +23,7 @@ import { NotificationService } from '../../core/services/notification.service';
 import { ToastComponent } from '../../components/toast-notification/toast-notification.component';
 import { Comment } from '../../core/interfaces/plan';
 import { MapComponent } from '../../components/map/map.component';
+import { AdBannerComponent } from '../../shared/ad-banner/ad-banner.component';
 
 import { trigger, transition, style, animate } from '@angular/animations';
 
@@ -48,7 +49,8 @@ import { environment } from '../../core/environments/environment';
     ToastComponent,
     ReactiveFormsModule,
     RouterLink,
-    MapComponent
+    MapComponent,
+    AdBannerComponent
   ],
   templateUrl: './showplan.component.html',
   styleUrl: './showplan.component.scss',
