@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild, WritableSignal, signal } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  WritableSignal,
+  signal,
+} from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { provincias, categorias } from '../../core/data';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -35,7 +41,7 @@ import { MapService } from '../../core/services/map.service';
 })
 export class EditarPlanComponent implements OnInit {
   @ViewChild(MapComponent) mapComponent!: MapComponent;
-  
+
   plan: Plan | null = null;
 
   provincias: Array<string> = provincias;
@@ -105,7 +111,7 @@ export class EditarPlanComponent implements OnInit {
     this.mapService.getCoordinatesFromLocation(selectedProvince).subscribe(
       (coords) => {
         this.center = coords;
-        
+
         this.coordinates = coords;
       },
       (error) => {
@@ -119,7 +125,6 @@ export class EditarPlanComponent implements OnInit {
       ? { lat: +this.plan.latitude, lng: +this.plan.longitude }
       : null;
   }
-  
 
   // Coordenadas exactas seleccionadas por el usuario
   getExactCoordinates(coords: google.maps.LatLngLiteral) {
@@ -239,6 +244,9 @@ export class EditarPlanComponent implements OnInit {
     if (this.exactCoordinates) {
       formData.append('latitude', this.exactCoordinates.lat.toString());
       formData.append('longitude', this.exactCoordinates.lng.toString());
+    } else if (this.plan?.latitude && this.plan?.longitude) {
+      formData.append('latitude', this.plan.latitude.toString());
+      formData.append('longitude', this.plan.longitude.toString());
     }
 
     if (this.imagesToDelete.length > 0) {
