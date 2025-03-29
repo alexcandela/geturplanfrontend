@@ -1,7 +1,17 @@
 @if (message) {
-  <div [ngClass]="[type, hide ? 'hide' : '']" class="toast-notification">
+<div [ngClass]="[type, hide ? 'hide' : '']" class="toast-notification">
+  <div class="icon">
     <i [ngClass]="icon()"></i>
-    <span>{{ message }}</span>
   </div>
-  
+  <div class="message">
+    <span class="errorContainer">{{type}}</span>
+    <span class="messageContainer">{{ message }}</span>
+  </div>
+  <div class="close">
+    <button (click)="closeNotification()">
+      <img src="/assets/icons/cross.svg" alt="cross-icon">
+    </button>
+  </div>
+</div>
+
 }

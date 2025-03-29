@@ -53,7 +53,7 @@
                 <section class="inputsection">
                     <label for="provincia"><i class="fa-solid fa-location-dot"></i><span>Selecciona la
                             provincia</span></label>
-                    <select name="provincia" formControlName="province">
+                    <select name="provincia" formControlName="province" (change)="getCoordinates($event)">
                         <option value="" disabled selected>Selecciona una provincia.</option>
                         @for (provincia of provincias; track $index) {
                         <option value="{{provincia}}">{{provincia}}</option>
@@ -86,22 +86,15 @@
             <article class="conturl">
                 <article class="label">
                     <i class="fa-solid fa-link"></i>
-                    <label for="description">URL - Google Maps</label>
+                    <label for="description">Ubicación - Google Maps</label>
                 </article>
-                <div class="inputdiv">
-                    <input type="url" name="name" placeholder="URL de la ubicación exacta..." formControlName="url">
-                    @if (submitted() && planForm.controls['url'].invalid) {
-                    <div class="errorMessageContainer">
-                        <i class="fa-solid fa-circle-exclamation"></i>
-                        @if (planForm.controls['url'].errors?.['required']) {
-                        <small class="errorMessage">La URL es obligatoria.</small>
-                        }
-                        @if (planForm.controls['url'].errors?.['pattern']) {
-                        <small class="errorMessage">La URL no es valida.</small>
-                        }
-                    </div>
-                    }
+                <app-map (exactCoords)="getExactCoordinates($event)" [isCreateMode]="true" [zone]="center" [selected]="getValidCoordinates()"/>
+                @if (submitted() && exactCoordinates == null) {
+                <div class="errorMessageContainer">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <small class="errorMessage">La ubicación es obligatoria.</small>
                 </div>
+                }
             </article>
             <section class="inputsection">
                 <article class="label">

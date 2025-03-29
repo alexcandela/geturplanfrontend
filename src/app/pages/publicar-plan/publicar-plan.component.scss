@@ -83,8 +83,8 @@
       }
       .conturl {
         display: grid;
-        grid-template-columns: auto 1fr;
-        gap: 50px;
+        grid-template-rows: auto 1fr;
+        gap: 10px;
         @media (max-width: 1024px) {
           grid-template-columns: 1fr;
           gap: 10px;

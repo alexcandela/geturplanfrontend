@@ -3,7 +3,7 @@ export interface PlanForm {
   description: string;
   province: string;
   city: string;
-  url: string;
+  coordinates: google.maps.LatLngLiteral; 
   categories: string[];
   principal_image: File;
   secondary_images: File[];

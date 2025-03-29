@@ -107,10 +107,11 @@
                 </article>
             </article>
         </section>
-        <section class="planDetalle-info-googlemaps">
+        <!-- <section class="planDetalle-info-googlemaps">
             <i class="fa-solid fa-map-pin"></i>
             <a [href]="plan.url" target="_blank">Click para ver ubicación exacta en Google Maps.</a>
-        </section>
+        </section> -->
+        <app-map [isCreateMode]="false" [planLocation]="coords"/>
     </section>
 
 </section>

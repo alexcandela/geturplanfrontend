@@ -22,6 +22,7 @@ import { LikeService } from '../../core/services/like.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { ToastComponent } from '../../components/toast-notification/toast-notification.component';
 import { Comment } from '../../core/interfaces/plan';
+import { MapComponent } from '../../components/map/map.component';
 
 import { trigger, transition, style, animate } from '@angular/animations';
 
@@ -47,6 +48,7 @@ import { environment } from '../../core/environments/environment';
     ToastComponent,
     ReactiveFormsModule,
     RouterLink,
+    MapComponent
   ],
   templateUrl: './showplan.component.html',
   styleUrl: './showplan.component.scss',
@@ -94,7 +96,8 @@ export class ShowplanComponent implements OnInit {
     comments: [],
     principal_image: '',
     secondary_images: [],
-    url: '',
+    latitude: 0,
+    longitude: 0,
   };
   token: string | null = null;
 
@@ -137,6 +140,9 @@ export class ShowplanComponent implements OnInit {
   facebookShareUrl = '';
   xShareUrl = '';
 
+  // Map
+  coords: google.maps.LatLngLiteral = { lat: 40.4168, lng: -3.7038 };
+
   sameUser(commentUserId: number): boolean {
     if (typeof window !== 'undefined' && window.localStorage) {
       this.token = localStorage.getItem('jwt');
@@ -178,7 +184,12 @@ export class ShowplanComponent implements OnInit {
         (response: any) => {
           if (response.status === 'success') {
             this.plan = response.plan;
-            console.log(this.plan.comments);
+            
+            this.coords = {
+              lat: parseFloat(this.plan.latitude.toString()),
+              lng: parseFloat(this.plan.longitude.toString())
+            };
+            
 
             this.selectedImg.set(this.plan.img);
             this.likeImgBtn.set(

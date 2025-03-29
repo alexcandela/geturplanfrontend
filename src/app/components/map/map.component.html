@@ -1,0 +1,7 @@
+<google-map (mapClick)="onMapClick($event)" [center]="center" [zoom]="zoom" width="100%" height="400px">
+    @if (isCreateMode && selectedLocation) {
+        <map-marker [position]="selectedLocation"></map-marker>
+    } @else if (!isCreateMode && planLocation) {
+        <map-marker [position]="planLocation"></map-marker>
+    }
+</google-map>

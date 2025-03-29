@@ -1,4 +1,4 @@
-import { Component, OnInit, WritableSignal, signal } from '@angular/core';
+import { Component, OnInit, ViewChild, WritableSignal, signal } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { provincias, categorias } from '../../core/data';
 import { Router } from '@angular/router';
@@ -6,6 +6,8 @@ import { AuthService } from '../../core/services/authservice.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ToastComponent } from '../../components/toast-notification/toast-notification.component';
 import { PlanForm, PlanFormResponse } from '../../core/interfaces/plan-form';
+import { MapComponent } from '../../components/map/map.component';
+
 import {
   exactCategoriesCount,
   imageValidator,
@@ -22,14 +24,17 @@ import { log } from 'console';
 import { PlanService } from '../../core/services/plan.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { backendurl } from '../../core/environments/backendurl';
+import { MapService } from '../../core/services/map.service';
 @Component({
   selector: 'app-publicar-plan',
   standalone: true,
-  imports: [ReactiveFormsModule, ToastComponent],
+  imports: [ReactiveFormsModule, ToastComponent, MapComponent],
   templateUrl: './publicar-plan.component.html',
   styleUrl: './publicar-plan.component.scss',
 })
 export class PublicarPlanComponent implements OnInit {
+  @ViewChild(MapComponent) mapComponent!: MapComponent;
+
   provincias: Array<string> = provincias;
   categorias: Array<string> = categorias;
 
@@ -43,6 +48,9 @@ export class PublicarPlanComponent implements OnInit {
   ];
 
   planForm: FormGroup;
+  coordinates: google.maps.LatLngLiteral | null = null;
+  exactCoordinates: google.maps.LatLngLiteral | null = null;
+
   submitted = signal(false);
 
   selectedCategories: string[] = [];
@@ -57,7 +65,8 @@ export class PublicarPlanComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private fb: FormBuilder,
     private planService: PlanService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private mapService: MapService
   ) {
     titulo.setTitle('Publicar plan');
     this.planForm = this.fb.group({
@@ -65,18 +74,13 @@ export class PublicarPlanComponent implements OnInit {
       description: ['', [Validators.required]],
       province: ['', [Validators.required]],
       city: ['', [Validators.required]],
-      url: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(/^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/),
-        ],
-      ],
       categories: [[], [Validators.required, exactCategoriesCount(3)]],
       principal_image: [null, [Validators.required, imageValidator()]],
       secondary_images: [[], [optionalImagesArrayValidator()]],
     });
   }
+
+  center: google.maps.LatLngLiteral | null = null;
 
   checkLogged = () => {
     if (typeof window !== 'undefined' && window.localStorage) {
@@ -86,6 +90,24 @@ export class PublicarPlanComponent implements OnInit {
       }
     }
   };
+  // Método para obtener las coordenadas a partir de la provincia
+  getCoordinates(event: Event) {
+    const selectedProvince = (event.target as HTMLSelectElement).value;
+    this.mapService.getCoordinatesFromLocation(selectedProvince).subscribe(
+      (coords) => {
+        this.center = coords;
+        this.coordinates = coords;
+      },
+      (error) => {
+        console.error('Error al obtener las coordenadas:', error);
+      }
+    );
+  }
+
+  // Coordenadas exactas seleccionadas por el usuario
+  getExactCoordinates(coords: google.maps.LatLngLiteral) {
+    this.exactCoordinates = coords;
+  }
 
   addOrDeleteCategory = (value: string) => {
     if (!this.selectedCategories.includes(value)) {
@@ -108,7 +130,7 @@ export class PublicarPlanComponent implements OnInit {
     return this.selectedCategories.includes(value);
   }
 
-  onFileChangePrincipal(event: Event): void {    
+  onFileChangePrincipal(event: Event): void {
     if (this.planForm.get('principal_image')?.value !== null) {
       this.notificationService.showNotification(
         'Ya se ha seleccionado una imagen.',
@@ -138,27 +160,27 @@ export class PublicarPlanComponent implements OnInit {
       );
     } else {
       const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      const file = input.files[0];
-      const url = this.sanitizer.bypassSecurityTrustUrl(
-        URL.createObjectURL(file)
-      );
+      if (input.files && input.files.length > 0) {
+        const file = input.files[0];
+        const url = this.sanitizer.bypassSecurityTrustUrl(
+          URL.createObjectURL(file)
+        );
 
-      if (this.secundarias.length >= 4) {
-        this.secundarias.pop();
+        if (this.secundarias.length >= 4) {
+          this.secundarias.pop();
+        }
+        if (this.selectedImages.length >= 4) {
+          this.selectedImages.pop();
+        }
+        this.secundarias.unshift(url);
+        this.selectedImages.unshift(file);
       }
-      if (this.selectedImages.length >= 4) {
-        this.selectedImages.pop();
-      }
-      this.secundarias.unshift(url);
-      this.selectedImages.unshift(file);
-    }
     }
   }
 
   reorderArray() {
     let nonNullIndex = 0;
-  
+
     // Mover todos los elementos no nulos hacia adelante
     for (let i = 0; i < this.secundarias.length; i++) {
       if (this.secundarias[i] !== this.defaultImg) {
@@ -166,7 +188,7 @@ export class PublicarPlanComponent implements OnInit {
         nonNullIndex++;
       }
     }
-  
+
     // Rellenar el resto del array con null
     for (let i = nonNullIndex; i < this.secundarias.length; i++) {
       this.secundarias[i] = this.defaultImg;
@@ -191,6 +213,11 @@ export class PublicarPlanComponent implements OnInit {
       'principal_image',
       this.planForm.get('principal_image')?.value
     );
+
+    if (this.exactCoordinates) {
+      formData.append('latitude', this.exactCoordinates.lat.toString());
+      formData.append('longitude', this.exactCoordinates.lng.toString());
+    }
 
     // Añadir imágenes secundarias de manera individual
     const secondaryImages = this.planForm.get('secondary_images')?.value;

@@ -10,7 +10,8 @@ export interface Plan {
   img: string,
   user_id: number;
   user: UserPlan;
-  url: string;
+  latitude: number;
+  longitude: number;
   created_at: string;
   categories: Category[];
   comments?: Comment[];

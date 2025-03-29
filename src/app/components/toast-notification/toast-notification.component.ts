@@ -37,6 +37,10 @@ export class ToastComponent implements OnInit {
     }
   };
 
+  closeNotification(){
+    this.hide = true;
+  }
+
   ngOnInit(): void {
     this.notificationService.notifications$.subscribe((notification) => {
       this.message = notification.message;
@@ -45,11 +49,11 @@ export class ToastComponent implements OnInit {
       this.hide = false;
       setTimeout(() => {
         this.hide = true;
-      }, 3000);
+      }, 5000);
       setTimeout(() => {
         this.message = null;
         this.type = null;
-      }, 3500);
+      }, 6000);
     });
   }
 }

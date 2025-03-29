@@ -1,4 +1,4 @@
-import { Component, OnInit, WritableSignal, signal } from '@angular/core';
+import { Component, OnInit, ViewChild, WritableSignal, signal } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { provincias, categorias } from '../../core/data';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -6,6 +6,7 @@ import { AuthService } from '../../core/services/authservice.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ToastComponent } from '../../components/toast-notification/toast-notification.component';
 import { PlanForm, PlanFormResponse } from '../../core/interfaces/plan-form';
+import { MapComponent } from '../../components/map/map.component';
 import {
   exactCategoriesCount,
   imageValidator,
@@ -23,15 +24,18 @@ import { PlanService } from '../../core/services/plan.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { Plan } from '../../core/interfaces/plan';
 import { backendurl } from '../../core/environments/backendurl';
+import { MapService } from '../../core/services/map.service';
 
 @Component({
   selector: 'app-editar-plan',
   standalone: true,
-  imports: [ReactiveFormsModule, ToastComponent, RouterLink],
+  imports: [ReactiveFormsModule, ToastComponent, RouterLink, MapComponent],
   templateUrl: './editar-plan.component.html',
   styleUrl: './editar-plan.component.scss',
 })
 export class EditarPlanComponent implements OnInit {
+  @ViewChild(MapComponent) mapComponent!: MapComponent;
+  
   plan: Plan | null = null;
 
   provincias: Array<string> = provincias;
@@ -59,6 +63,10 @@ export class EditarPlanComponent implements OnInit {
   imagesToDelete: SafeUrl[] = [];
   filteredSecundarias: SafeUrl[] = [];
 
+  coordinates: google.maps.LatLngLiteral | null = null;
+  exactCoordinates: google.maps.LatLngLiteral | null = null;
+  center: google.maps.LatLngLiteral | null = null;
+
   constructor(
     private titulo: Title,
     private router: Router,
@@ -67,7 +75,8 @@ export class EditarPlanComponent implements OnInit {
     private fb: FormBuilder,
     private planService: PlanService,
     private notificationService: NotificationService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private mapService: MapService
   ) {
     titulo.setTitle('Editar plan');
     this.planForm = this.fb.group({
@@ -75,13 +84,6 @@ export class EditarPlanComponent implements OnInit {
       description: ['', [Validators.required]],
       province: ['', [Validators.required]],
       city: ['', [Validators.required]],
-      url: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(/^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/),
-        ],
-      ],
       categories: [[], [Validators.required, exactCategoriesCount(3)]],
       principal_image: [null, [imageValidator()]],
       secondary_images: [[], [optionalImagesArrayValidator()]],
@@ -96,6 +98,33 @@ export class EditarPlanComponent implements OnInit {
       }
     }
   };
+
+  // Método para obtener las coordenadas a partir de la provincia
+  getCoordinates(event: Event) {
+    const selectedProvince = (event.target as HTMLSelectElement).value;
+    this.mapService.getCoordinatesFromLocation(selectedProvince).subscribe(
+      (coords) => {
+        this.center = coords;
+        
+        this.coordinates = coords;
+      },
+      (error) => {
+        console.error('Error al obtener las coordenadas:', error);
+      }
+    );
+  }
+
+  getValidCoordinates(): google.maps.LatLngLiteral | null {
+    return this.plan?.latitude && this.plan?.longitude
+      ? { lat: +this.plan.latitude, lng: +this.plan.longitude }
+      : null;
+  }
+  
+
+  // Coordenadas exactas seleccionadas por el usuario
+  getExactCoordinates(coords: google.maps.LatLngLiteral) {
+    this.exactCoordinates = coords;
+  }
 
   addOrDeleteCategory = (value: string) => {
     if (!this.selectedCategories.includes(value)) {
@@ -206,6 +235,12 @@ export class EditarPlanComponent implements OnInit {
     formData.append('city', this.planForm.get('city')?.value);
     formData.append('url', this.planForm.get('url')?.value);
     formData.append('categories', this.planForm.get('categories')?.value);
+
+    if (this.exactCoordinates) {
+      formData.append('latitude', this.exactCoordinates.lat.toString());
+      formData.append('longitude', this.exactCoordinates.lng.toString());
+    }
+
     if (this.imagesToDelete.length > 0) {
       const imageUrls: string[] = this.imagesToDelete.map((safeUrl: SafeUrl) =>
         safeUrl.toString()
@@ -225,7 +260,6 @@ export class EditarPlanComponent implements OnInit {
         formData.append(`secondary_images[${index}]`, file);
       });
     }
-
     return formData;
   };
 
@@ -272,7 +306,6 @@ export class EditarPlanComponent implements OnInit {
         description: this.plan.description,
         province: this.plan.province,
         city: this.plan.city,
-        url: this.plan.url,
         categories: this.plan.categories,
         // principal_image: this.plan.principal_image,
         // secondary_images: this.plan.secondary_images || [],
