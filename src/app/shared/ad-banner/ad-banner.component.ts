@@ -1,4 +1,5 @@
-import { Component, AfterViewInit, Input } from '@angular/core';
+import { Component, AfterViewInit, Input, ElementRef, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-ad-banner',
@@ -7,14 +8,34 @@ import { Component, AfterViewInit, Input } from '@angular/core';
   standalone: true,
 })
 export class AdBannerComponent implements AfterViewInit {
-  @Input() adSlot!: string; // ID del bloque de anuncios
+  @Input() adSlot!: string;
+
+  constructor(private el: ElementRef, @Inject(PLATFORM_ID) private platformId: object) {}
 
   ngAfterViewInit() {
-    try {
-      (window as any).adsbygoogle = (window as any).adsbygoogle || [];
-      (window as any).adsbygoogle.push({});
-    } catch (e) {
-      console.error('Error cargando Google AdSense', e);
+    if (isPlatformBrowser(this.platformId)) {
+      this.loadAd();
+    } else {
+      console.warn('AdSense intentado cargar en un entorno no compatible (SSR).');
+    }
+  }
+
+  private loadAd() {
+    if (typeof (window as any).adsbygoogle === 'undefined') {
+      console.warn('Google AdSense script no está cargado aún.');
+      return;
+    }
+
+    const adElement = this.el.nativeElement.querySelector('.adsbygoogle');
+    if (adElement) {
+      try {
+        console.log('Cargando anuncio...');
+        (window as any).adsbygoogle.push({});
+      } catch (e) {
+        console.error('Error cargando Google AdSense', e);
+      }
+    } else {
+      console.warn('No se encontró el bloque de anuncios en el DOM');
     }
   }
 }
