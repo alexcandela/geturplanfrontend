@@ -21,21 +21,28 @@ export class AdBannerComponent implements AfterViewInit {
   }
 
   private loadAd() {
-    if (typeof (window as any).adsbygoogle === 'undefined') {
-      console.warn('Google AdSense script no está cargado aún.');
+    const adElement = this.el.nativeElement.querySelector('.adsbygoogle');
+    
+    if (!adElement) {
+      console.warn('No se encontró el bloque de anuncios en el DOM');
       return;
     }
 
-    const adElement = this.el.nativeElement.querySelector('.adsbygoogle');
-    if (adElement) {
+    const checkAdsense = () => {
+      if (typeof (window as any).adsbygoogle === 'undefined') {
+        console.warn('Google AdSense script no está cargado aún. Reintentando...');
+        setTimeout(checkAdsense, 500); // Reintenta cada 500ms hasta que se cargue
+        return;
+      }
+
       try {
         console.log('Cargando anuncio...');
         (window as any).adsbygoogle.push({});
       } catch (e) {
         console.error('Error cargando Google AdSense', e);
       }
-    } else {
-      console.warn('No se encontró el bloque de anuncios en el DOM');
-    }
+    };
+
+    checkAdsense();
   }
 }
