@@ -21,6 +21,7 @@
             </div>
         </section>
     </section>
+    @if (!resetPassword()) {
     <section class="allLogin-cont">
         <section class="login">
             <article class="login-titulo">
@@ -81,7 +82,8 @@
                                 id="login" formControlName="rememberme">
                         </div>
                         <div class="opciones-forgot">
-                            <a rel="noopener noreferrer" (click)="sendEmail()" >He olvidado mi contraseña</a>
+                            <a rel="noopener noreferrer" (click)="resetPassword.set(!resetPassword())">He olvidado mi
+                                contraseña</a>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-iniciarsesion">Iniciar Sesión</button>
@@ -100,9 +102,55 @@
                 <p>¿No tienes cuenta?</p><a href="/register">Registrate</a>
             </section>
             <section class="divVolver">
-                <a rel="noopener noreferrer" href="/" class="btn btn-basico"><span>Volver al inicio</span><i class="fa-solid fa-house"></i></a>
+                <a rel="noopener noreferrer" href="/" class="btn btn-basico"><span>Volver al inicio</span><i
+                        class="fa-solid fa-house"></i></a>
             </section>
         </section>
     </section>
+    } @else {
+    <section class="allLogin-cont">
+        <section class="resetPassword">
+            <article class="login-titulo">
+                <h3>Recuperar contraseña</h3>
+                <p>Ingrese su correo asociado para cambiar la contraseña.</p>
+            </article>
+            <form [formGroup]="resetPassForm" (ngSubmit)="sendEmail(resetPassForm.value)" id="login"
+                class="login-inputs-inp">
+                <div class="inputContainer">
+                    <div class="input">
+                        <div class="input-divicon">
+                            <img src="/assets/icons/email.png" alt="email-icon">
+                        </div>
+                        <input type="email" name="email" id="login" formControlName="email">
+                        <div></div>
+                    </div>
+                    @if (submitted() && resetPassForm.controls['email'].invalid) {
+                    <div class="errorMessageContainer">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        @if (resetPassForm.controls['email'].errors?.['required']) {
+                        <small class="errorMessage">El email es obligatorio.</small>
+                        }
+                        @if (resetPassForm.controls['email'].errors?.['email']) {
+                        <small class="errorMessage">El email no es válido.</small>
+                        }
+                    </div>
+                    }
+                    @if(showErrorMessage()){
+                    <div class="errorMessageContainer">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <small class="errorMessage">{{message()}}</small>
+                    </div>
+                    }
+                </div>
+                <button type="submit" class="btn btn-iniciarsesion">Enviar correo de recuperación</button>
+            </form>
+            <section class="divVolver">
+                <a rel="noopener noreferrer" class="btn btn-basico"
+                    (click)="resetPassword.set(!resetPassword())"><span>Volver</span>
+                    <i class="fa-solid fa-person-walking-arrow-loop-left"></i></a>
+            </section>
+        </section>
+    </section>
+    }
 </section>
 <app-toast-notification />
