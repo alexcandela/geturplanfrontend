@@ -89,7 +89,7 @@ export class LoginComponent {
           if (error.status === 404) {
             this.message.set(error.error.message);
           } else {
-            this.message.set('Ocurrió un error al intentar iniciar sesión.');
+            this.message.set('Ocurrió un error en servidor.');
           }
         }
       );
