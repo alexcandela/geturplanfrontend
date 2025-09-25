@@ -49,6 +49,7 @@ export const provincias: string[] = [
   'Vizcaya',
   'Zamora',
   'Zaragoza',
+  'Otros'
 ];
 
 export const categorias: string[] = [
