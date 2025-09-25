@@ -7,11 +7,12 @@ import { CommentService } from '../../core/services/comment.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { NotificationService } from '../../core/services/notification.service';
 import { LikeService } from '../../core/services/like.service';
+import { DateFormatPipe } from '../../core/pipes/date-format.pipe';
 
 @Component({
   selector: 'app-commentreply',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, DateFormatPipe],
   templateUrl: './commentreply.component.html',
   styleUrl: './commentreply.component.scss',
 })
