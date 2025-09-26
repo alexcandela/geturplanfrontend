@@ -37,7 +37,7 @@ export class EditarPerfilComponent implements OnInit {
     tiktok: '',
   };
 
-  defaultImg: string = `${backendurl.apiUrl}/storage/default/default_user.png`;
+  defaultImg: string = `https://xvzgprxywegcfprvqhtr.supabase.co/storage/v1/object/public/storage/images/default/default_user.png`;
 
   token: string | null = null;
   userData: UserData | null = null;
