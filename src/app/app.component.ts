@@ -6,6 +6,7 @@ import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { routes } from './app.routes';
 import { ViewportScroller } from '@angular/common';
+import { inject } from "@vercel/analytics"
 
 
 
@@ -31,5 +32,6 @@ export class AppComponent implements OnInit {
       this.showHeaderFooter = !this.excludedRoutes.includes(event.urlAfterRedirects);
       this.viewportScroller.scrollToPosition([0, 0]);
     });
+    inject();
   }
 }
