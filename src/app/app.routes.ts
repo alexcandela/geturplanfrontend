@@ -7,7 +7,6 @@ import { Page404Component } from './pages/page-404/page-404.component';
 import { ShowplanComponent } from './pages/showplan/showplan.component';
 import { PublicarPlanComponent } from './pages/publicar-plan/publicar-plan.component';
 import { ProfileComponent } from './pages/profile/profile.component'; 
-import { EditarPerfilComponent } from './pages/editar-perfil/editar-perfil.component';
 import { FavoritosComponent } from './pages/favoritos/favoritos.component';
 import { EditarPlanComponent } from './pages/editar-plan/editar-plan.component';
 import { SettingsComponent } from './pages/settings/settings.component';
@@ -22,7 +21,6 @@ export const routes: Routes = [
     { path: 'publicar-plan', component: PublicarPlanComponent },
     { path: 'editar-plan', component: EditarPlanComponent },
     { path: 'perfil/:username', component: ProfileComponent },
-    { path: 'editar-perfil', component: EditarPerfilComponent },
     { path: 'favoritos', component: FavoritosComponent },
     { path: '**', component: Page404Component },
 ];
