@@ -2,195 +2,194 @@
     <section class="publicarPlan-timeline"></section>
     <section class="publicarPlan-formcont">
         <article class="publicarPlan-formcont-titulo">
-            <article>
+            <div class="titulo-content">
+                <i class="fa-solid fa-square-plus"></i>
                 <h2>Publicar plan</h2>
-                <img src="assets/icons/publicar.svg" alt="icon">
-            </article>
-            <section class="volvercont">
-                <a rel="noopener noreferrer" href="/" class="btn btn-basico"><i
-                        class="fa-solid fa-person-walking-arrow-loop-left"></i><span>Volver</span></a>
-            </section>
+            </div>
+            <a rel="noopener noreferrer" href="/" class="btn-volver">
+                <i class="fa-solid fa-arrow-left"></i>
+                <span>Volver</span>
+            </a>
         </article>
-        <form class="publicarPlan-formcont-form" method="post" [formGroup]="planForm"
-            (submit)="onSubmit(planForm.value)">
-            <section class="infobasica">
-                <article class="cont">
-                    <article class="label">
-                        <label for="name">Nombre</label>
-                    </article>
-                    <div class="inputdiv">
-                        <input type="text" name="name" placeholder="Nombre del plan..." formControlName="name">
-                        @if (submitted() && planForm.controls['name'].invalid) {
-                        <div class="errorMessageContainer">
-                            <i class="fa-solid fa-circle-exclamation"></i>
-                            @if (planForm.controls['name'].errors?.['required']) {
-                            <small class="errorMessage">El nombre es obligatorio.</small>
-                            }
-                        </div>
-                        }
-                    </div>
-
-                </article>
-                <article class="cont">
-                    <article class="label">
-                        <label for="description">Descripción</label>
-                    </article>
-                    <div class="inputdiv">
-                        <textarea name="description" placeholder="Escribe una breve descripción de tu plan..."
-                            maxlength="700" formControlName="description"></textarea>
-                        @if (submitted() && planForm.controls['description'].invalid) {
-                        <div class="errorMessageContainer">
-                            <i class="fa-solid fa-circle-exclamation"></i>
-                            @if (planForm.controls['description'].errors?.['required']) {
-                            <small class="errorMessage">La descripción es obligatoria.</small>
-                            }
-                        </div>
-                        }
-                    </div>
-                </article>
-            </section>
-            <section class="contubi">
-                <section class="inputsection">
-                    <label for="provincia"><i class="fa-solid fa-location-dot"></i><span>Selecciona la
-                            provincia</span></label>
-                    <select name="provincia" formControlName="province" (change)="getCoordinates($event)">
-                        <option value="" disabled selected>Selecciona una provincia.</option>
-                        @for (provincia of provincias; track $index) {
-                        <option value="{{provincia}}">{{provincia}}</option>
-                        }
-                    </select>
-
-                    <div class="errorMessageContainer">
-                        @if (submitted() && planForm.controls['province'].invalid) {
-                        <i class="fa-solid fa-circle-exclamation"></i>
-                        @if (planForm.controls['province'].errors?.['required']) {
-                        <small class="errorMessage">La provincia es obligatoria.</small>
-                        }
-                        }
-                    </div>
-
-                </section>
-                <section class="inputsection">
-                    <label for="ciudad"><i class="fa-solid fa-compass"></i><span>Escribe la ciudad</span></label>
-                    <input type="text" name="ciudad" placeholder="Ej: Terrassa" formControlName="city">
-                    <div class="errorMessageContainer">
-                        @if (submitted() && planForm.controls['city'].invalid) {
-                        <i class="fa-solid fa-circle-exclamation"></i>
-                        @if (planForm.controls['city'].errors?.['required']) {
-                        <small class="errorMessage">La ciudad es obligatoria.</small>
-                        }
-                        }
-                    </div>
-                </section>
-            </section>
-            <article class="conturl">
-                <article class="label">
-                    <i class="fa-solid fa-link"></i>
-                    <label for="description">Ubicación - Google Maps</label>
-                </article>
-                <app-map (exactCoords)="getExactCoordinates($event)" [isCreateMode]="true" [zone]="center" />
-                @if (submitted() && exactCoordinates == null) {
-                <div class="errorMessageContainer">
-                    <i class="fa-solid fa-circle-exclamation"></i>
-                    <small class="errorMessage">La ubicación es obligatoria.</small>
+        
+        <form class="publicarPlan-formcont-form" method="post" [formGroup]="planForm" (submit)="onSubmit(planForm.value)">
+            <section class="form-section">
+                <div class="section-header">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <h3>Información básica</h3>
                 </div>
-                }
-            </article>
-            <section class="inputsection">
-                <article class="label">
-                    <label for="">
-                        <i class="fa-solid fa-layer-group"></i><span>Seleccona hasta 3 categorias</span>
-                    </label>
-                </article>
-                <div class="inputdiv">
-                    <section class="listacategorias">
-                        @for (categoria of categorias; track $index) {
-                        <div class="listacategorias-categoria" [class.selected]="isCategorySelected(categoria)"
-                            (click)="addOrDeleteCategory(categoria)"><span>{{categoria}}</span></div>
-                        }
-                    </section>
-                    @if (submitted() && planForm.controls['categories'].invalid) {
-                    <div class="errorMessageContainer">
+                
+                <div class="inputContainer">
+                    <label for="name">Nombre del plan</label>
+                    <input type="text" id="name" placeholder="Ej: Senderismo en Montserrat..." formControlName="name">
+                    @if (submitted() && planForm.controls['name'].invalid) {
+                    <div class="errorMessage">
                         <i class="fa-solid fa-circle-exclamation"></i>
-                        <small class="errorMessage">Selecciona 3 categorias.</small>
+                        @if (planForm.controls['name'].errors?.['required']) {
+                        <span>El nombre es obligatorio</span>
+                        }
+                    </div>
+                    }
+                </div>
+
+                <div class="inputContainer">
+                    <label for="description">Descripción</label>
+                    <textarea id="description" placeholder="Describe tu plan en detalle..." maxlength="700" formControlName="description"></textarea>
+                    @if (submitted() && planForm.controls['description'].invalid) {
+                    <div class="errorMessage">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        @if (planForm.controls['description'].errors?.['required']) {
+                        <span>La descripción es obligatoria</span>
+                        }
                     </div>
                     }
                 </div>
             </section>
 
-            <section class="contphoto">
-                <section class="inputsection">
-                    <article class="label">
-                        <label for="principal">
-                            <i class="fa-regular fa-image"></i><span>Selecciona la foto principal</span>
-                        </label>
-                    </article>
-                    <section class="inputphoto">
-                        <div class="principal">
-                            <img class="img" [src]="img()" alt="Selected Image">
-                            <div class="deletediv">
-                                <button type="button" (click)="deletePrincipal()"><img src="assets/icons/papelera.svg"
-                                        alt="delete-icon">
-                                </button>
-                            </div>
-                        </div>
-                        <div class="upload-container">
-                            <input type="file" id="uploadPrincipal" class="upload-input" accept="image/*"
-                                (change)="onFileChangePrincipal($event)">
-                            <label for="uploadPrincipal" class="upload-button">Subir Imagen</label>
-                        </div>
-                        <div class="errorMessageContainer">
-                            @if (submitted() && planForm.controls['principal_image'].invalid) {
+            <section class="form-section">
+                <div class="section-header">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <h3>Ubicación</h3>
+                </div>
+                
+                <div class="location-grid">
+                    <div class="inputContainer">
+                        <label for="provincia">Provincia</label>
+                        <select id="provincia" formControlName="province" (change)="getCoordinates($event)">
+                            <option value="" disabled selected>Selecciona una provincia</option>
+                            @for (provincia of provincias; track $index) {
+                            <option value="{{provincia}}">{{provincia}}</option>
+                            }
+                        </select>
+                        @if (submitted() && planForm.controls['province'].invalid) {
+                        <div class="errorMessage">
                             <i class="fa-solid fa-circle-exclamation"></i>
-                            @if (planForm.controls['principal_image'].errors?.['required']) {
-                            <small class="errorMessage">La imagen principal es obligatoria.</small>
-                            } @else {
-                            <small class="errorMessage">La imagen no es valida.</small>
-                            }
+                            @if (planForm.controls['province'].errors?.['required']) {
+                            <span>La provincia es obligatoria</span>
                             }
                         </div>
-                    </section>
-                </section>
-                <section class="inputsection">
-                    <article class="label">
-                        <label for="secundarias">
-                            <i class="fa-regular fa-images"></i><span>Selecciona hasta 4 fotos secundarias</span>
-                        </label>
-                    </article>
-                    <section class="inputphoto">
-                        <div class="secundarias">
-                            @for (img of secundarias; track $index) {
-                            <div class="secImgCont">
-                                <img class="img" [src]="img" alt="img">
-                                <div class="deletediv">
-                                    <button type="button" (click)="deleleteSecundarias($index)"><img
-                                            src="assets/icons/papelera.svg" alt="delete-icon">
-                                    </button>
-                                </div>
-                            </div>
-                            }
-                        </div>
-                        <div class="upload-container">
-                            <input type="file" id="uploadSecundaria" class="upload-input" accept="image/*"
-                                (change)="onFileChangeSecundaria($event)">
-                            <label for="uploadSecundaria" class="upload-button">Subir Imagen</label>
-                        </div>
-                        <div class="errorMessageContainer">
-                            @if (submitted() && planForm.controls['secondary_images'].invalid) {
+                        }
+                    </div>
+
+                    <div class="inputContainer">
+                        <label for="city">Ciudad</label>
+                        <input type="text" id="city" placeholder="Ej: Barcelona" formControlName="city">
+                        @if (submitted() && planForm.controls['city'].invalid) {
+                        <div class="errorMessage">
                             <i class="fa-solid fa-circle-exclamation"></i>
-                            <small class="errorMessage">Alguna de las imagenes no es valida.</small>
+                            @if (planForm.controls['city'].errors?.['required']) {
+                            <span>La ciudad es obligatoria</span>
                             }
                         </div>
-                    </section>
-                </section>
+                        }
+                    </div>
+                </div>
+
+                <div class="inputContainer">
+                    <label for="map">Ubicación exacta - Google Maps</label>
+                    <div class="map-container">
+                        <app-map (exactCoords)="getExactCoordinates($event)" [isCreateMode]="true" [zone]="center" />
+                    </div>
+                    @if (submitted() && exactCoordinates == null) {
+                    <div class="errorMessage">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <span>La ubicación es obligatoria</span>
+                    </div>
+                    }
+                </div>
             </section>
 
+            <section class="form-section">
+                <div class="section-header">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <h3>Categorías</h3>
+                </div>
+                
+                <div class="inputContainer">
+                    <label>Selecciona hasta 3 categorías</label>
+                    <div class="categories-grid">
+                        @for (categoria of categorias; track $index) {
+                        <div class="category-chip" [class.selected]="isCategorySelected(categoria)" (click)="addOrDeleteCategory(categoria)">
+                            <span>{{categoria}}</span>
+                        </div>
+                        }
+                    </div>
+                    @if (submitted() && planForm.controls['categories'].invalid) {
+                    <div class="errorMessage">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <span>Selecciona hasta 3 categorías</span>
+                    </div>
+                    }
+                </div>
+            </section>
 
-            <article class="submitcont">
-                <button type="submit" class="btn btn-basico">Publicar plan</button>
-            </article>
+            <section class="form-section">
+                <div class="section-header">
+                    <i class="fa-solid fa-images"></i>
+                    <h3>Imágenes</h3>
+                </div>
+                
+                <div class="images-grid">
+                    <div class="image-upload-section">
+                        <label>Imagen principal</label>
+                        <div class="image-preview principal">
+                            <img [src]="img()" alt="Imagen principal">
+                            <button type="button" class="delete-btn" (click)="deletePrincipal()">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                        <div class="upload-container">
+                            <input type="file" id="uploadPrincipal" accept="image/*" (change)="onFileChangePrincipal($event)">
+                            <label for="uploadPrincipal" class="upload-button">
+                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                                <span>Subir imagen</span>
+                            </label>
+                        </div>
+                        @if (submitted() && planForm.controls['principal_image'].invalid) {
+                        <div class="errorMessage">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <span>La imagen principal es obligatoria</span>
+                        </div>
+                        }
+                    </div>
+
+                    <div class="image-upload-section">
+                        <label>Imágenes secundarias (hasta 4)</label>
+                        <div class="secondary-grid">
+                            @for (img of secundarias; track $index) {
+                            <div class="image-preview secondary">
+                                <img [src]="img" alt="Imagen secundaria">
+                                <button type="button" class="delete-btn" (click)="deleleteSecundarias($index)">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </div>
+                            }
+                        </div>
+                        <div class="upload-container">
+                            <input type="file" id="uploadSecundaria" accept="image/*" (change)="onFileChangeSecundaria($event)">
+                            <label for="uploadSecundaria" class="upload-button">
+                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                                <span>Subir imagen</span>
+                            </label>
+                        </div>
+                        @if (submitted() && planForm.controls['secondary_images'].invalid) {
+                        <div class="errorMessage">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <span>Alguna imagen no es válida</span>
+                        </div>
+                        }
+                    </div>
+                </div>
+            </section>
+
+            <div class="submit-container">
+                <button type="submit" class="btn-submit">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span>Publicar plan</span>
+                </button>
+            </div>
         </form>
     </section>
-    <section></section>
+    <section class="publicarPlan-timeline"></section>
 </section>
 <app-toast-notification />

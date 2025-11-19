@@ -1,31 +1,63 @@
 <section class="settings">
-    <article class="settings-userinfo">
-        <article class="img">
-            <img [src]="user?.img" alt="">
-        </article>
-        <section class="info">
-            <h2>{{user?.username}}</h2>
-            <p>{{fraseSeleccionada()}}</p>
-        </section>
-    </article>
-    <section class="settings-all">
-        <section class="settings-all-list">
-            <ul>
-                <li (click)="seleccionarComponente('general')" [ngClass]="{'black': selectedComponent() === 'general'}"
-                    class="grey">General</li>
-                <li (click)="seleccionarComponente('editar')" [ngClass]="{'black': selectedComponent() === 'editar'}"
-                    class="grey">Editar perfil</li>
-                <li (click)="seleccionarComponente('password')"
-                    [ngClass]="{'black': selectedComponent() === 'password'}" class="grey">Contraseña</li>
-                <li (click)="seleccionarComponente('redes')" [ngClass]="{'black': selectedComponent() === 'redes'}"
-                    class="grey">Redes Sociales</li>
-                <li (click)="seleccionarComponente('notificaciones')"
-                    [ngClass]="{'black': selectedComponent() === 'notificaciones'}" class="grey">Notificaciones</li>
-                <hr>
-                <li class="red">Borrar cuenta</li>
-            </ul>
-        </section>
-        <div class="settings-all-componentcontainer">
+    <section class="settings-header">
+        <div class="user-card">
+            <div class="user-avatar">
+                <img [src]="user?.img" alt="Avatar de usuario">
+            </div>
+            <div class="user-info">
+                <h2>{{user?.username}}</h2>
+                <p>{{fraseSeleccionada()}}</p>
+            </div>
+            <a [routerLink]="['/perfil', user?.username]" class="btn-back">
+                <i class="fa-solid fa-arrow-left"></i>
+                <span>Volver al perfil</span>
+            </a>
+        </div>
+    </section>
+    
+    <section class="settings-content">
+        <aside class="settings-sidebar">
+            <nav class="settings-menu">
+                <h3>Configuración</h3>
+                <ul>
+                    <li (click)="seleccionarComponente('general')" 
+                        [class.active]="selectedComponent() === 'general'">
+                        <i class="fa-solid fa-sliders"></i>
+                        <span>General</span>
+                    </li>
+                    <li (click)="seleccionarComponente('editar')" 
+                        [class.active]="selectedComponent() === 'editar'">
+                        <i class="fa-solid fa-user-pen"></i>
+                        <span>Editar perfil</span>
+                    </li>
+                    <li (click)="seleccionarComponente('password')" 
+                        [class.active]="selectedComponent() === 'password'">
+                        <i class="fa-solid fa-lock"></i>
+                        <span>Contraseña</span>
+                    </li>
+                    <li (click)="seleccionarComponente('redes')" 
+                        [class.active]="selectedComponent() === 'redes'">
+                        <i class="fa-solid fa-share-nodes"></i>
+                        <span>Redes Sociales</span>
+                    </li>
+                    <li (click)="seleccionarComponente('notificaciones')" 
+                        [class.active]="selectedComponent() === 'notificaciones'">
+                        <i class="fa-solid fa-bell"></i>
+                        <span>Notificaciones</span>
+                    </li>
+                </ul>
+                
+                <div class="danger-zone">
+                    <h4>Zona de peligro</h4>
+                    <button class="btn-danger">
+                        <i class="fa-solid fa-trash-can"></i>
+                        <span>Borrar cuenta</span>
+                    </button>
+                </div>
+            </nav>
+        </aside>
+        
+        <main class="settings-main">
             @switch (selectedComponent()) {
             @case ('general') {
             <app-general [user]="user" (refresh)="refresh($event)" />
@@ -40,13 +72,12 @@
             <app-redes-sociales />
             }
             @case ('notificaciones') {
-
             <app-notificaciones />
             }
             @default {
             <app-general />
             }
             }
-        </div>
+        </main>
     </section>
 </section>

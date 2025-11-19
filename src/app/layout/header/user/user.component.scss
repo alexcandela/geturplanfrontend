@@ -1,107 +1,155 @@
 @import "../../../../styles.scss";
 
 .userComp {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-  background-image: linear-gradient(to right, $azul, #0145da);
-  border-radius: 5px;
   position: relative;
-  cursor: pointer;
-  min-width: 120px;
-
-  &:hover {
-    background-color: #0046d1;
-  }
-
-  &-img {
+  
+  &-trigger {
     display: flex;
-    justify-content: center;
-    align-items: center;
-
-    img {
-      width: 25px;
-      border-radius: 50%;
-    }
-  }
-
-  &-name {
-    display: flex;
-    justify-content: space-between;
     align-items: center;
     gap: 10px;
-    width: 100%;
-    padding: 5px 15px;
-
-    .nombreCompleto {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 3px;
-
-      span {
-        font-family: $montserrat;
-        font-size: 15px;
-        font-weight: 600;
-        color: #fff;
-        letter-spacing: -0.5px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 12px rgba(102, 126, 234, 0.3);
+    min-width: 120px;
+    
+    @media (max-width: 1024px) {
+      padding: 8px 16px;
+      min-width: 100px;
+    }
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 18px rgba(102, 126, 234, 0.4);
+    }
+    
+    &:active {
+      transform: translateY(0);
+    }
+  }
+  
+  .user-info {
+    flex: 1;
+    min-width: 0;
+    
+    .username {
+      font-family: $montserrat;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: -0.3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: block;
+      
+      @media (max-width: 1024px) {
+        font-size: 13px;
       }
     }
-
-    i {
-      color: #fff;
-    }
+  }
+  
+  .arrow-icon {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.9);
+    transition: transform 0.3s ease;
+  }
+  
+  &-trigger:hover .arrow-icon {
+    transform: translateY(2px);
   }
 }
 
 .dropdown {
   position: absolute;
-  top: 100%;
-  width: 100%;
-  background-color: #fff;
-  box-shadow: $sombra;
-  border-radius: 5px;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 200px;
+  background: #fff;
+  border-radius: 12px;
   overflow: hidden;
-  z-index: 2;
+  z-index: 1000;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   max-height: 0;
   opacity: 0;
-  transition: max-height 1s ease-in-out, opacity 0.3s ease-out;
-
+  transform: translateY(-10px);
+  transition: max-height 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+  
   ul {
     list-style: none;
-    padding: 10px;
+    padding: 8px;
     margin: 0;
-
+    
     li {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 5px 10px;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: all 0.2s ease;
       cursor: pointer;
-      gap: 5px;
-      border-radius: 5px;
-
+      
       a {
-        font-size: 15px;
-        font-family: $montserrat;
-        letter-spacing: -0.7px;
-        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 14px;
         text-decoration: none;
-        color: #000;
-        transition: color 0.3s ease;
-      }
-
-      i {
-        font-size: 16px;
-        color: $azul;
-        transition: transform 0.3s ease;
-      }
-
-      &:hover {
-        background-color: #eeeeee;
+        color: #333;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        
         i {
-          transform: translateX(-3px);
+          font-size: 18px;
+          color: #667eea;
+          transition: transform 0.2s ease;
+          flex-shrink: 0;
+        }
+        
+        span {
+          font-family: $montserrat;
+          font-size: 14px;
+          font-weight: 600;
+          letter-spacing: -0.3px;
+          flex: 1;
+        }
+      }
+      
+      &:hover {
+        background: #f5f5f5;
+        
+        a {
+          color: #667eea;
+          
+          i {
+            transform: translateX(3px);
+          }
+        }
+      }
+      
+      &.logout-item {
+        margin-top: 4px;
+        border-top: 1px solid #f0f0f0;
+        padding-top: 4px;
+        
+        a {
+          color: #ff4757;
+          
+          i {
+            color: #ff4757;
+          }
+        }
+        
+        &:hover {
+          background: #fff5f5;
+          
+          a {
+            color: #ff0028;
+            
+            i {
+              color: #ff0028;
+            }
+          }
         }
       }
     }
@@ -109,6 +157,7 @@
 }
 
 .show {
-  max-height: 600px;
+  max-height: 400px;
   opacity: 1;
+  transform: translateY(0);
 }

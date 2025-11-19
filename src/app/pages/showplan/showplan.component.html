@@ -1,119 +1,143 @@
 <section class="planDetalle">
-    <section class="planDetalle-fotoComments">
-        <section class="fotos">
-            <section class="fotos-seleccionar">
+    <!-- Columna principal: Fotos y comentarios -->
+    <section class="planDetalle-main">
+        <!-- Galería de fotos -->
+        <section class="gallery">
+            <div class="gallery-main">
+                @if (showSkeleton()) {
+                <div class="skeleton skeleton-main"></div>
+                } @else {
+                <img [src]="selectedImg()" alt="plan-img" class="main-image">
+                }
+            </div>
+            <div class="gallery-thumbs">
                 @if (showSkeleton()) {
                 @for (let of [1, 2, 3, 4]; track $index) {
-                <div class="skeleton skeleton-main"></div>
+                <div class="skeleton skeleton-thumb"></div>
                 }
                 } @else {
-                <img [src]="plan.img" (click)="selectMainImage(plan.img)" alt="plan-img" class="main-img">
+                <div class="thumb" [class.active]="selectedImg() === plan.img" (click)="selectMainImage(plan.img)">
+                    <img [src]="plan.img" alt="plan-img">
+                </div>
                 @for (img of plan.secondary_images; track $index) {
-                <img [src]="img.img" (click)="selectMainImage(img.img)" alt="img">
+                <div class="thumb" [class.active]="selectedImg() === img.img" (click)="selectMainImage(img.img)">
+                    <img [src]="img.img" alt="img">
+                </div>
                 }
                 }
-            </section>
-            <section class="fotos-principal">
-                @if (showSkeleton()) {
-                <div class="skeleton skeleton-main"></div>
-                } @else {
-                <img [src]="selectedImg()" alt="plan-img">
-                }
-            </section>
-        </section>
-        <section class="comentarios">
-            <div class="commentdisable">
-                <app-ad-banner adSlot="8778414056463192"></app-ad-banner>
             </div>
-            <div class="comments">
-                @if (logged()) {
-                <form class="comentar" [formGroup]="commentForm" (ngSubmit)="submitComment(commentForm.value)">
-                    <textarea name="comentario" placeholder="Escribe tu comentario..." formControlName="comment"
-                        maxlength="200"></textarea>
-                    <article>
-                        <input type="submit" name="comentar" class="btn btn-basico" value="Publicar comentario">
-                    </article>
-                </form>
+        </section>
+
+        <!-- Sección de comentarios -->
+        <section class="comments-section">
+            <h3 class="comments-title">
+                <i class="fa-solid fa-comments"></i>
+                Comentarios
+            </h3>
+            
+            @if (logged()) {
+            <form class="comment-form" [formGroup]="commentForm" (ngSubmit)="submitComment(commentForm.value)">
+                <textarea 
+                    placeholder="Añade un comentario..." 
+                    formControlName="comment"
+                    maxlength="200">
+                </textarea>
+                <button type="submit" class="btn btn-basico">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    <span>Publicar</span>
+                </button>
+            </form>
+            }
+
+            <div class="comments-list">
+                @for (comment of plan.comments; track comment.id) {
+                <div class="comment-item" [@commentAnimation]="isNewComment ? 'void' : '*'">
+                    <app-comment 
+                        (delete)="handleDelete($event)" 
+                        [comment]="comment" 
+                        [planUserId]="plan.user_id"
+                        [sameuser]="sameUser(comment.user.id)">
+                    </app-comment>
+                </div>
+                } @empty {
+                <div class="no-comments">
+                    <i class="fa-regular fa-comment-dots"></i>
+                    <p>Sé el primero en comentar</p>
+                </div>
                 }
-                <section class="lista">
-                    <ul class="lista-scroll">
-                        @for (comment of plan.comments; track comment.id) {
-                        <li class="comment" [@commentAnimation]="isNewComment ? 'void' : '*'">
-                            <app-comment (delete)="handleDelete($event)" [comment]="comment" [planUserId]="plan.user_id"
-                                [sameuser]="sameUser(comment.user.id)">
-                            </app-comment>
-                        </li>
-                        }
-                    </ul>
-                </section>
             </div>
         </section>
     </section>
 
-    <section class="planDetalle-info">
-        <article class="planDetalle-info-titulo">
+    <!-- Sidebar: Información del plan -->
+    <aside class="planDetalle-sidebar">
+        <div class="plan-header">
             @if (showSkeleton()) {
-            <span class="skeletonPlanName skeleton"></span>
+            <div class="skeleton skeleton-title"></div>
             } @else {
-            <h2>{{plan.name}}</h2>
+            <h1>{{plan.name}}</h1>
             }
-        </article>
-        <section class="planDetalle-info-location">
-            @if (showSkeleton()) {
-            <span class="skeletonText skeleton"></span>
-            } @else {
-            <article><i class="fa-solid fa-location-dot"></i><span>{{plan.city}}, {{plan.province}}</span></article>
-            }
-        </section>
-        <section class="planDetalle-info-descripcion">
-            @if (showSkeleton()) {
-            <article class="username"><span class="skeletonUserImg skeleton"></span><span
-                    class="skeletonText skeleton blue"></span></article>
-            } @else {
-            <article class="username"><img [src]="plan.user.img" alt="user-img"><a
-                    [routerLink]="['/perfil', plan.user.username]">{{plan.user.username}}</a></article>
-            }
+        </div>
 
-            <article class="desc">
-                @if (showSkeleton()) {
-                <span class="skeletonDesc skeleton"></span>
-                } @else {
-                <p [innerHTML]="plan.description | newlineToBr"></p>
-                }
-            </article>
-            <article class="fechalikes">
-                <section class="likes">
-                    <div class="likediv">
-                        <img [src]="likeImgBtn()" (click)="like($event)" alt="like-button">
-                    </div>
-                    <span>{{plan.likes_count}}</span>
-                    <article class="sharediv">
-                        <a [href]="whatsappShareUrl">
-                            <img src="/assets/icons/whatsapp.svg" alt="whatsapp-icon">
-                        </a>
-                        <a [href]="xShareUrl" target="_blank">
-                            <img src="/assets/icons/twitter.svg" alt="twitter-icon">
-                        </a>
-                        <a [href]="facebookShareUrl" target="_blank">
-                            <img src="/assets/icons/facebook.svg" alt="facebook-icon">
-                        </a>
-                        <img src="/assets/icons/share.svg" alt="share-icon" (click)="compartir()">
-                    </article>
-                </section>
+        <div class="plan-user">
+            @if (showSkeleton()) {
+            <div class="skeleton skeleton-avatar"></div>
+            <div class="skeleton skeleton-username"></div>
+            } @else {
+            <img [src]="plan.user.img" alt="user" class="user-avatar">
+            <div class="user-info">
+                <span class="label">Publicado por</span>
+                <a [routerLink]="['/perfil', plan.user.username]" class="username">{{plan.user.username}}</a>
+            </div>
+            }
+        </div>
 
-                <article class="fecha">
-                    <i class="fa-solid fa-clock"></i>
-                    <span class="fecha-frase">Publicado el</span>
-                    <span>{{ plan.created_at | dateFormat }}</span>
-                </article>
-            </article>
-        </section>
-        <!-- <section class="planDetalle-info-googlemaps">
-            <i class="fa-solid fa-map-pin"></i>
-            <a [href]="plan.url" target="_blank">Click para ver ubicación exacta en Google Maps.</a>
-        </section> -->
+        <div class="plan-location">
+            @if (showSkeleton()) {
+            <div class="skeleton skeleton-text"></div>
+            } @else {
+            <i class="fa-solid fa-location-dot"></i>
+            <span>{{plan.city}}, {{plan.province}}</span>
+            }
+        </div>
+
+        <div class="plan-actions">
+            <button class="action-btn like-btn" (click)="like($event)">
+                <img [src]="likeImgBtn()" alt="like">
+                <span>{{plan.likes_count}}</span>
+            </button>
+            <div class="share-buttons">
+                <a [href]="whatsappShareUrl" class="share-btn whatsapp" title="Compartir en WhatsApp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+                <a [href]="xShareUrl" target="_blank" class="share-btn twitter" title="Compartir en X">
+                    <i class="fa-brands fa-x-twitter"></i>
+                </a>
+                <a [href]="facebookShareUrl" target="_blank" class="share-btn facebook" title="Compartir en Facebook">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+                <button class="share-btn copy" (click)="compartir()" title="Copiar enlace">
+                    <i class="fa-solid fa-link"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="plan-description">
+            @if (showSkeleton()) {
+            <div class="skeleton skeleton-description"></div>
+            } @else {
+            <h3>Descripción</h3>
+            <p [innerHTML]="plan.description | newlineToBr"></p>
+            }
+        </div>
+
+        <div class="plan-date">
+            <i class="fa-solid fa-clock"></i>
+            <span>{{ plan.created_at | dateFormat }}</span>
+        </div>
+
         <app-map [isCreateMode]="false" [planLocation]="coords"/>
-    </section>
+    </aside>
 
+    <app-toast-notification />
 </section>
-<app-toast-notification />

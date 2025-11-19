@@ -16,6 +16,7 @@ import { Title } from '@angular/platform-browser';
 import { User } from '../../core/interfaces/user';
 import { UserService } from '../../core/services/user.service';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-settings',
@@ -27,6 +28,7 @@ import { CommonModule } from '@angular/common';
     NotificacionesComponent,
     RedesSocialesComponent,
     CommonModule,
+    RouterLink
   ],
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.scss',

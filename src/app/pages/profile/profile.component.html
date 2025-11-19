@@ -7,10 +7,8 @@
             } @else {
             <img [src]="user.img" alt="user-img">
             }
-
         </section>
         <section class="infouser">
-            <div class="none"></div>
             <article class="name">
                 <i class="fa-solid fa-circle-user"></i>
                 <h3>{{user.username}}</h3>
@@ -33,7 +31,6 @@
                 @if (user.tiktok) {
                 <a rel="noopener noreferrer" href="{{user.tiktok}}" target="_blank"><i class="fa-brands fa-tiktok tiktok-icon"></i></a>
                 }
-
             </article>
         </section>
     </section>

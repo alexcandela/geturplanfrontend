@@ -21,134 +21,148 @@
             </div>
         </section>
     </section>
+    
     @if (!resetPassword()) {
     <section class="allLogin-cont">
         <section class="login">
             <article class="login-titulo">
-                <h3>Bienvenido de nuevo</h3>
-                <p>Inicia sesión para ver los nuevos planes.</p>
+                <h3>Iniciar sesión</h3>
+                <p>Accede a tu cuenta para explorar nuevos planes.</p>
             </article>
-            <section class="login-inputs">
-                <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)" id="login"
-                    class="login-inputs-inp">
-                    <div class="inputContainer">
-                        <div class="input">
-                            <div class="input-divicon">
-                                <img src="/assets/icons/email.png" alt="email-icon">
-                            </div>
-                            <input type="email" name="email" id="login" formControlName="email">
-                            <div></div>
+            
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)" class="login-form">
+                <div class="inputContainer">
+                    <label for="email">Correo electrónico</label>
+                    <div class="input">
+                        <div class="input-icon">
+                            <i class="fa-solid fa-envelope"></i>
                         </div>
-                        @if (submitted() && loginForm.controls['email'].invalid) {
-                        <div class="errorMessageContainer">
-                            <i class="fa-solid fa-circle-exclamation"></i>
-                            @if (loginForm.controls['email'].errors?.['required']) {
-                            <small class="errorMessage">El email es obligatorio.</small>
-                            }
-                            @if (loginForm.controls['email'].errors?.['email']) {
-                            <small class="errorMessage">El email no es válido.</small>
-                            }
-                        </div>
-                        }
+                        <input 
+                            type="email" 
+                            id="email" 
+                            placeholder="tu@email.com"
+                            formControlName="email">
                     </div>
-
-                    <div class="inputContainer">
-                        <div class="input">
-                            <div class="input-divicon">
-                                <img src="/assets/icons/password.png" alt="password-icon">
-                            </div>
-                            <input [type]="inputtype()" name="password" id="login" formControlName="password">
-                            <button type="button" (click)="showpassword()"><img [src]="showPasswordImg()"
-                                    alt="eye-icon"></button>
-                        </div>
-                        @if (submitted() && loginForm.controls['password'].invalid) {
-                        <div class="errorMessageContainer">
-                            <i class="fa-solid fa-circle-exclamation"></i>
-                            @if (loginForm.controls['password'].errors?.['required']) {
-                            <small class="errorMessage">La contraseña es obligatoria.</small>
-                            }
-                        </div>
-                        }
-                    </div>
-                    @if(showErrorMessage()){
-                    <div class="errorMessageContainer">
+                    @if (submitted() && loginForm.controls['email'].invalid) {
+                    <div class="errorMessage">
                         <i class="fa-solid fa-circle-exclamation"></i>
-                        <small class="errorMessage">{{message()}}</small>
+                        @if (loginForm.controls['email'].errors?.['required']) {
+                        <span>El email es obligatorio</span>
+                        }
+                        @if (loginForm.controls['email'].errors?.['email']) {
+                        <span>El email no es válido</span>
+                        }
                     </div>
                     }
-                    <div class="opciones">
-                        <div class="opciones-remember">
-                            <span>Recuerdame</span><input [value]="rememberme()" type="checkbox" name="rememberme"
-                                id="login" formControlName="rememberme">
+                </div>
+
+                <div class="inputContainer">
+                    <label for="password">Contraseña</label>
+                    <div class="input">
+                        <div class="input-icon">
+                            <i class="fa-solid fa-lock"></i>
                         </div>
-                        <div class="opciones-forgot">
-                            <a rel="noopener noreferrer" (click)="resetPassword.set(!resetPassword())">He olvidado mi
-                                contraseña</a>
-                        </div>
+                        <input 
+                            [type]="inputtype()" 
+                            id="password" 
+                            placeholder="••••••••"
+                            formControlName="password">
+                        <button type="button" class="toggle-password" (click)="showpassword()">
+                            <i [class]="showPasswordImg() === '/assets/icons/eye.png' ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'"></i>
+                        </button>
                     </div>
-                    <button type="submit" class="btn btn-iniciarsesion">Iniciar Sesión</button>
-                </form>
-            </section>
-            <section class="login-hr">
-                <hr>
-            </section>
-            <section class="login-google">
-                <a rel="noopener noreferrer" href="" class="googlebtn">
-                    <img src="/assets/icons/google.png" alt="google-logo">
-                    <span>Iniciar sesión con Google</span>
+                    @if (submitted() && loginForm.controls['password'].invalid) {
+                    <div class="errorMessage">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        @if (loginForm.controls['password'].errors?.['required']) {
+                        <span>La contraseña es obligatoria</span>
+                        }
+                    </div>
+                    }
+                </div>
+
+                @if(showErrorMessage()){
+                <div class="errorMessage">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span>{{message()}}</span>
+                </div>
+                }
+
+                <div class="forgot-link">
+                    <a rel="noopener noreferrer" (click)="resetPassword.set(!resetPassword())">
+                        ¿Olvidaste tu contraseña?
+                    </a>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    Iniciar sesión
+                </button>
+            </form>
+
+            <div class="register-link">
+                <span>¿No tienes cuenta?</span>
+                <a href="/register">Regístrate gratis</a>
+            </div>
+
+            <div class="back-link">
+                <a rel="noopener noreferrer" href="/">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Volver al inicio</span>
                 </a>
-            </section>
-            <section class="login-linkregistrarse">
-                <p>¿No tienes cuenta?</p><a href="/register">Registrate</a>
-            </section>
-            <section class="divVolver">
-                <a rel="noopener noreferrer" href="/" class="btn btn-basico"><span>Volver al inicio</span><i
-                        class="fa-solid fa-house"></i></a>
-            </section>
+            </div>
         </section>
     </section>
     } @else {
     <section class="allLogin-cont">
-        <section class="resetPassword">
+        <section class="login">
             <article class="login-titulo">
                 <h3>Recuperar contraseña</h3>
-                <p>Ingrese su correo asociado para cambiar la contraseña.</p>
+                <p>Ingresa tu correo para recibir instrucciones.</p>
             </article>
-            <form [formGroup]="resetPassForm" (ngSubmit)="sendEmail(resetPassForm.value)" id="login"
-                class="login-inputs-inp">
+            
+            <form [formGroup]="resetPassForm" (ngSubmit)="sendEmail(resetPassForm.value)" class="login-form">
                 <div class="inputContainer">
+                    <label for="reset-email">Correo electrónico</label>
                     <div class="input">
-                        <div class="input-divicon">
-                            <img src="/assets/icons/email.png" alt="email-icon">
+                        <div class="input-icon">
+                            <i class="fa-solid fa-envelope"></i>
                         </div>
-                        <input type="email" name="email" id="login" formControlName="email">
-                        <div></div>
+                        <input 
+                            type="email" 
+                            id="reset-email" 
+                            placeholder="tu@email.com"
+                            formControlName="email">
                     </div>
                     @if (submitted() && resetPassForm.controls['email'].invalid) {
-                    <div class="errorMessageContainer">
+                    <div class="errorMessage">
                         <i class="fa-solid fa-circle-exclamation"></i>
                         @if (resetPassForm.controls['email'].errors?.['required']) {
-                        <small class="errorMessage">El email es obligatorio.</small>
+                        <span>El email es obligatorio</span>
                         }
                         @if (resetPassForm.controls['email'].errors?.['email']) {
-                        <small class="errorMessage">El email no es válido.</small>
+                        <span>El email no es válido</span>
                         }
                     </div>
                     }
                     @if(showErrorMessage()){
-                    <div class="errorMessageContainer">
+                    <div class="errorMessage">
                         <i class="fa-solid fa-circle-exclamation"></i>
-                        <small class="errorMessage">{{message()}}</small>
+                        <span>{{message()}}</span>
                     </div>
                     }
                 </div>
-                <button type="submit" class="btn btn-iniciarsesion">Enviar correo de recuperación</button>
+
+                <button type="submit" class="btn-submit">
+                    Enviar correo de recuperación
+                </button>
             </form>
-            <section class="divVolver">
-                <a rel="noopener noreferrer" class="btn btn-basico"
-                    (click)="resetPassword.set(!resetPassword())"><span>Volver</span>
-                    <i class="fa-solid fa-person-walking-arrow-loop-left"></i></a>
-            </section>
+
+            <div class="back-link">
+                <a rel="noopener noreferrer" (click)="resetPassword.set(!resetPassword())">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Volver al login</span>
+                </a>
+            </div>
         </section>
     </section>
     }

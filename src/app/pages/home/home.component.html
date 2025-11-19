@@ -1,8 +1,33 @@
 <section class="home">
+    <!-- Hero alternativo -->
+    <section class="hero-banner">
+        <div class="hero-background">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fa-solid fa-rocket"></i>
+                <span>Descubre experiencias únicas</span>
+            </div>
+            <h1>Encuentra tu próxima aventura</h1>
+            <p>Miles de planes esperando por ti. Explora, guarda y comparte experiencias increíbles con la comunidad.</p>
+            <a routerLink="/explorar" class="hero-btn">
+                <span>Explorar planes</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Planes populares -->
     <section class="populares">
         <article class="populares-titulo">
-            <i class="fa-solid fa-fire"></i>
-            <h2>Los planes más gustados</h2>
+            <div class="titulo-wrapper">
+                <i class="fa-solid fa-fire"></i>
+                <h2>Los planes más gustados</h2>
+            </div>
+            <p class="subtitulo">Descubre lo que está en tendencia esta semana</p>
         </article>
         <section class="populares-planes">
             @if (loading()) {
@@ -14,7 +39,8 @@
             <app-plan [plan]="plan" />
             } @empty {
                 <div class="noplans">
-                    <p>No se han encontrado planes 😢</p>
+                    <i class="fa-solid fa-face-sad-tear"></i>
+                    <p>No se han encontrado planes</p>
                 </div>
             }
             }
@@ -24,15 +50,27 @@
             </a>
         </section>
     </section>
+
+    <!-- CTA publicar -->
     <section class="publicar">
-        <div class="publicar-info">
-            <h3>Publica tu plan.</h3>
-            <p>Comparte tu plan perfecto con el mundo.</p>
-            <a routerLink="/publicar-plan" class="btn btn-basico">Publicar plan</a>
+        <div class="publicar-content">
+            <div class="publicar-badge">
+                <i class="fa-solid fa-sparkles"></i>
+                <span>Para creadores</span>
+            </div>
+            <h3>Publica tu plan</h3>
+            <p>Comparte tu plan perfecto con miles de personas y ayúdales a descubrir nuevas experiencias únicas.</p>
+            <a routerLink="/publicar-plan" class="btn btn-gradient">
+                <i class="fa-solid fa-plus"></i>
+                <span>Crear plan</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
         </div>
         <div class="publicar-img">
+            <div class="img-decoration"></div>
             <img src="/assets/images/publicar_home.svg" alt="">
         </div>
     </section>
+
     <app-toast-notification />
 </section>

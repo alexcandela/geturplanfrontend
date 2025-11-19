@@ -1,45 +1,59 @@
-<form class="form" method="post" [formGroup]="editGeneral" (ngSubmit)="onSubmit(editGeneral.value)">
-    <section class="form-input">
-        <label for="username">Username</label>
-        <input type="text" name="username" formControlName="username">
-        <p>URL de tu perfil: https://geturplanfrontend.vercel.app/perfil/<span>{{user?.username}}</span></p>
-        @if (submitted() && editGeneral.controls['username'].invalid) {
-        <div class="errorMessageContainer">
-            <i class="fa-solid fa-circle-exclamation"></i>
-            @if (editGeneral.controls['username'].errors?.['required']) {
-            <small class="errorMessage">Este campo no puede estar vacío.</small>
-            }
-        </div>
-        }
-        @if (conflictUsername()) {
-            <div class="errorMessageContainer">
-                <i class="fa-solid fa-circle-exclamation"></i>
-                <small class="errorMessage">El nombre de usuario ya está en uso.</small>
+<div class="general-settings">
+    <div class="section-header">
+        <h3>Configuración general</h3>
+        <p>Administra la información básica de tu cuenta</p>
+    </div>
+
+    <form class="settings-form" method="post" [formGroup]="editGeneral" (ngSubmit)="onSubmit(editGeneral.value)">
+        <div class="form-group">
+            <label for="username">Nombre de usuario</label>
+            <input type="text" id="username" placeholder="Ej: juanperez" formControlName="username">
+            <div class="input-info">
+                <i class="fa-solid fa-link"></i>
+                <span>URL: https://geturplanfrontend.vercel.app/perfil/<strong>{{user?.username}}</strong></span>
             </div>
-           }
-    </section>
-    <section class="form-input">
-        <label for="email">Email</label>
-        <input type="email" name="email" formControlName="email">
-        @if (submitted() && editGeneral.controls['email'].invalid) {
-        <div class="errorMessageContainer">
-            <i class="fa-solid fa-circle-exclamation"></i>
-            @if (editGeneral.controls['email'].errors?.['required']) {
-            <small class="errorMessage">Este campo no puede estar vacío.</small>
-            } @else if (editGeneral.controls['email'].errors?.['email']) {
-            <small class="errorMessage">El email no es válido.</small>
+            @if (submitted() && editGeneral.controls['username'].invalid) {
+            <div class="errorMessage">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                @if (editGeneral.controls['username'].errors?.['required']) {
+                <span>El nombre de usuario es obligatorio</span>
+                }
+            </div>
+            }
+            @if (conflictUsername()) {
+            <div class="errorMessage">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <span>El nombre de usuario ya está en uso</span>
+            </div>
             }
         </div>
-        }
-       @if (conflictEmail()) {
-        <div class="errorMessageContainer">
-            <i class="fa-solid fa-circle-exclamation"></i>
-            <small class="errorMessage">El email ya está en uso.</small>
+
+        <div class="form-group">
+            <label for="email">Correo electrónico</label>
+            <input type="email" id="email" placeholder="tu@email.com" formControlName="email">
+            @if (submitted() && editGeneral.controls['email'].invalid) {
+            <div class="errorMessage">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                @if (editGeneral.controls['email'].errors?.['required']) {
+                <span>El email es obligatorio</span>
+                } @else if (editGeneral.controls['email'].errors?.['email']) {
+                <span>El email no es válido</span>
+                }
+            </div>
+            }
+            @if (conflictEmail()) {
+            <div class="errorMessage">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <span>El email ya está en uso</span>
+            </div>
+            }
         </div>
-       }
-    </section>
-    <section class="form-guardar">
-        <input type="submit" name="guardar" value="Guardar cambios" class="savechanges">
-    </section>
-</form>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-save">
+                Guardar cambios
+            </button>
+        </div>
+    </form>
+</div>
 <app-toast-notification />

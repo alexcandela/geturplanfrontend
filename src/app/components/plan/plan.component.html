@@ -1,62 +1,72 @@
-    <a rel="noopener noreferrer" [routerLink]="['/showplan', plan.id]" class="plan">
-        @if (showModal()) {
+<a rel="noopener noreferrer" [routerLink]="['/showplan', plan.id]" class="plan">
+    @if (showModal()) {
+    <div class="modal-overlay">
         <div class="modal">
+            <i class="fa-solid fa-triangle-exclamation"></i>
             <div class="modal-text">
-                <p>Eliminar plan</p>
+                <h4>¿Eliminar plan?</h4>
+                <p>Esta acción no se puede deshacer</p>
             </div>
             <div class="modal-buttons">
-                <button class="cancelar" (click)="cancelar($event)">Cancelar</button>
-                <button class="confirmar" (click)="confirmar($event)">Confirmar</button>
+                <button class="cancelar" (click)="cancelar($event)">
+                    <i class="fa-solid fa-xmark"></i>
+                    <span>Cancelar</span>
+                </button>
+                <button class="confirmar" (click)="confirmar($event)">
+                    <i class="fa-solid fa-check"></i>
+                    <span>Confirmar</span>
+                </button>
             </div>
         </div>
-        }
-        @else {
-        <div class="plan-img">
-            <img [src]="plan.img" alt="plan-img">
+    </div>
+    }
+    @else {
+    <div class="plan-img">
+        <div class="img-overlay"></div>
+        <img [src]="plan.img" alt="plan-img">
+        <div class="action-buttons">
             <div class="likebtnDiv" (click)="like($event)">
                 <img [src]="likeImgBtn()" alt="like-button">
             </div>
             @if (sameuser) {
             <div class="editbtnDiv" (click)="edit($event)">
-                <img src="assets/icons/editicon.svg" alt="edit-button">
+                <i class="fa-solid fa-pen-to-square"></i>
             </div>
             <div class="deletebtnDiv" (click)="delete($event)">
-                <img src="assets/icons/papelera.svg" alt="delete-button">
+                <i class="fa-solid fa-trash"></i>
             </div>
             }
         </div>
-        }
-        <div class="plan-info">
-            <div class="plan-info-categorias">
-                @for (category of plan.categories; track $index) {
-                <span>#{{category.name}}</span>
-                }
+    </div>
+    }
+    <div class="plan-info">
+        <div class="plan-info-categorias">
+            @for (category of plan.categories; track $index) {
+            <span class="category-badge">#{{category.name}}</span>
+            }
+        </div>
+        <div class="plan-info-titulo">
+            <h3>{{plan.name}}</h3>
+            <span class="author">by <strong>{{plan.user.username}}</strong></span>
+        </div>
+        <div class="plan-info-location">
+            <i class="fa-solid fa-location-dot"></i>
+            <span>{{plan.city}}, {{plan.province}}</span>
+        </div>
+        <div class="plan-info-divider"></div>
+        <div class="plan-info-stats">
+            <div class="stat views">
+                <i class="fa-solid fa-eye"></i>
+                <span>1.5k</span>
             </div>
-            <div class="plan-info-titulo">
-                <h3>{{plan.name}}</h3>
-                <span>by {{plan.user.username}}</span>
+            <div class="stat comments">
+                <i class="fa-solid fa-comment"></i>
+                <span>{{plan.comments?.length}}</span>
             </div>
-            <div class="plan-info-location">
-                <div class="cont">
-                    <i class="fa-solid fa-location-dot"></i><span>{{plan.city}}, {{plan.province}}</span>
-                </div>
-            </div>
-            <div class="plan-info-hr">
-                <hr>
-            </div>
-            <div class="plan-info-stats">
-                <div class="stat">
-                    <img src="/assets/icons/chart.svg" alt="chart-icon">
-                    <span>1.5k</span>
-                </div>
-                <div class="stat">
-                    <img src="/assets/icons/comment.svg" alt="comment-icon">
-                    <span>{{plan.comments?.length}}</span>
-                </div>
-                <div class="stat">
-                    <img src="/assets/icons/like.svg" alt="like-icon">
-                    <span>{{plan.likes_count}}</span>
-                </div>
+            <div class="stat likes">
+                <i class="fa-solid fa-heart"></i>
+                <span>{{plan.likes_count}}</span>
             </div>
         </div>
-    </a>
+    </div>
+</a>

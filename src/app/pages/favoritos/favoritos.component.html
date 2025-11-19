@@ -1,29 +1,41 @@
 <section class="allFav">
-    <section class="allFav-titulo">
-        <i class="fa-solid fa-heart-circle-check"></i>
-        <h3>Mis planes favoritos</h3>
-        <!-- <img src="assets/images/boyswimming.svg" alt="boyswimming-img"> -->
-
+    <section class="allFav-header">
+        <div class="header-content">
+            <i class="fa-solid fa-heart"></i>
+            <h2>Mis planes favoritos</h2>
+        </div>
     </section>
+    
     <section class="allFav-listado">
         @if (loading()) {
-        @for (let of [1, 2, 3, 4, 6, 5, 7, 8]; track $index) {
+        @for (let of [1, 2, 3, 4, 5, 6, 7, 8]; track $index) {
         <app-skeleton-plan />
         }
         } @else {
         @for (plan of plans; track $index) {
         <app-plan [plan]="plan" />
         } @empty {
-        <div></div>
-        <div class="noplansmessagecontainer">
-            <p>No tienes planes favoritos.</p>
-            <i class="fa-solid fa-circle-question"></i>
+        <div class="empty-state">
+            <i class="fa-solid fa-heart-crack"></i>
+            <h3>No tienes planes favoritos</h3>
+            <p>Explora planes y añádelos a tus favoritos</p>
+            <a href="/explorar" class="btn-explore">
+                <i class="fa-solid fa-compass"></i>
+                <span>Explorar planes</span>
+            </a>
         </div>
         }
         }
     </section>
+    
+    @if (totalPlans() > 0) {
     <section class="allFav-pag">
-        <app-pagination [itemsPerPage]="8" [totalItems]="totalPlans()" [currentPage]="currentPage()" (pageChange)="onPageChange($event)">
+        <app-pagination 
+            [itemsPerPage]="8" 
+            [totalItems]="totalPlans()" 
+            [currentPage]="currentPage()" 
+            (pageChange)="onPageChange($event)">
         </app-pagination>
     </section>
+    }
 </section>

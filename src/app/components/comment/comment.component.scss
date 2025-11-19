@@ -1,120 +1,164 @@
 @import "../../../styles.scss";
+
 .comment {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  
   &-username {
     display: flex;
-    justify-content: start;
     align-items: center;
     gap: 10px;
+    
     img {
-      width: 20px;
-      height: 20px;
+      width: 32px;
+      height: 32px;
       object-fit: cover;
       border-radius: 50%;
+      border: 2px solid #e5e5e5;
+      transition: border-color 0.3s ease;
     }
+    
     a {
       font-family: $montserrat;
-      font-weight: 600;
-      font-size: 17px;
-      color: $azul;
+      font-weight: 700;
+      font-size: 14px;
+      color: #000;
       text-decoration: none;
-      letter-spacing: -0.5px;
+      letter-spacing: -0.3px;
+      transition: color 0.3s ease;
+      
       &:hover {
-        text-decoration: underline;
+        color: #667eea;
       }
     }
+    
+    &:hover img {
+      border-color: #667eea;
+    }
+    
     &-creador {
-      display: flex;
-      justify-content: center;
+      display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 4px;
+      padding: 3px 10px;
+      background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+      border-radius: 15px;
+      
       img {
-        width: 15px;
-        height: 15px;
+        width: 12px;
+        height: 12px;
+        border: none;
       }
+      
       span {
         font-family: $montserrat;
-        font-weight: 500;
-        font-size: 14px;
-        color: #8d8d8d;
-        text-decoration: none;
-        letter-spacing: -0.5px;
+        font-weight: 800;
+        font-size: 10px;
+        color: #000;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
       }
     }
   }
+  
   &-text {
-    display: grid;
-    grid-template-rows: 1fr auto;
-    gap: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    
     p {
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 500;
       font-family: $montserrat;
-      padding: 5px;
+      line-height: 1.6;
+      color: #2c2c2c;
+      padding: 0;
+      margin: 0;
     }
+    
     &-fecha {
-      display: flex;
-      justify-content: end;
+      display: inline-flex;
       align-items: center;
       gap: 5px;
+      width: fit-content;
+      padding: 3px 8px;
+      background: #f5f5f5;
+      border-radius: 15px;
+      
       i {
         font-size: 11px;
-        color: $azul;
-        padding: 2px;
+        color: #667eea;
       }
+      
       span {
         font-family: $montserrat;
-        font-size: 13px;
-        font-weight: 500;
+        font-size: 11px;
+        font-weight: 600;
+        color: #666;
       }
     }
   }
+  
   &-inputreply {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 5px;
-    padding: 10px;
-    @media (max-width: 1024px) {
-      padding: 5px;
-    }
+    display: flex;
+    gap: 10px;
+    padding: 0;
+    margin-top: 5px;
+    
     textarea {
-      font-size: 15px;
+      flex: 1;
+      font-size: 14px;
       font-weight: 500;
-      padding: 10px;
-      border: 1.5px solid #ccc;
-      border-radius: 5px;
+      padding: 12px 14px;
+      border: 2px solid #e5e5e5;
+      border-radius: 10px;
       outline: none;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
-      resize: none;
-      height: 50px;
-      background-color: #ffffff;
+      transition: all 0.3s ease;
+      resize: vertical;
+      min-height: 70px;
+      background-color: #fafafa;
       color: #333;
       font-family: $montserrat;
-      @media (max-width: 1024px) {
-        font-size: 16px;
+      line-height: 1.5;
+      
+      &:focus {
+        border-color: #667eea;
+        background: #fff;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.08);
+      }
+      
+      &::placeholder {
+        color: #aaa;
       }
     }
+    
     button {
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
       border: none;
-      border-radius: 5px;
+      border-radius: 10px;
       cursor: pointer;
-      background-color: #f0f0f0;
+      background: #667eea;
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+      
       img {
-        width: 40px;
-        height: 40px;
-        @media (max-width: 1024px) {
-          width: 30px;
-          height: 30px;
-        }
+        width: 20px;
+        height: 20px;
+        filter: brightness(0) invert(1);
       }
+      
       &:hover {
-        transition: ease-in-out 0.3s;
-        background-color: #e4e4e4;
+        background: #764ba2;
+        transform: scale(1.05);
+      }
+      
+      &:active {
+        transform: scale(0.95);
       }
     }
   }
@@ -123,37 +167,86 @@
 .commentActions {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  
   &-buttons {
     display: flex;
-    justify-content: start;
     align-items: center;
-    gap: 10px;
-    &-likes {
+    gap: 8px;
+    
+    &-likes,
+    &-resp,
+    &-eliminarComent {
       display: flex;
-      justify-content: center;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
+    }
+    
+    &-likes {
       span {
         font-family: $montserrat;
-        font-size: 15px;
-        font-weight: 500;
-        color: red;
+        font-size: 14px;
+        font-weight: 700;
+        color: #ff0000;
+        min-width: 18px;
+      }
+      
+      .commentLikeBtn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border: 2px solid #e5e5e5;
+        border-radius: 50%;
+        background: #fff;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        padding: 0;
+        
+        &:hover {
+          border-color: #ff0844;
+          background: #fff5f7;
+          transform: scale(1.1);
+        }
+        
+        img {
+          width: 16px;
+          height: 16px;
+        }
       }
     }
-    &-resp {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    
+    button {
+      padding: 6px 14px;
+      border: 2px solid #e5e5e5;
+      border-radius: 8px;
+      font-family: $montserrat;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: #fff;
     }
-    &-eliminarComent {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    
+    .replyBtn {
+      color: #667eea;
+      
+      &:hover {
+        border-color: #667eea;
+        background: #f5f7ff;
+      }
     }
-    &-eliminarComent {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    
+    .deleteCommentBtn {
+      color: #ff0844;
+      
+      &:hover {
+        border-color: #ff0844;
+        background: #fff5f7;
+      }
     }
   }
 }

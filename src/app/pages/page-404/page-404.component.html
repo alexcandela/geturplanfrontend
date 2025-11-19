@@ -1,5 +1,27 @@
 <section class="all404">
-    <img src="/assets/images/404.svg" alt="404_image">
-    <h2>Página no encontrada.</h2>
-    <a rel="noopener noreferrer" routerLink="/" class="btn btn-basico"><span>Volver al inicio</span><i class="fa-solid fa-house"></i></a>
+    <div class="error-container">
+        <div class="error-code">
+            <span>4</span>
+            <div class="icon-wrapper">
+                <i class="fa-solid fa-compass"></i>
+            </div>
+            <span>4</span>
+        </div>
+        
+        <div class="error-content">
+            <h2>¡Ups! Página no encontrada</h2>
+            <p>Parece que te has perdido. La página que buscas no existe o ha sido movida.</p>
+        </div>
+        
+        <div class="error-actions">
+            <a rel="noopener noreferrer" routerLink="/" class="btn-primary">
+                <i class="fa-solid fa-house"></i>
+                <span>Volver al inicio</span>
+            </a>
+            <a rel="noopener noreferrer" routerLink="/explorar" class="btn-secondary">
+                <i class="fa-solid fa-compass"></i>
+                <span>Explorar planes</span>
+            </a>
+        </div>
+    </div>
 </section>

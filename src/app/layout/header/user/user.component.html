@@ -1,21 +1,36 @@
 <div class="userComp">
-    <div class="userComp-name" (click)="toggleDropdown()">
-        <div class="nombreCompleto">
-            <span>{{userData.username}}</span>
+    <div class="userComp-trigger" (click)="toggleDropdown()">
+        <div class="user-info">
+            <span class="username">{{userData.username}}</span>
         </div>
-        <i class="fa-solid fa-caret-down"></i>
+        <i class="fa-solid fa-chevron-down arrow-icon"></i>
     </div>
     <div class="dropdown" [ngClass]="{ 'show': dropdownOpen }">
         <ul>
-            <li (click)="toggleDropdown()"><a rel="noopener noreferrer" [routerLink]="['/perfil', userData.username]">Mi
-                    Perfil</a><i class="fa-solid fa-circle-user"></i></li>
-            <li><a rel="noopener noreferrer" (click)="toggleDropdown()" routerLink="publicar-plan">Publicar</a><i
-                    class="fa-solid fa-circle-plus"></i></li>
-            <li><a rel="noopener noreferrer" (click)="toggleDropdown()" routerLink="favoritos">Favoritos</a><i
-                    class="fa-solid fa-heart"></i></li>
-            <li><a rel="noopener noreferrer" (click)="toggleDropdown()" (click)="logout()">Logout</a><i
-                    class="fa-solid fa-right-from-bracket"></i></li>
-            <!-- <i class="fa-solid fa-heart"></i> -->
+            <li (click)="toggleDropdown()">
+                <a rel="noopener noreferrer" [routerLink]="['/perfil', userData.username]">
+                    <i class="fa-solid fa-circle-user"></i>
+                    <span>Mi Perfil</span>
+                </a>
+            </li>
+            <li (click)="toggleDropdown()">
+                <a rel="noopener noreferrer" routerLink="publicar-plan">
+                    <i class="fa-solid fa-circle-plus"></i>
+                    <span>Publicar</span>
+                </a>
+            </li>
+            <li (click)="toggleDropdown()">
+                <a rel="noopener noreferrer" routerLink="favoritos">
+                    <i class="fa-solid fa-heart"></i>
+                    <span>Favoritos</span>
+                </a>
+            </li>
+            <li class="logout-item" (click)="toggleDropdown(); logout()">
+                <a rel="noopener noreferrer">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Cerrar Sesión</span>
+                </a>
+            </li>
         </ul>
     </div>
 </div>
