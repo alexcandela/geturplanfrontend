@@ -31,9 +31,13 @@
         </article>
         <section class="populares-planes">
             @if (loading()) {
-            @for (let of [1, 2, 3, 4]; track $index) {
+            @for (let of [1, 2, 3]; track $index) {
             <app-skeleton-plan />
             }
+            <a rel="noopener noreferrer" class="vermas" routerLink="/explorar">
+                <span>Ver todos los planes</span>
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </a>
             } @else {
             @for (plan of popularPlans(); track $index) {
             <app-plan [plan]="plan" />
@@ -43,11 +47,11 @@
                     <p>No se han encontrado planes</p>
                 </div>
             }
-            }
             <a rel="noopener noreferrer" class="vermas" routerLink="/explorar">
                 <span>Ver todos los planes</span>
                 <i class="fa-solid fa-magnifying-glass"></i>
             </a>
+            }
         </section>
     </section>
 
